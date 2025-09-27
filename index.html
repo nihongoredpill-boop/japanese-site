@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.13/html-to-image.min.js" integrity="sha512-iZ2ORl595Wx6miw+GuadDet4WQbdSWS3JLMoNfY8cRGoEFy6oT3G9IbcrBeL6AfkgpA51ETt/faX6yLV+/gFJg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+      (function() {
+        const originalConsole = window.console;
+        window.console = {
+          log: (...args) => {
+            originalConsole.log(...args);
+            window.parent.postMessage({ type: 'console', message: args.join(' ') }, '*');
+          },
+          error: (...args) => {
+            originalConsole.error(...args);
+            window.parent.postMessage({ type: 'console', message: 'Error: ' + args.join(' ') }, '*');
+          },
+          warn: (...args) => {
+            originalConsole.warn(...args);
+            window.parent.postMessage({ type: 'console', message: 'Warning: ' + args.join(' ') }, '*');
+          }
+        };
+
+        let requestId = 0;
+        let callbacksMap = new Map();
+        let streamControllers = new Map();
+        
+        window.claude = {
+          complete: (prompt) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'claudeComplete', id, prompt }, '*');
+            });
+          }
+        };
+
+        window.storage = {
+          get: (key, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageGet', id, key, shared }, '*');
+            });
+          },
+          set: (key, value, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageSet', id, key, value, shared }, '*');
+            });
+          },
+          delete: (key, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageDelete', id, key, shared }, '*');
+            });
+          },
+          list: (prefix, shared = false) => {
+            return new Promise((resolve, reject) => {
+              const id = requestId++;
+              callbacksMap.set(id, { resolve, reject });
+              window.parent.postMessage({ type: 'storageList', id, prefix, shared }, '*');
+            });
+          }
+        };
+
+        let pendingBlobs = new Map();
+        URL.createObjectURL = (blob) => {
+          // Store the blob and create an ID and URL for it
+          const blobId = `blob-${Date.now()}-${Math.random()}`;
+          pendingBlobs.set(blobId, blob);
+          return `blob-request://${blobId}`;
+        };
+
+        URL.revokeObjectURL = (url) => {
+          // Remove the blob from our store
+          const blobId = url.replace("blob-request://", "");
+          pendingBlobs.delete(blobId);
+        };
+
+        const getBlobFromURL = (url) => {
+          const blobId = url.replace("blob-request://", "");
+          return pendingBlobs.get(blobId);
+        };
+
+        // Override global fetch with streaming support
+        window.fetch = (url, init = {}) => {
+          return new Promise((resolve, reject) => {
+            const id = requestId++;
+            const channelId = `fetch-${id}-${Date.now()}`;
+            
+            callbacksMap.set(id, { 
+              resolve: (response) => {
+                // Create a ReadableStream for the response body
+                const stream = new ReadableStream({
+                  start(controller) {
+                    streamControllers.set(channelId, controller);
+                  },
+                  cancel() {
+                    streamControllers.delete(channelId);
+                  }
+                });
+                
+                // Create and return the Response with the stream
+                resolve(new Response(stream, {
+                  status: response.status,
+                  statusText: response.statusText,
+                  headers: response.headers
+                }));
+              },
+              reject,
+              channelId
+            });
+            
+            window.parent.postMessage({
+              type: 'proxyFetch',
+              id,
+              url,
+              init,
+              channelId
+            }, '*');
+          });
+        };
+
+        window.addEventListener('message', async (event) => {
+          if (event.data.type === 'takeScreenshot') {
+            const rootElement = document.getElementById('artifacts-component-root-html');
+            if (!rootElement) {
+              window.parent.postMessage({
+                type: 'screenshotError',
+                error: new Error('Root element not found'),
+              }, '*');
+            }
+            const screenshot = await htmlToImage.toPng(rootElement, {
+              imagePlaceholder:
+                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjePDgwX8ACOQDoNsk0PMAAAAASUVORK5CYII=",
+            });
+            window.parent.postMessage({
+              type: 'screenshotData',
+              data: screenshot,
+            }, '*');
+          } else if (event.data.type === 'claudeComplete') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.completion);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'proxyFetchResponse') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+              callbacksMap.delete(event.data.id);
+            } else {
+              // Initial response with headers, status, etc.
+              callback.resolve({
+                status: event.data.status,
+                statusText: event.data.statusText,
+                headers: event.data.headers
+              });
+              // Don't delete the callback yet if streaming
+              if (!event.data.body) {
+                callbacksMap.delete(event.data.id);
+              }
+            }
+          } else if (event.data.type === 'proxyFetchStream') {
+            // Handle streaming data chunks
+            const controller = streamControllers.get(event.data.channelId);
+            if (controller) {
+              if (event.data.error) {
+                controller.error(new Error(event.data.error));
+                streamControllers.delete(event.data.channelId);
+              } else if (event.data.done) {
+                controller.close();
+                streamControllers.delete(event.data.channelId);
+                // Clean up the callback
+                const callback = Array.from(callbacksMap.entries()).find(
+                  ([_, value]) => value.channelId === event.data.channelId
+                );
+                if (callback) {
+                  callbacksMap.delete(callback[0]);
+                }
+              } else if (event.data.chunk) {
+                controller.enqueue(new Uint8Array(event.data.chunk));
+              }
+            }
+          } else if (event.data.type === 'storageGet') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageSet') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageDelete') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          } else if (event.data.type === 'storageList') {
+            const callback = callbacksMap.get(event.data.id);
+            if (event.data.error) {
+              callback.reject(new Error(event.data.error));
+            } else {
+              callback.resolve(event.data.result);
+            }
+            callbacksMap.delete(event.data.id);
+          }
+        });
+
+        window.addEventListener('click', (event) => {
+          const isEl = event.target instanceof HTMLElement;
+          if (!isEl) return;
+    
+          // find ancestor links
+          const linkEl = event.target.closest("a");
+          if (!linkEl || !linkEl.href) return;
+    
+          event.preventDefault();
+          event.stopImmediatePropagation();
+    
+          if (linkEl.href.startsWith("blob-request:")) {
+            const blob = getBlobFromURL(linkEl.href);
+            if (!blob) return;
+            void blob.arrayBuffer().then((data) => {
+              window.parent.postMessage({
+                type: "downloadFile",
+                filename: linkEl.download,
+                data,
+                mimeType: blob.type || "application/octet-stream",
+              });
+            });
+          } else if (linkEl.href.startsWith("data:")) {
+            const [header, base64Data] = linkEl.href.split(",");
+            const mimeMatch = header.match(/data:([^;]+)/);
+            const mimeType = mimeMatch ? mimeMatch[1] : "application/octet-stream";
+            const binaryString = atob(base64Data);
+            const data = Uint8Array.from(binaryString, (c) =>
+              c.charCodeAt(0),
+            ).buffer;
+            window.parent.postMessage({
+              type: "downloadFile",
+              filename: linkEl.download,
+              data,
+              mimeType,
+            });
+          } else {
+            let linkUrl;
+            try {
+              linkUrl = new URL(linkEl.href);
+            } catch (error) {
+              return;
+            }
+    
+            if (linkUrl.hostname === window.location.hostname) return;
+      
+            window.parent.postMessage({
+              type: 'openExternal',
+              href: linkEl.href,
+            }, '*');
+          }
+      });
+
+        const originalOpen = window.open;
+        window.open = function (url) {
+          window.parent.postMessage({
+            type: "openExternal",
+            href: url,
+          }, "*");
+        };
+
+        window.addEventListener('error', (event) => {
+          window.parent.postMessage({ type: 'console', message: 'Uncaught Error: ' + event.message }, '*');
+        });
+      })();
+    </script>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casual Japanese - Unlock Your Social Life in Japan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Power words styling */
+        .power-word {
+            color: #dc2626;
+            font-weight: 600;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 0;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .video-container {
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+            background: linear-gradient(135deg, #111 0%, #222 100%);
+            border-radius: 20px;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 60px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+        
+        .play-button {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.3);
+        }
+        
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 25px solid white;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            margin-left: 5px;
+        }
+        
+        .hero-headline {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        
+        .hero-subheadline {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 300;
+            margin-bottom: 60px;
+            opacity: 0.8;
+            max-width: 800px;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.4);
+        }
+        
+        /* Section Styling */
+        .section {
+            padding: 120px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 80px;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Benefits Section */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+        
+        .benefit-card {
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            border-color: #dc2626;
+        }
+        
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            box-shadow: 0 15px 30px rgba(220, 38, 38, 0.3);
+        }
+        
+        .benefit-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: white;
+            fill: none;
+            stroke-width: 2;
+        }
+        
+        .benefit-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .benefit-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .benefit-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            opacity: 0.9;
+        }
+        
+        .benefit-list li::before {
+            content: '•';
+            color: #dc2626;
+            margin-right: 12px;
+            font-size: 1.2rem;
+            line-height: 1.3;
+        }
+        
+        /* Brain Concept Section */
+        .brain-section {
+            background: linear-gradient(135deg, #111 0%, #000 100%);
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+        
+        .brain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        
+        .brain-card {
+            text-align: center;
+            padding: 50px 30px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            border: 2px solid #333;
+        }
+        
+        .brain-card.polite {
+            border-color: #666;
+        }
+        
+        .brain-card.casual {
+            border-color: #dc2626;
+        }
+        
+        .brain-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .brain-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.7;
+            margin-bottom: 24px;
+        }
+        
+        .brain-description {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            opacity: 0.9;
+            text-align: left;
+        }
+        
+        .brain-description p {
+            margin-bottom: 12px;
+        }
+        
+        .breakthrough {
+            text-align: center;
+            padding: 40px;
+            background: rgba(220, 38, 38, 0.1);
+            border-radius: 16px;
+            border: 1px solid #dc2626;
+            margin-bottom: 60px;
+        }
+        
+        .breakthrough h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 16px;
+        }
+        
+        /* Problems Section */
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+        
+        .problem-card {
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        
+        .problem-card:hover {
+            border-color: #dc2626;
+            transform: translateY(-5px);
+        }
+        
+        .problem-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #dc2626;
+        }
+        
+        .problem-description {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .problem-description p {
+            margin-bottom: 8px;
+        }
+        
+        /* Consequences Section */
+        .consequences-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        
+        .consequence-item {
+            padding: 30px;
+            background: rgba(220, 38, 38, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid #dc2626;
+        }
+        
+        .consequence-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #dc2626;
+        }
+        
+        /* Testimonials Section */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        
+        .testimonial-card {
+            background: #000;
+            border: 2px solid #dc2626;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(220, 38, 38, 0.2);
+        }
+        
+        .testimonial-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            object-fit: cover;
+        }
+        
+        .testimonial-quote {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+        
+        .testimonial-name {
+            font-weight: 600;
+            color: #dc2626;
+        }
+        
+        /* FAQ Section */
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto 80px;
+        }
+        
+        .faq-item {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+        
+        .faq-question {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #dc2626;
+        }
+        
+        .faq-answer {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+        
+        /* Final CTA Section */
+        .final-cta {
+            text-align: center;
+            padding: 120px 0;
+            background: radial-gradient(circle at center, rgba(220, 38, 38, 0.05) 0%, transparent 70%);
+        }
+        
+        .final-text {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 300;
+            line-height: 1.4;
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .final-button {
+            font-size: 1.375rem;
+            padding: 24px 48px;
+        }
+        
+        /* Choose Your Path Page */
+        .path-page {
+            display: none;
+            min-height: 100vh;
+            padding: 120px 0;
+        }
+        
+        .path-page.active {
+            display: block;
+        }
+        
+        .path-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+        
+        .path-card {
+            padding: 50px 40px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            border: 2px solid #333;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .path-card:hover {
+            border-color: #dc2626;
+            transform: translateY(-10px);
+        }
+        
+        .path-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #dc2626;
+        }
+        
+        .path-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.7;
+            margin-bottom: 30px;
+        }
+        
+        .path-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .path-features li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+        
+        .path-features li::before {
+            content: '✅';
+            margin-right: 12px;
+        }
+        
+        .path-perfect {
+            margin-bottom: 40px;
+        }
+        
+        .path-perfect h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #dc2626;
+        }
+        
+        .path-perfect ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .path-perfect li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .path-perfect li::before {
+            content: '•';
+            color: #dc2626;
+            margin-right: 8px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .section {
+                padding: 80px 0;
+            }
+            
+            .benefits-grid,
+            .problems-grid,
+            .brain-grid,
+            .path-comparison {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .video-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body id="artifacts-component-root-html">
+    <!-- Main Landing Page -->
+    <div id="main-page">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="video-container">
+                    <div class="play-button"></div>
+                </div>
+                
+                <h1 class="hero-headline">Casual Japanese <span class="power-word">Unlocks</span> Your Social Life in Japan</h1>
+                <p class="hero-subheadline">Master the language that lets you <span class="power-word">feel</span>, <span class="power-word">connect</span>, and be <span class="power-word">yourself</span></p>
+                
+                <a href="#" class="cta-button" onclick="showPathPage()">Choose Your Path</a>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Why is casual Japanese so important?</h2>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </div>
+                        <h3 class="benefit-title">Casual Japanese is the language of <span class="power-word">connection</span></h3>
+                        <ul class="benefit-list">
+                            <li>Build real friendships, not formal exchanges</li>
+                            <li>Express your true personality and emotions</li>
+                            <li>Read between the lines and know when someone is being fake</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+                            </svg>
+                        </div>
+                        <h3 class="benefit-title">It's full of <span class="power-word">emotion</span> and <span class="power-word">personality</span></h3>
+                        <ul class="benefit-list">
+                            <li>Convey feelings, not just information</li>
+                            <li>Sound human, not robotic</li>
+                            <li>Let your character shine through</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </div>
+                        <h3 class="benefit-title">Date and love <span class="power-word">authentically</span> in Japan</h3>
+                        <ul class="benefit-list">
+                            <li>Sound approachable, not like a business meeting</li>
+                            <li>Express romantic feelings naturally</li>
+                            <li>Connect emotionally, not just linguistically</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <svg viewBox="0 0 24 24">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                <line x1="8" y1="21" x2="16" y2="21"/>
+                                <line x1="12" y1="17" x2="12" y2="21"/>
+                            </svg>
+                        </div>
+                        <h3 class="benefit-title">Understand movies, dramas, and anime</h3>
+                        <ul class="benefit-list">
+                            <li>Actually get what characters are really saying</li>
+                            <li>No more missing cultural references and jokes</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="cta-button" onclick="showPathPage()">Start Your Journey</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brain Concept Section -->
+        <section class="section brain-section">
+            <div class="container">
+                <h2 class="section-title">The Two Sides of the Japanese Brain</h2>
+                
+                <div class="brain-grid">
+                    <div class="brain-card polite">
+                        <h3 class="brain-title">The Polite Brain</h3>
+                        <p class="brain-subtitle">(What Foreigners Usually Meet)</p>
+                        <div class="brain-description">
+                            <p>• Survival mode - formal, careful, distant</p>
+                            <p>• The "mask" Japanese people wear with outsiders</p>
+                            <p>• Respectful, kind, but emotionally unavailable</p>
+                            <p>• This is why foreigners say "Japanese people are so polite"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="brain-card casual">
+                        <h3 class="brain-title">The Casual Brain</h3>
+                        <p class="brain-subtitle">(The Real Person)</p>
+                        <div class="brain-description">
+                            <p>• Connection mode - emotional, funny, authentic</p>
+                            <p>• Where true personality lives</p>
+                            <p>• How they talk with real friends and family</p>
+                            <p>• This is the Japanese person you actually want to know</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="breakthrough">
+                    <h3>The Breakthrough</h3>
+                    <p>When you speak casual Japanese = you <span class="power-word">unlock</span> their casual brain = <span class="power-word">real connection</span></p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="cta-button" onclick="showPathPage()">Unlock the Real Japan</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problems Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">The Problem with the Japanese Language Market</h2>
+                
+                <div class="problems-grid">
+                    <div class="problem-card">
+                        <h3 class="problem-title">1. Textbooks and apps ignore casual Japanese</h3>
+                        <div class="problem-description">
+                            <p>• Keep you stuck in formal patterns forever</p>
+                            <p>• Don't care about your social success</p>
+                        </div>
+                    </div>
+                    
+                    <div class="problem-card">
+                        <h3 class="problem-title">2. Tutors just copy textbooks</h3>
+                        <div class="problem-description">
+                            <p>• Even "native conversations" on Youtube sound fake</p>
+                            <p>• Teaching you to talk to masks, not real people</p>
+                        </div>
+                    </div>
+                    
+                    <div class="problem-card">
+                        <h3 class="problem-title">3. They miss how Japan actually works</h3>
+                        <div class="problem-description">
+                            <p>• No understanding of "polite brain" vs "casual brain"</p>
+                            <p>• Perfect outsider Japanese that keeps you an outsider</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Consequences Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">This results in...</h2>
+                
+                <div class="consequences-list">
+                    <div class="consequence-item">
+                        <h3 class="consequence-title">You'll be forever trapped talking to the "polite brain"</h3>
+                        <ul class="benefit-list">
+                            <li>You get respectful responses but never genuine connection</li>
+                            <li>They treat you like an outsider who "wouldn't understand"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="consequence-item">
+                        <h3 class="consequence-title">You'll become another lonely foreigner</h3>
+                        <ul class="benefit-list">
+                            <li>Perfect grammar but eating lunch with foreigner friends</li>
+                            <li>Excluded from real social circles and after-work hangouts</li>
+                            <li>Dating feels like business meetings, not real romance</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="consequence-item">
+                        <h3 class="consequence-title">You'll waste years studying fake Japanese</h3>
+                        <ul class="benefit-list">
+                            <li>Fluent in textbook patterns that don't create connection</li>
+                            <li>All that effort just to be permanently kept at arm's length</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="cta-button" onclick="showPathPage()">Don't Let This Be Your Story</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">What my students are saying</h2>
+                
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <img src="sarah-profile.jpg" alt="Sarah M" class="testimonial-image">
+                        <p class="testimonial-quote">"I finally connected with Japanese people on a human level thanks to this program. The difference is night and day."</p>
+                        <p class="testimonial-name">- Sarah M.</p>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <img src="kenji-profile.jpg" alt="Kenji T" class="testimonial-image">
+                        <p class="testimonial-quote">"After years of formal Japanese classes, I finally understand anime without subtitles. This changed everything for me."</p>
+                        <p class="testimonial-name">- Kenji T.</p>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <img src="maria-profile.jpg" alt="Maria L" class="testimonial-image">
+                        <p class="testimonial-quote">"My Japanese friends say I sound natural now, not like a textbook. That means the world to me."</p>
+                        <p class="testimonial-name">- Maria L.</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="cta-button" onclick="showPathPage()">Join Them Today</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <h3 class="faq-question">Won't casual Japanese be rude in business settings?</h3>
+                        <p class="faq-answer">It's always safe to stay polite in business first. But imagine you're at dinner with colleagues and they start speaking casually to each other - you won't understand what they actually mean. You'll miss the real conversation, the jokes, the bonding. Learning casual Japanese means you can understand when others use it, even if you choose to stay formal.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3 class="faq-question">What if I make mistakes and offend someone?</h3>
+                        <p class="faq-answer">Japanese people are incredibly forgiving when they see you're trying to connect genuinely. Making small casual mistakes shows you're human. Staying formal forever is actually more offensive - it says "I don't trust you enough to be myself."</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3 class="faq-question">Is this just slang and bad grammar?</h3>
+                        <p class="faq-answer">Not at all. Casual Japanese follows specific patterns and rules - it's just different rules than textbooks teach. You're learning the "correct" way to be casual, which is actually harder than being formal.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h3 class="faq-question">Is this okay if I'm a beginner?</h3>
+                        <p class="faq-answer">Yes, but learn hiragana first (which I include as a bonus). You don't need to be advanced to start understanding casual patterns. In fact, it's better to learn casual Japanese early so you don't get stuck in formal-only mode like most learners.</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="cta-button" onclick="showPathPage()">Get Started Today</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section class="final-cta">
+            <div class="container">
+                <p class="final-text">Stop learning textbook Japanese that keeps you <span class="power-word">lonely</span>. Master casual Japanese and <span class="power-word">unlock</span> real connections.</p>
+                
+                <a href="#" class="cta-button final-button" onclick="showPathPage()">Choose Your Path Today</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Choose Your Path Page -->
+    <div id="path-page" class="path-page">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Two Paths to Casual Japanese Mastery</h2>
+                <p style="text-align: center; font-size: 1.25rem; opacity: 0.8; margin-bottom: 80px; max-width: 600px; margin-left: auto; margin-right: auto;">Both lead to the same destination - real connections in Japan. Choose the journey that fits your style.</p>
+                
+                <div class="path-comparison">
+                    <div class="path-card">
+                        <h3 class="path-title">THE COMMUNITY</h3>
+                        <p class="path-subtitle">For social learners</p>
+                        
+                        <ul class="path-features">
+                            <li>Weekly group calls with me</li>
+                            <li>Daily challenges and practice</li>
+                            <li>Direct access to me</li>
+                            <li>Active tribe of 90+ learners</li>
+                            <li>Resources and bonus content</li>
+                            <li>All courses included</li>
+                            <li>New content added weekly</li>
+                        </ul>
+                        
+                        <div class="path-perfect">
+                            <h4>Perfect if you:</h4>
+                            <ul>
+                                <li>Learn better with others</li>
+                                <li>Want ongoing support</li>
+                                <li>Like real-time feedback</li>
+                                <li>Prefer community learning</li>
+                            </ul>
+                        </div>
+                        
+                        <a href="#" class="cta-button">Join the Community</a>
+                    </div>
+
+                    <div class="path-card">
+                        <h3 class="path-title">THE COURSE</h3>
+                        <p class="path-subtitle">For focused learners</p>
+                        
+                        <ul class="path-features">
+                            <li>Complete step-by-step curriculum</li>
+                            <li>Self-paced video modules</li>
+                            <li>Structured learning path</li>
+                            <li>Downloadable resources</li>
+                            <li>Lifetime access</li>
+                        </ul>
+                        
+                        <div class="path-perfect">
+                            <h4>Perfect if you:</h4>
+                            <ul>
+                                <li>Prefer your own pace</li>
+                                <li>Want clear structure</li>
+                                <li>Like to go deep solo</li>
+                                <li>Learn better independently</li>
+                            </ul>
+                        </div>
+                        
+                        <a href="#" class="cta-button">Take the Course</a>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 60px;">
+                    <p style="font-size: 1.125rem; opacity: 0.8;">Still deciding? Most successful students choose the Community for ongoing support.</p>
+                    <button onclick="showMainPage()" style="background: none; border: 1px solid #666; color: #ccc; padding: 12px 24px; border-radius: 8px; margin-top: 20px; cursor: pointer;">← Back to Main Page</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function showPathPage() {
+            document.getElementById('main-page').style.display = 'none';
+            document.getElementById('path-page').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+        
+        function showMainPage() {
+            document.getElementById('path-page').style.display = 'none';
+            document.getElementById('main-page').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
