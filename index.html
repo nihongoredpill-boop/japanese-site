@@ -394,24 +394,25 @@
 }
         }
         
-        .hero-subheadline {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 300;
-            margin-bottom: 60px;
-            opacity: 0.8;
-            max-width: 800px;
+      .hero-subheadline {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 300;
+    margin-bottom: 60px;
+    opacity: 0.8;
+    max-width: 800px;
+}
         }
         
         .cta-button {
             display: inline-flex;
             align-items: center;
-            padding: 20px 40px;
+            padding: 24px 48px;
             background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
             color: white;
             text-decoration: none;
             border-radius: 12px;
             font-weight: 600;
-            font-size: 1.125rem;
+            font-size: 1.25rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -670,13 +671,14 @@
             box-shadow: 0 30px 60px rgba(220, 38, 38, 0.2);
         }
         
-        .testimonial-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            object-fit: cover;
-        }
+       .testimonial-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 0 auto 20px;
+    object-fit: contain;
+    max-width: 100%;
+}
         
         .testimonial-quote {
             font-size: 1.125rem;
@@ -864,6 +866,10 @@
 <body id="artifacts-component-root-html">
     <!-- Main Landing Page -->
     <div id="main-page">
+         <!-- Logo -->
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <img src="LOGO.png" alt="Logo" style="height: 50px; width: auto;">
+    </div>
         <!-- Hero Section -->
         <section class="hero">
             <div class="container">
@@ -1074,24 +1080,29 @@
     <p class="testimonial-name">- Aaron</p>
 </div>
                     
-                  <div class="testimonial-card">
-    <img src="Andreas.jpeg" alt="Andreas testimonial" style="width: 100%; border-radius: 12px; margin-bottom: 20px;">
+                <div class="testimonial-card">
+    <img src="Andreas.jpeg" alt="Andreas testimonial" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; object-fit: contain;">
     <p class="testimonial-name">- Andreas</p>
 </div>
 
 <div class="testimonial-card">
-    <img src="Lili.jpeg" alt="Lili testimonial" style="width: 100%; border-radius: 12px; margin-bottom: 20px;">
+    <img src="Lili.jpeg" alt="Lili testimonial" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; object-fit: contain;">
     <p class="testimonial-name">- Lili</p>
 </div>
 
 <div class="testimonial-card">
-    <img src="Chris.png" alt="Chris testimonial" style="width: 100%; border-radius: 12px; margin-bottom: 20px;">
+    <img src="Chris.png" alt="Chris testimonial" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; object-fit: contain;">
     <p class="testimonial-name">- Chris</p>
 </div>
 
 <div class="testimonial-card">
-    <img src="Matthieu.png" alt="Matthieu testimonial" style="width: 100%; border-radius: 12px; margin-bottom: 20px;">
+    <img src="Matthieu.png" alt="Matthieu testimonial" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; object-fit: contain;">
     <p class="testimonial-name">- Matthieu</p>
+</div>
+
+<div class="testimonial-card">
+    <img src="Brendan.png" alt="Brendan testimonial" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; object-fit: contain;">
+    <p class="testimonial-name">- Brendan</p>
 </div>
                 </div>
                 
