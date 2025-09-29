@@ -306,7 +306,10 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
-        
+        a {
+  color: inherit;
+  text-decoration: none;
+}
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -401,18 +404,21 @@
     max-width: 800px;
 }
         
-      .cta-button {
-    all: unset;
-    display: inline-block !important;
-    background: red !important;
-    color: white !important;
-    padding: 20px 40px !important;
-    border-radius: 12px !important;
-    font-weight: bold !important;
-    font-size: 20px !important;
-    text-align: center !important;
-    cursor: pointer !important;
-    text-decoration: none !important;
+   .cta-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    color: white;
+    padding: 20px 40px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: none;
 }
         
         .cta-button::before {
