@@ -1,293 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.13/html-to-image.min.js" integrity="sha512-iZ2ORl595Wx6miw+GuadDet4WQbdSWS3JLMoNfY8cRGoEFy6oT3G9IbcrBeL6AfkgpA51ETt/faX6yLV+/gFJg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-      (function() {
-        const originalConsole = window.console;
-        window.console = {
-          log: (...args) => {
-            originalConsole.log(...args);
-            window.parent.postMessage({ type: 'console', message: args.join(' ') }, '*');
-          },
-          error: (...args) => {
-            originalConsole.error(...args);
-            window.parent.postMessage({ type: 'console', message: 'Error: ' + args.join(' ') }, '*');
-          },
-          warn: (...args) => {
-            originalConsole.warn(...args);
-            window.parent.postMessage({ type: 'console', message: 'Warning: ' + args.join(' ') }, '*');
-          }
-        };
-
-        let requestId = 0;
-        let callbacksMap = new Map();
-        let streamControllers = new Map();
-        
-        window.claude = {
-          complete: (prompt) => {
-            return new Promise((resolve, reject) => {
-              const id = requestId++;
-              callbacksMap.set(id, { resolve, reject });
-              window.parent.postMessage({ type: 'claudeComplete', id, prompt }, '*');
-            });
-          }
-        };
-
-        window.storage = {
-          get: (key, shared = false) => {
-            return new Promise((resolve, reject) => {
-              const id = requestId++;
-              callbacksMap.set(id, { resolve, reject });
-              window.parent.postMessage({ type: 'storageGet', id, key, shared }, '*');
-            });
-          },
-          set: (key, value, shared = false) => {
-            return new Promise((resolve, reject) => {
-              const id = requestId++;
-              callbacksMap.set(id, { resolve, reject });
-              window.parent.postMessage({ type: 'storageSet', id, key, value, shared }, '*');
-            });
-          },
-          delete: (key, shared = false) => {
-            return new Promise((resolve, reject) => {
-              const id = requestId++;
-              callbacksMap.set(id, { resolve, reject });
-              window.parent.postMessage({ type: 'storageDelete', id, key, shared }, '*');
-            });
-          },
-          list: (prefix, shared = false) => {
-            return new Promise((resolve, reject) => {
-              const id = requestId++;
-              callbacksMap.set(id, { resolve, reject });
-              window.parent.postMessage({ type: 'storageList', id, prefix, shared }, '*');
-            });
-          }
-        };
-
-        let pendingBlobs = new Map();
-        URL.createObjectURL = (blob) => {
-          // Store the blob and create an ID and URL for it
-          const blobId = `blob-${Date.now()}-${Math.random()}`;
-          pendingBlobs.set(blobId, blob);
-          return `blob-request://${blobId}`;
-        };
-
-        URL.revokeObjectURL = (url) => {
-          // Remove the blob from our store
-          const blobId = url.replace("blob-request://", "");
-          pendingBlobs.delete(blobId);
-        };
-
-        const getBlobFromURL = (url) => {
-          const blobId = url.replace("blob-request://", "");
-          return pendingBlobs.get(blobId);
-        };
-
-        // Override global fetch with streaming support
-        window.fetch = (url, init = {}) => {
-          return new Promise((resolve, reject) => {
-            const id = requestId++;
-            const channelId = `fetch-${id}-${Date.now()}`;
-            
-            callbacksMap.set(id, { 
-              resolve: (response) => {
-                // Create a ReadableStream for the response body
-                const stream = new ReadableStream({
-                  start(controller) {
-                    streamControllers.set(channelId, controller);
-                  },
-                  cancel() {
-                    streamControllers.delete(channelId);
-                  }
-                });
-                
-                // Create and return the Response with the stream
-                resolve(new Response(stream, {
-                  status: response.status,
-                  statusText: response.statusText,
-                  headers: response.headers
-                }));
-              },
-              reject,
-              channelId
-            });
-            
-            window.parent.postMessage({
-              type: 'proxyFetch',
-              id,
-              url,
-              init,
-              channelId
-            }, '*');
-          });
-        };
-
-        window.addEventListener('message', async (event) => {
-          if (event.data.type === 'takeScreenshot') {
-            const rootElement = document.getElementById('artifacts-component-root-html');
-            if (!rootElement) {
-              window.parent.postMessage({
-                type: 'screenshotError',
-                error: new Error('Root element not found'),
-              }, '*');
-            }
-            const screenshot = await htmlToImage.toPng(rootElement, {
-              imagePlaceholder:
-                "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAA1JREFUGFdjePDgwX8ACOQDoNsk0PMAAAAASUVORK5CYII=",
-            });
-            window.parent.postMessage({
-              type: 'screenshotData',
-              data: screenshot,
-            }, '*');
-          } else if (event.data.type === 'claudeComplete') {
-            const callback = callbacksMap.get(event.data.id);
-            if (event.data.error) {
-              callback.reject(new Error(event.data.error));
-            } else {
-              callback.resolve(event.data.completion);
-            }
-            callbacksMap.delete(event.data.id);
-          } else if (event.data.type === 'proxyFetchResponse') {
-            const callback = callbacksMap.get(event.data.id);
-            if (event.data.error) {
-              callback.reject(new Error(event.data.error));
-              callbacksMap.delete(event.data.id);
-            } else {
-              // Initial response with headers, status, etc.
-              callback.resolve({
-                status: event.data.status,
-                statusText: event.data.statusText,
-                headers: event.data.headers
-              });
-              // Don't delete the callback yet if streaming
-              if (!event.data.body) {
-                callbacksMap.delete(event.data.id);
-              }
-            }
-          } else if (event.data.type === 'proxyFetchStream') {
-            // Handle streaming data chunks
-            const controller = streamControllers.get(event.data.channelId);
-            if (controller) {
-              if (event.data.error) {
-                controller.error(new Error(event.data.error));
-                streamControllers.delete(event.data.channelId);
-              } else if (event.data.done) {
-                controller.close();
-                streamControllers.delete(event.data.channelId);
-                // Clean up the callback
-                const callback = Array.from(callbacksMap.entries()).find(
-                  ([_, value]) => value.channelId === event.data.channelId
-                );
-                if (callback) {
-                  callbacksMap.delete(callback[0]);
-                }
-              } else if (event.data.chunk) {
-                controller.enqueue(new Uint8Array(event.data.chunk));
-              }
-            }
-          } else if (event.data.type === 'storageGet') {
-            const callback = callbacksMap.get(event.data.id);
-            if (event.data.error) {
-              callback.reject(new Error(event.data.error));
-            } else {
-              callback.resolve(event.data.result);
-            }
-            callbacksMap.delete(event.data.id);
-          } else if (event.data.type === 'storageSet') {
-            const callback = callbacksMap.get(event.data.id);
-            if (event.data.error) {
-              callback.reject(new Error(event.data.error));
-            } else {
-              callback.resolve(event.data.result);
-            }
-            callbacksMap.delete(event.data.id);
-          } else if (event.data.type === 'storageDelete') {
-            const callback = callbacksMap.get(event.data.id);
-            if (event.data.error) {
-              callback.reject(new Error(event.data.error));
-            } else {
-              callback.resolve(event.data.result);
-            }
-            callbacksMap.delete(event.data.id);
-          } else if (event.data.type === 'storageList') {
-            const callback = callbacksMap.get(event.data.id);
-            if (event.data.error) {
-              callback.reject(new Error(event.data.error));
-            } else {
-              callback.resolve(event.data.result);
-            }
-            callbacksMap.delete(event.data.id);
-          }
-        });
-
-        window.addEventListener('click', (event) => {
-          const isEl = event.target instanceof HTMLElement;
-          if (!isEl) return;
-    
-          // find ancestor links
-          const linkEl = event.target.closest("a");
-          if (!linkEl || !linkEl.href) return;
-    
-          event.preventDefault();
-          event.stopImmediatePropagation();
-    
-          if (linkEl.href.startsWith("blob-request:")) {
-            const blob = getBlobFromURL(linkEl.href);
-            if (!blob) return;
-            void blob.arrayBuffer().then((data) => {
-              window.parent.postMessage({
-                type: "downloadFile",
-                filename: linkEl.download,
-                data,
-                mimeType: blob.type || "application/octet-stream",
-              });
-            });
-          } else if (linkEl.href.startsWith("data:")) {
-            const [header, base64Data] = linkEl.href.split(",");
-            const mimeMatch = header.match(/data:([^;]+)/);
-            const mimeType = mimeMatch ? mimeMatch[1] : "application/octet-stream";
-            const binaryString = atob(base64Data);
-            const data = Uint8Array.from(binaryString, (c) =>
-              c.charCodeAt(0),
-            ).buffer;
-            window.parent.postMessage({
-              type: "downloadFile",
-              filename: linkEl.download,
-              data,
-              mimeType,
-            });
-          } else {
-            let linkUrl;
-            try {
-              linkUrl = new URL(linkEl.href);
-            } catch (error) {
-              return;
-            }
-    
-            if (linkUrl.hostname === window.location.hostname) return;
-      
-            window.parent.postMessage({
-              type: 'openExternal',
-              href: linkEl.href,
-            }, '*');
-          }
-      });
-
-        const originalOpen = window.open;
-        window.open = function (url) {
-          window.parent.postMessage({
-            type: "openExternal",
-            href: url,
-          }, "*");
-        };
-
-        window.addEventListener('error', (event) => {
-          window.parent.postMessage({ type: 'console', message: 'Uncaught Error: ' + event.message }, '*');
-        });
-      })();
-    </script>
-  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Casual Japanese - Unlock Your Social Life in Japan</title>
@@ -306,23 +19,23 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
+        
         a {
-  color: inherit;
-  text-decoration: none;
-}
+            color: inherit;
+            text-decoration: none;
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
         }
         
-        /* Power words styling */
         .power-word {
             color: #dc2626;
             font-weight: 600;
         }
         
-        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -386,40 +99,40 @@
             margin-left: 5px;
         }
         
-       .hero-headline {
-    font-size: clamp(2.5rem, 7vw, 5.5rem);
-    font-weight: 800;
-    margin-bottom: 24px;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    word-wrap: break-word;
-    max-width: 100%;
-}
+        .hero-headline {
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            word-wrap: break-word;
+            max-width: 100%;
+        }
         
-      .hero-subheadline {
-    font-size: clamp(1.8rem, 5vw, 3rem);
-    font-weight: 300;
-    margin-bottom: 60px;
-    opacity: 0.8;
-    max-width: 800px;
-}
+        .hero-subheadline {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 300;
+            margin-bottom: 60px;
+            opacity: 0.8;
+            max-width: 800px;
+        }
         
-   .cta-button {
-    display: inline-block;
-    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-    color: white;
-    padding: 20px 40px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 1.125rem;
-    text-align: center;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    border: none;
-}
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
         
         .cta-button::before {
             content: '';
@@ -441,7 +154,6 @@
             box-shadow: 0 20px 40px rgba(220, 38, 38, 0.4);
         }
         
-        /* Section Styling */
         .section {
             padding: 120px 0;
             position: relative;
@@ -455,7 +167,6 @@
             letter-spacing: -0.02em;
         }
         
-        /* Benefits Section */
         .benefits-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -476,24 +187,22 @@
             border-color: #dc2626;
         }
         
-     .benefit-icon {
-    width: 100%;
-    height: 200px;
-    border-radius: 16px;
-    overflow: hidden;
-    margin-bottom: 24px;
-    box-shadow: 0 15px 30px rgba(220, 38, 38, 0.3);
-}
+        .benefit-icon {
+            width: 100%;
+            height: 200px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: 0 15px 30px rgba(220, 38, 38, 0.3);
+        }
 
-.benefit-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 16px;
-}
+        .benefit-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
         
-      
-    
         .benefit-title {
             font-size: 1.5rem;
             font-weight: 600;
@@ -521,7 +230,6 @@
             line-height: 1.3;
         }
         
-        /* Brain Concept Section */
         .brain-section {
             background: linear-gradient(135deg, #111 0%, #000 100%);
             border-top: 1px solid #333;
@@ -590,7 +298,6 @@
             margin-bottom: 16px;
         }
         
-        /* Problems Section */
         .problems-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -628,7 +335,6 @@
             margin-bottom: 8px;
         }
         
-        /* Consequences Section */
         .consequences-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -650,7 +356,6 @@
             color: #dc2626;
         }
         
-        /* Testimonials Section */
         .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -672,14 +377,14 @@
             box-shadow: 0 30px 60px rgba(220, 38, 38, 0.2);
         }
         
-       .testimonial-image {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    margin: 0 auto 20px;
-    object-fit: contain;
-    max-width: 100%;
-}
+        .testimonial-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 0 auto 20px;
+            object-fit: contain;
+            max-width: 100%;
+        }
         
         .testimonial-quote {
             font-size: 1.125rem;
@@ -693,7 +398,6 @@
             color: #dc2626;
         }
         
-        /* FAQ Section */
         .faq-list {
             max-width: 800px;
             margin: 0 auto 80px;
@@ -720,7 +424,6 @@
             opacity: 0.9;
         }
         
-        /* Final CTA Section */
         .final-cta {
             text-align: center;
             padding: 120px 0;
@@ -742,7 +445,6 @@
             padding: 24px 48px;
         }
         
-        /* Choose Your Path Page */
         .path-page {
             display: none;
             min-height: 100vh;
@@ -836,7 +538,6 @@
             margin-right: 8px;
         }
         
-        /* Responsive Design */
         @media (max-width: 768px) {
             .section {
                 padding: 80px 0;
@@ -864,16 +565,12 @@
         }
     </style>
 </head>
-<body id="artifacts-component-root-html">
-    <!-- Main Landing Page -->
+<body>
     <div id="main-page">
+        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+            <img src="Logo.PNG" alt="Logo" style="height: 50px; width: auto;">
+        </div>
         
-         <!-- Logo -->
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <img src="Logo.PNG" alt="Logo" style="height: 50px; width: auto;">
-    </div>
-        
-        <!-- Hero Section -->
         <section class="hero">
             <div class="container">
                 <div class="video-container">
@@ -883,20 +580,19 @@
                 <h1 class="hero-headline">Casual Japanese <span class="power-word">Unlocks</span> Your Social Life in Japan</h1>
                 <p class="hero-subheadline">Master the language that lets you <span class="power-word">feel</span>, <span class="power-word">connect</span>, and be <span class="power-word">yourself</span></p>
                 
-               <a href="javascript:void(0);" class="cta-button" onclick="showPathPage(); return false;">Choose Your Path</a>
+                <a href="javascript:void(0);" class="cta-button" onclick="showPathPage(); return false;">Choose Your Path</a>
             </div>
         </section>
 
-        <!-- Benefits Section -->
         <section class="section">
             <div class="container">
                 <h2 class="section-title">Why Is Casual Japanese So Important?</h2>
                 
                 <div class="benefits-grid">
                     <div class="benefit-card">
-                      <div class="benefit-icon">
-    <img src="connection.jpg" alt="Connection" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
-</div>
+                        <div class="benefit-icon">
+                            <img src="connection.jpg" alt="Connection">
+                        </div>
                         <h3 class="benefit-title">Casual Japanese is the language of <span class="power-word">connection</span></h3>
                         <ul class="benefit-list">
                             <li>Build real friendships, not formal exchanges</li>
@@ -906,9 +602,9 @@
                     </div>
                     
                     <div class="benefit-card">
-                       <div class="benefit-icon">
-    <img src="gesture.jpg" alt="Connection" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
-</div>
+                        <div class="benefit-icon">
+                            <img src="gesture.jpg" alt="Emotion">
+                        </div>
                         <h3 class="benefit-title">It's full of <span class="power-word">emotion</span> and <span class="power-word">personality</span></h3>
                         <ul class="benefit-list">
                             <li>Convey feelings, not just information</li>
@@ -918,9 +614,9 @@
                     </div>
                     
                     <div class="benefit-card">
-                      <div class="benefit-icon">
-    <img src="dating .jpg" alt="Connection" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
-</div>
+                        <div class="benefit-icon">
+                            <img src="dating .jpg" alt="Dating">
+                        </div>
                         <h3 class="benefit-title">Date and love <span class="power-word">authentically</span> in Japan</h3>
                         <ul class="benefit-list">
                             <li>Sound approachable, not like a business meeting</li>
@@ -930,9 +626,9 @@
                     </div>
                     
                     <div class="benefit-card">
-                       <div class="benefit-icon">
-    <img src="wathicng tv.jpg" alt="Movies and anime" style="width: 100%; height: 100%; object-fit: cover; border-radius: 16px;">
-</div>
+                        <div class="benefit-icon">
+                            <img src="wathicng tv.jpg" alt="Movies">
+                        </div>
                         <h3 class="benefit-title">Understand movies, dramas, and anime</h3>
                         <ul class="benefit-list">
                             <li>Actually get what characters are really saying</li>
@@ -942,19 +638,19 @@
                 </div>
                 
                 <div style="text-align: center;">
-                <a href="javascript:void(0);" class="cta-button" onclick="showPathPage(); return false;">Start Your Journey</a>
+                    <a href="javascript:void(0);" class="cta-button" onclick="showPathPage(); return false;">Start Your Journey</a>
                 </div>
             </div>
         </section>
 
-        <!-- Brain Concept Section -->
         <section class="section brain-section">
             <div class="container">
                 <h2 class="section-title">The Two Sides of the Japanese Brain</h2>
                 
                 <div style="text-align: center; margin-bottom: 60px;">
-    <img src="The Polite Brain.png" alt="The Two Sides of the Japanese Brain" style="max-width: 600px; width: 100%; border-radius: 20px;">
-</div>
+                    <img src="The Polite Brain.png" alt="Japanese Brain" style="max-width: 600px; width: 100%; border-radius: 20px;">
+                </div>
+                
                 <div class="brain-grid">
                     <div class="brain-card polite">
                         <h3 class="brain-title">The Polite Brain</h3>
@@ -985,12 +681,11 @@
                 </div>
                 
                 <div style="text-align: center;">
-                   <a href="javascript:void(0);" class="cta-button" onclick="showPathPage(); return false;">Unlock The Real Connection</a>
+                    <a href="javascript:void(0);" class="cta-button" onclick="showPathPage(); return false;">Unlock The Real Connection</a>
                 </div>
             </div>
         </section>
 
-        <!-- Problems Section -->
         <section class="section">
             <div class="container">
                 <h2 class="section-title">The Problem with the Japanese Language Market</h2>
@@ -1023,7 +718,6 @@
             </div>
         </section>
 
-        <!-- Consequences Section -->
         <section class="section">
             <div class="container">
                 <h2 class="section-title">This results in...</h2>
@@ -1056,65 +750,64 @@
                 </div>
                 
                 <div style="text-align: center;">
-              <a href="javascript:void(0);" class="cta-button" onclick="showPathPage(); return false;">Don't Let This Be My Story</a>
+                    <a href="javascript:void(0);" class="cta-button" onclick="showPathPage(); return false;">Don't Let This Be My Story</a>
+                </div>
             </div>
         </section>
 
-        <!-- Testimonials Section -->
         <section class="section">
             <div class="container">
                 <h2 class="section-title">What my students are saying</h2>
                 
                 <div class="testimonials-grid">
-  <div class="testimonial-card">
-    <video controls width="100%" style="border-radius: 12px; margin-bottom: 20px;">
-        <source src="ian.mp4" type="video/mp4">
-    </video>
-    <p class="testimonial-quote" style="font-size: 1rem; font-style: italic; margin-bottom: 12px;">"After joining, I found that I could speak more naturally and express myself much more"</p>
-    <p class="testimonial-name">- Ian</p>
-</div>
+                    <div class="testimonial-card">
+                        <video controls width="100%" style="border-radius: 12px; margin-bottom: 20px;">
+                            <source src="ian.mp4" type="video/mp4">
+                        </video>
+                        <p class="testimonial-quote">"After joining, I found that I could speak more naturally and express myself much more"</p>
+                        <p class="testimonial-name">- Ian</p>
+                    </div>
                     
-<div class="testimonial-card">
-    <video controls width="100%" style="border-radius: 12px; margin-bottom: 20px;">
-        <source src="aaron.mp4" type="video/mp4">
-    </video>
-    <p class="testimonial-quote" style="font-size: 1rem; font-style: italic; margin-bottom: 12px;">"Before joining I couldn't show emotion but I started picking up emotion in speech and I sound more like a person now"</p>
-    <p class="testimonial-name">- Aaron</p>
-</div>
+                    <div class="testimonial-card">
+                        <video controls width="100%" style="border-radius: 12px; margin-bottom: 20px;">
+                            <source src="aaron.mp4" type="video/mp4">
+                        </video>
+                        <p class="testimonial-quote">"Before joining I couldn't show emotion but I started picking up emotion in speech and I sound more like a person now"</p>
+                        <p class="testimonial-name">- Aaron</p>
+                    </div>
                     
-                <div class="testimonial-card">
-    <img src="Andreas.jpeg" alt="Andreas testimonial" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; object-fit: contain;">
-    <p class="testimonial-name">- Andreas</p>
-</div>
+                    <div class="testimonial-card">
+                        <img src="Andreas.jpeg" alt="Andreas" class="testimonial-image">
+                        <p class="testimonial-name">- Andreas</p>
+                    </div>
 
-<div class="testimonial-card">
-    <img src="Lili.jpeg" alt="Lili testimonial" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; object-fit: contain;">
-    <p class="testimonial-name">- Lili</p>
-</div>
+                    <div class="testimonial-card">
+                        <img src="Lili.jpeg" alt="Lili" class="testimonial-image">
+                        <p class="testimonial-name">- Lili</p>
+                    </div>
 
-<div class="testimonial-card">
-    <img src="Chris.png" alt="Chris testimonial" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; object-fit: contain;">
-    <p class="testimonial-name">- Chris</p>
-</div>
+                    <div class="testimonial-card">
+                        <img src="Chris.png" alt="Chris" class="testimonial-image">
+                        <p class="testimonial-name">- Chris</p>
+                    </div>
 
-<div class="testimonial-card">
-    <img src="Matthieu.png" alt="Matthieu testimonial" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; object-fit: contain;">
-    <p class="testimonial-name">- Matthieu</p>
-</div>
+                    <div class="testimonial-card">
+                        <img src="Matthieu.png" alt="Matthieu" class="testimonial-image">
+                        <p class="testimonial-name">- Matthieu</p>
+                    </div>
 
-<div class="testimonial-card">
-    <img src="Brendan.png" alt="Brendan testimonial" style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 20px; object-fit: contain;">
-    <p class="testimonial-name">- Brendan</p>
-</div>
+                    <div class="testimonial-card">
+                        <img src="Brendan.png" alt="Brendan" class="testimonial-image">
+                        <p class="testimonial-name">- Brendan</p>
+                    </div>
                 </div>
                 
                 <div style="text-align: center;">
-                   <a href="javascript:void(0);" class="cta-button" onclick="showPathPage(); return false;">Join Them Today</a>
+                    <a href="javascript:void(0);" class="cta-button" onclick="showPathPage(); return false;">Join Them Today</a>
                 </div>
             </div>
         </section>
 
-        <!-- FAQ Section -->
         <section class="section">
             <div class="container">
                 <h2 class="section-title">Frequently Asked Questions</h2>
@@ -1142,21 +835,20 @@
                 </div>
                 
                 <div style="text-align: center;">
-                   <a href="javascript:void(0);" class="cta-button" onclick="showPathPage(); return false;">Get Started Today</a>
+                    <a href="javascript:void(0);" class="cta-button" onclick="showPathPage(); return false;">Get Started Today</a>
+                </div>
             </div>
         </section>
 
-        <!-- Final CTA Section -->
         <section class="final-cta">
             <div class="container">
-                <p class="final-text">Stop learning textbook Japanese that keeps you <span class="power-word">lonely</span>. Master casual Japanese and <span class="power-word">unlock</span> real connections.</p>
+               <p class="final-text">Stop learning textbook Japanese that keeps you <span class="power-word">lonely</span>. Master casual Japanese and <span class="power-word">unlock</span> real connections.</p>
                 
-                <a href="#" class="cta-button final-button" onclick="showPathPage()">Choose Your Path Today</a>
+                <a href="javascript:void(0);" class="cta-button final-button" onclick="showPathPage(); return false;">Choose Your Path Today</a>
             </div>
         </section>
     </div>
 
-    <!-- Choose Your Path Page -->
     <div id="path-page" class="path-page">
         <section class="section">
             <div class="container">
@@ -1174,7 +866,6 @@
                             <li>Direct access to me</li>
                             <li>Active tribe of 90+ learners</li>
                             <li>All courses included & new weekly content</li>
-                           
                         </ul>
                         
                         <div class="path-perfect">
@@ -1187,7 +878,7 @@
                             </ul>
                         </div>
                         
-                       <a href="https://www.skool.com/nihongo-red-pill-8365/about?ref=b013f5d7358247f7a5176d745bfeaf5c" class="cta-button" target="_blank" rel="noopener noreferrer">Join on Skool</a>
+                        <a href="https://www.skool.com/nihongo-red-pill-8365/about?ref=b013f5d7358247f7a5176d745bfeaf5c" class="cta-button" target="_blank" rel="noopener noreferrer">Join on Skool</a>
                     </div>
 
                     <div class="path-card">
@@ -1212,7 +903,7 @@
                             </ul>
                         </div>
                         
-                      <a href="https://whop.com/nihongoredlippcourse/" class="cta-button" target="_blank" rel="noopener noreferrer">Join on Whop</a>
+                        <a href="https://whop.com/nihongoredlippcourse/" class="cta-button" target="_blank" rel="noopener noreferrer">Join on Whop</a>
                     </div>
                 </div>
                 
@@ -1224,30 +915,18 @@
         </section>
     </div>
 
-  <script>
-function showPathPage(e) {
-    if (e) e.preventDefault();
-    document.getElementById('main-page').style.display = 'none';
-    document.getElementById('path-page').style.display = 'block';
-    window.scrollTo(0, 0);
-}
-
-function showMainPage(e) {
-    if (e) e.preventDefault();
-    document.getElementById('path-page').style.display = 'none';
-    document.getElementById('main-page').style.display = 'block';
-    window.scrollTo(0, 0);
-}
-
-// Allow external links to work
-document.addEventListener('DOMContentLoaded', function() {
-    const externalLinks = document.querySelectorAll('a[target="_blank"]');
-    externalLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.stopPropagation();
-        }, true);
-    });
-});
-</script>
+    <script>
+        function showPathPage() {
+            document.getElementById('main-page').style.display = 'none';
+            document.getElementById('path-page').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+        
+        function showMainPage() {
+            document.getElementById('path-page').style.display = 'none';
+            document.getElementById('main-page').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+    </script>
 </body>
 </html>
