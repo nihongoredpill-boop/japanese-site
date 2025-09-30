@@ -1237,20 +1237,6 @@
             window.scrollTo(0, 0);
         }
     </script>
-   <script>
-  // Let external links work
-  document.addEventListener('click', function(event) {
-    const linkEl = event.target.closest("a");
-
-    if (!linkEl || !linkEl.href) return;
-
-    // ✅ ALLOW links that start with http (external)
-    if (linkEl.href.startsWith("http")) return;
-
-    // ❌ BLOCK everything else
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  });
-</script>
+ 
 </body>
 </html>
