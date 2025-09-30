@@ -1187,7 +1187,7 @@
                             </ul>
                         </div>
                         
-                       <a href="https://www.skool.com/nihongo-red-pill-8365/about?ref=b013f5d7358247f7a5176d745bfeaf5c" class="cta-button real-link" target="_blank" rel="noopener noreferrer">Choose Your Path</a>
+                       <a href="https://www.skool.com/nihongo-red-pill-8365/about?ref=b013f5d7358247f7a5176d745bfeaf5c" class="cta-button" target="_blank" rel="noopener noreferrer">Join on Skool</a>
                     </div>
 
                     <div class="path-card">
@@ -1212,7 +1212,7 @@
                             </ul>
                         </div>
                         
-                      <a href="https://whop.com/nihongoredlippcourse/" class="cta-button real-link" target="_blank" rel="noopener noreferrer">Choose Your Path</a>
+                      <a href="https://whop.com/nihongoredlippcourse/" class="cta-button" target="_blank" rel="noopener noreferrer">Join on Whop</a>
                     </div>
                 </div>
                 
@@ -1237,15 +1237,17 @@
             window.scrollTo(0, 0);
         }
     </script>
-    <script>
-  // Let real external links work
+   <script>
+  // Let external links work
   document.addEventListener('click', function(event) {
     const linkEl = event.target.closest("a");
 
     if (!linkEl || !linkEl.href) return;
 
-    if (linkEl.classList.contains("real-link")) return;
+    // ✅ ALLOW links that start with http (external)
+    if (linkEl.href.startsWith("http")) return;
 
+    // ❌ BLOCK everything else
     event.preventDefault();
     event.stopImmediatePropagation();
   });
