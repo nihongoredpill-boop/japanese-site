@@ -1237,6 +1237,28 @@
             window.scrollTo(0, 0);
         }
     </script>
- 
+ <script>
+  document.addEventListener("click", function (event) {
+    const linkEl = event.target.closest("a");
+    if (!linkEl) return;
+
+    // Let external links behave normally
+    if (linkEl.href.startsWith("http")) return;
+
+    event.preventDefault();
+
+    const href = linkEl.getAttribute("href");
+
+    if (href === "#path") {
+      document.getElementById("main-page").style.display = "none";
+      document.getElementById("path-page").style.display = "block";
+      window.scrollTo(0, 0);
+    } else if (href === "#") {
+      return;
+    } else {
+      window.location.href = href;
+    }
+  });
+</script>
 </body>
 </html>
