@@ -562,16 +562,42 @@
             .video-container {
                 height: 300px;
             }
-            .path-mockup {
+         .path-mockup {
   width: 100%;
-  max-width: 300px;
+  max-width: 280px;
   height: auto;
   display: block;
   margin: 0 auto 24px;
   border-radius: 12px;
-  box-shadow: 0 0 12px rgba(255, 0, 0, 0.2);
+  object-fit: contain;
 }
-        }
+     .card-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.card-text {
+  flex: 1;
+}
+
+@media screen and (min-width: 768px) {
+  .card-flex {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-flex img {
+    max-width: 300px;
+    flex-shrink: 0;
+  }
+
+  .card-text {
+    padding-left: 32px;
+    text-align: left;
+  }
+   }
     </style>
 </head>
 <body>
@@ -865,60 +891,67 @@
                 <p style="text-align: center; font-size: 1.25rem; opacity: 0.8; margin-bottom: 80px; max-width: 600px; margin-left: auto; margin-right: auto;">Both lead to the same destination - real connections in Japan. Choose the journey that fits your style.</p>
                 
                 <div class="path-comparison">
-                    <div class="path-card">
-                         <img src="laptop.png" alt="Nihongo Red Pill Community" class="path-mockup">
+                   <div class="path-card">
+  <div class="card-flex">
+    <img src="laptop.png" class="path-mockup" alt="Community Mockup">
 
-                        <h3 class="path-title">THE COMMUNITY</h3>
-                        <p class="path-subtitle">For social learners</p>
-                        
-                        <ul class="path-features">
-                            <li>Weekly group calls with me</li>
-                            <li>Daily challenges and practice</li>
-                            <li>Direct access to me</li>
-                            <li>Active tribe of 90+ learners</li>
-                            <li>All courses included & new weekly content</li>
-                        </ul>
-                        
-                        <div class="path-perfect">
-                            <h4>Perfect if you:</h4>
-                            <ul>
-                                <li>Learn better with others</li>
-                                <li>Want ongoing support</li>
-                                <li>Like real-time feedback</li>
-                                <li>Prefer community learning</li>
-                            </ul>
-                        </div>
-                        
-                        <a href="https://www.skool.com/nihongo-red-pill-8365/about?ref=b013f5d7358247f7a5176d745bfeaf5c" class="cta-button" target="_blank" rel="noopener noreferrer">Join on Skool</a>
-                    </div>
+    <div class="card-text">
+      <h3 class="path-title">THE COMMUNITY</h3>
+      <p class="path-subtitle">For social learners</p>
 
-                    <div class="path-card">
-                          <img src="course.png" alt="Casual Japanese Foundation Course" class="path-mockup">
-                        <h3 class="path-title">THE COURSE</h3>
-                        <p class="path-subtitle">For focused learners</p>
-                        
-                        <ul class="path-features">
-                            <li>Complete step-by-step curriculum</li>
-                            <li>Self-paced video modules</li>
-                            <li>Structured learning path</li>
-                            <li>Downloadable resources</li>
-                            <li>Lifetime access</li>
-                        </ul>
-                        
-                        <div class="path-perfect">
-                            <h4>Perfect if you:</h4>
-                            <ul>
-                                <li>Prefer your own pace</li>
-                                <li>Want clear structure</li>
-                                <li>Like to go deep solo</li>
-                                <li>Learn better independently</li>
-                            </ul>
-                        </div>
-                        
-                        <a href="https://whop.com/nihongoredlippcourse/" class="cta-button" target="_blank" rel="noopener noreferrer">Join on Whop</a>
-                    </div>
-                </div>
-                
+      <ul class="path-features">
+        <li>Weekly group calls with me</li>
+        <li>Daily challenges and practice</li>
+        <li>Direct access to me</li>
+        <li>Active tribe of 90+ learners</li>
+        <li>All courses included & new weekly content</li>
+      </ul>
+
+      <div class="path-perfect">
+        <h4>Perfect if you:</h4>
+        <ul>
+          <li>Learn better with others</li>
+          <li>Want ongoing support</li>
+          <li>Like real-time feedback</li>
+          <li>Prefer community learning</li>
+        </ul>
+      </div>
+
+      <a href="https://www.skool.com/nihongo-red-pill-8365/about?ref=b013f5d7358247f7a5176d745bfeaf5c" class="cta-button" target="_blank" rel="noopener noreferrer">Join on Skool</a>
+    </div>
+  </div>
+</div>
+
+                   <div class="path-card">
+  <div class="card-flex">
+    <img src="course.png" class="path-mockup" alt="Course Mockup">
+
+    <div class="card-text">
+      <h3 class="path-title">THE COURSE</h3>
+      <p class="path-subtitle">For focused learners</p>
+
+      <ul class="path-features">
+        <li>Complete step-by-step curriculum</li>
+        <li>Self-paced video modules</li>
+        <li>Structured learning path</li>
+        <li>Downloadable resources</li>
+        <li>Lifetime access</li>
+      </ul>
+
+      <div class="path-perfect">
+        <h4>Perfect if you:</h4>
+        <ul>
+          <li>Prefer your own pace</li>
+          <li>Want clear structure</li>
+          <li>Like to go deep solo</li>
+          <li>Learn better independently</li>
+        </ul>
+      </div>
+
+      <a href="https://whop.com/nihongoredlippcourse/" class="cta-button" target="_blank" rel="noopener noreferrer">Join on Whop</a>
+    </div>
+  </div>
+</div>
                 <div style="text-align: center; margin-top: 60px;">
                     <p style="font-size: 1.125rem; opacity: 0.8;">Still deciding? Most successful students choose the Community for ongoing support.</p>
                     <button onclick="showMainPage()" style="background: none; border: 1px solid #666; color: #ccc; padding: 12px 24px; border-radius: 8px; margin-top: 20px; cursor: pointer;">← Back to Main Page</button>
