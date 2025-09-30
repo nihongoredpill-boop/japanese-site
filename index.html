@@ -1224,19 +1224,30 @@
         </section>
     </div>
 
-    <script>
-        function showPathPage() {
-            document.getElementById('main-page').style.display = 'none';
-            document.getElementById('path-page').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-        
-        function showMainPage() {
-            document.getElementById('path-page').style.display = 'none';
-            document.getElementById('main-page').style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-    </script>
+  <script>
+function showPathPage(e) {
+    if (e) e.preventDefault();
+    document.getElementById('main-page').style.display = 'none';
+    document.getElementById('path-page').style.display = 'block';
+    window.scrollTo(0, 0);
+}
 
+function showMainPage(e) {
+    if (e) e.preventDefault();
+    document.getElementById('path-page').style.display = 'none';
+    document.getElementById('main-page').style.display = 'block';
+    window.scrollTo(0, 0);
+}
+
+// Allow external links to work
+document.addEventListener('DOMContentLoaded', function() {
+    const externalLinks = document.querySelectorAll('a[target="_blank"]');
+    externalLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.stopPropagation();
+        }, true);
+    });
+});
+</script>
 </body>
 </html>
