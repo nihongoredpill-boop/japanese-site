@@ -1237,33 +1237,6 @@
             window.scrollTo(0, 0);
         }
     </script>
-<script>
-  document.addEventListener("click", function (event) {
-    const linkEl = event.target.closest("a");
 
-    if (!linkEl || !linkEl.getAttribute("href")) return;
-
-    const href = linkEl.getAttribute("href");
-
-    // ✅ Allow real external links (Skool, Whop)
-    if (href.startsWith("http")) return;
-
-    // ✅ Allow blank links (anchor placeholder)
-    if (href === "#") return;
-
-    // ✅ Handle in-page switch to #path
-    if (href === "#path") {
-      event.preventDefault();
-      document.getElementById("main-page").style.display = "none";
-      document.getElementById("path-page").style.display = "block";
-      window.scrollTo(0, 0);
-      return;
-    }
-
-    // ❌ Default: prevent broken behavior
-    event.preventDefault();
-    window.location.href = href;
-  });
-</script>
 </body>
 </html>
