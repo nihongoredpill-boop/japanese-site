@@ -601,14 +601,104 @@
     padding-left: 32px;
     text-align: left;
   }
+    /* NAV BAR */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #000;
+  padding: 12px 24px;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #222;
+}
+
+.nav-logo img {
+  height: 40px;
+  width: auto;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+}
+
+.nav-links li a {
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.nav-links li a:hover {
+  color: #dc2626;
+}
+
+/* Hamburger (hidden on desktop) */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  height: 3px;
+  width: 25px;
+  background: white;
+  margin: 4px 0;
+  border-radius: 5px;
+}
+
+/* Mobile behavior */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #000;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
    }
     </style>
 </head>
 <body>
+    <div class="nav-bar">
+  <a href="#home" class="nav-logo">
+    <img src="Logo.PNG" alt="Logo">
+  </a>
+
+  <div class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="#broken-market">The Problem</a></li>
+    <li><a href="#two-brains">Two Brains</a></li>
+    <li><a href="#what-casual-unlocks">What It Unlocks</a></li>
+    <li><a href="#choose-your-path">The Path</a></li>
+    <li><a href="#testimonials">Results</a></li>
+    <li><a href="#faq">Q&A</a></li>
+    <li><a href="#about">About Me</a></li>
+  </ul>
+</div> 
+    
     <div id="main-page">
-        <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-            <img src="Logo.PNG" alt="Logo" style="height: 50px; width: auto;">
-        </div>
         
         <section class="hero">
             <div class="container">
