@@ -21,7 +21,7 @@
   </a>
 
   <ul class="nav-links">
-    <li><a href="#problems">The Problem</a></li>
+    <li><a href="#problems">The Problem</a></li> 
     <li><a href="#brain">Two Brains</a></li>
     <li><a href="#what-it-unlocks">What It Unlocks</a></li>
     <li><a href="#path">The Path</a></li>
@@ -76,19 +76,25 @@
             pointer-events: none;
         }
         
-   .video-container {
-    width: 100%;
-    max-width: 800px;
-    aspect-ratio: 16 / 9; /* keeps it responsive */
-    background: linear-gradient(135deg, #111 0%, #222 100%);
-    border-radius: 20px;
-    border: 2px solid #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 30px; /* reduced */
-    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-    overflow: hidden;
+ .video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 2px solid #333;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  margin: 0 auto 40px;
+  max-width: 800px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
         
         .play-button {
@@ -652,21 +658,6 @@
 .nav-links li a:hover {
   text-decoration: underline;
 }
-    .video-container {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.video-container iframe {
-  margin: 0;
-  padding: 0;
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
    }
     </style>
 </head>
@@ -676,17 +667,14 @@
 </div>
         
         <section id="home" class="hero">
-          <div class="video-container">
+        <div class="video-container">
   <iframe 
-    src="https://player.vimeo.com/video/1123790496?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-    width="100%" 
-    height="450" 
-    frameborder="0" 
-    allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-    referrerpolicy="strict-origin-when-cross-origin" 
+    src="https://player.vimeo.com/video/1123790496?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
     title="mainvsl"
+    allow="fullscreen; picture-in-picture"
     allowfullscreen>
   </iframe>
+</div>
 </div>
                 
             <h1 class="hero-headline">
