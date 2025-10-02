@@ -58,45 +58,27 @@
             pointer-events: none;
         }
         
-        .video-container {
-            width: 100%;
-            max-width: 800px;
-            height: 450px;
-            background: linear-gradient(135deg, #111 0%, #222 100%);
-            border-radius: 20px;
-            border: 2px solid #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 60px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
-        }
-        
-        .play-button {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.3);
-        }
-        
-        .play-button:hover {
-            transform: scale(1.1);
-        }
-        
-        .play-button::after {
-            content: '';
-            width: 0;
-            height: 0;
-            border-left: 25px solid white;
-            border-top: 15px solid transparent;
-            border-bottom: 15px solid transparent;
-            margin-left: 5px;
+    .video-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;       /* keeps it centered and not too wide */
+  margin: 0 auto 40px;
+  padding-bottom: 56.25%; /* 16:9 ratio (responsive) */
+  height: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 2px solid #333;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  background: #000; /* fallback black background while loading */
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
         }
         
         .hero-headline {
@@ -716,9 +698,14 @@
         
         <section class="hero">
             <div class="container">
-                <div class="video-container">
-                    <div class="play-button"></div>
-                </div>
+              <div class="video-container">
+  <iframe 
+    src="https://player.vimeo.com/video/1123790496?title=0&byline=0&portrait=0&dnt=1"
+    title="mainvsl"
+    allow="fullscreen; picture-in-picture"
+    allowfullscreen>
+  </iframe>
+</div>
                 
                 <h1 class="hero-headline">Casual Japanese <span class="power-word">Unlocks</span> Your Social Life in Japan</h1>
                 <p class="hero-subheadline">Master the language that lets you <span class="power-word">feel</span>, <span class="power-word">connect</span>, and be <span class="power-word">yourself</span></p>
