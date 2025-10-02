@@ -676,28 +676,29 @@
     </style>
 </head>
 <body>
-    <div class="nav-bar">
-  <a href="#home" class="nav-logo">
-    <img src="Logo.PNG" alt="Logo">
-  </a>
-
-  <div class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('active')">
-    <span></span>
-    <span></span>
-    <span></span>
+    <body>
+  <!-- NAV BAR (always sticky) -->
+  <div class="nav-bar">
+    <a href="#home" class="nav-logo">
+      <img src="Logo.PNG" alt="Logo" style="height: 40px; width: auto;">
+    </a>
+    <div class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#problems">The Problem</a></li>
+      <li><a href="#two-brains">Two Brains</a></li>
+      <li><a href="#what-casual-unlocks">What It Unlocks</a></li>
+      <li><a href="#choose-your-path">The Path</a></li>
+      <li><a href="#testimonials">Results</a></li>
+      <li><a href="#Q&A">Q&A</a></li>
+      <li><a href="#about">About Me</a></li>
+    </ul>
   </div>
 
-  <ul class="nav-links">
-    <li><a href="#broken-market">The Problem</a></li>
-    <li><a href="#two-brains">Two Brains</a></li>
-    <li><a href="#what-casual-unlocks">What It Unlocks</a></li>
-    <li><a href="#choose-your-path">The Path</a></li>
-    <li><a href="#testimonials">Results</a></li>
-    <li><a href="#faq">Q&A</a></li>
-    <li><a href="#about">About Me</a></li>
-  </ul>
-</div> 
-    
+  <!-- MAIN CONTENT -->
     <div id="main-page">
         
         <section class="hero">
