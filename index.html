@@ -76,16 +76,17 @@
             pointer-events: none;
         }
         
- .video-container {
+.video-container {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  width: 100%;
+  max-width: 800px;
+  padding-bottom: 56.25%; /* keeps 16:9 ratio */
   height: 0;
   overflow: hidden;
   border-radius: 20px;
   border: 2px solid #333;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
   margin: 0 auto 40px;
-  max-width: 800px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
 }
 
 .video-container iframe {
