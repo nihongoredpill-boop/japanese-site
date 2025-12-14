@@ -198,17 +198,23 @@
       margin-bottom: 48px;
     }
 
-    .courses-eyebrow {
-      letter-spacing: 0.14em;
-      font-size: 0.85rem;
-      opacity: 0.75;
-      margin-bottom: 14px;
-    }
+ .courses-eyebrow {
+  color: #dc2626;                 /* RED */
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem);  /* BIGGEST */
+  line-height: 1.15;
+  opacity: 1;                      /* don’t fade it */
+  margin-bottom: 14px;
+}
 
-    .courses-subline {
-      margin-top: 10px;
-      font-size: 1.1rem;
-      opacity: 0.85;
+   .courses-subline {
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem); /* SAME SIZE */
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+
     }
 
     .courses-subline-strong {
