@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nihongo Red Pill - Casual Japanese for Real Connection</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        .power-word {
+            color: #dc2626;
+            font-weight: 600;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 0;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+    .video-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;       /* keeps it centered and not too wide */
+  margin: 0 auto 40px;
+  padding-bottom: 56.25%; /* 16:9 ratio (responsive) */
+  height: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 2px solid #333;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  background: #000; /* fallback black background while loading */
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+        }
+        
+        .hero-headline {
+            font-size: clamp(2.5rem, 7vw, 5.5rem);
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            word-wrap: break-word;
+            max-width: 100%;
+        }
+        
+        .hero-subheadline {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 300;
+            margin-bottom: 60px;
+            opacity: 0.8;
+            max-width: 800px;
+             text-align: center; 
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.4);
+        }
+        
+        .section {
+            padding: 150px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 80px;
+            letter-spacing: -0.02em;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+        
+        .benefit-card {
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            border-color: #dc2626;
+        }
+        
+        .benefit-icon {
+            width: 100%;
+            height: 200px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: 0 15px 30px rgba(220, 38, 38, 0.3);
+        }
+
+        .benefit-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+        
+        .benefit-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .benefit-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .benefit-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            opacity: 0.9;
+        }
+        
+        .benefit-list li::before {
+            content: '•';
+            color: #dc2626;
+            margin-right: 12px;
+            font-size: 1.2rem;
+            line-height: 1.3;
+        }
+        
+        .brain-section {
+            background: linear-gradient(135deg, #111 0%, #000 100%);
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+        
+        .brain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        
+        .brain-card {
+            text-align: center;
+            padding: 50px 30px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            border: 2px solid #333;
+        }
+        
+        .brain-card.polite {
+            border-color: #666;
+        }
+        
+        .brain-card.casual {
+            border-color: #dc2626;
+        }
+        
+        .brain-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .brain-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.7;
+            margin-bottom: 24px;
+        }
+        
+        .brain-description {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            opacity: 0.9;
+            text-align: left;
+        }
+        
+        .brain-description p {
+            margin-bottom: 12px;
+        }
+        
+        .breakthrough {
+            text-align: center;
+            padding: 40px;
+            background: rgba(220, 38, 38, 0.1);
+            border-radius: 16px;
+            border: 1px solid #dc2626;
+            margin-bottom: 60px;
+        }
+        
+        .breakthrough h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 16px;
+        }
+        
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+        
+        .problem-card {
+            padding: 40px 30px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 16px;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+        
+        .problem-card:hover {
+            border-color: #dc2626;
+            transform: translateY(-5px);
+        }
+        
+        .problem-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #dc2626;
+        }
+        
+        .problem-description {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .problem-description p {
+            margin-bottom: 8px;
+        }
+        
+        .consequences-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        
+        .consequence-item {
+            padding: 30px;
+            background: rgba(220, 38, 38, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid #dc2626;
+        }
+        
+        .consequence-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #dc2626;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        
+        .testimonial-card {
+            background: #000;
+            border: 2px solid #dc2626;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(220, 38, 38, 0.2);
+        }
+        
+        .testimonial-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 0 auto 20px;
+            object-fit: contain;
+            max-width: 100%;
+        }
+        
+        .testimonial-quote {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            font-style: italic;
+        }
+        
+        .testimonial-name {
+            font-weight: 600;
+            color: #dc2626;
+        }
+        
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto 80px;
+        }
+        
+        .faq-item {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+        
+        .faq-question {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #dc2626;
+        }
+        
+        .faq-answer {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+        
+        .final-cta {
+            text-align: center;
+            padding: 120px 0;
+            background: radial-gradient(circle at center, rgba(220, 38, 38, 0.05) 0%, transparent 70%);
+        }
+        
+        .final-text {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 300;
+            line-height: 1.4;
+            margin-bottom: 60px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .final-button {
+            font-size: 1.375rem;
+            padding: 24px 48px;
+        }
+        
+        .path-page {
+            display: none;
+            min-height: 100vh;
+            padding: 120px 0;
+        }
+        
+        .path-page.active {
+            display: block;
+        }
+        
+        .path-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+        
+        .path-card {
+            padding: 50px 40px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 20px;
+            border: 2px solid #333;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .path-card:hover {
+            border-color: #dc2626;
+            transform: translateY(-10px);
+        }
+        
+        .path-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #dc2626;
+        }
+        
+        .path-subtitle {
+            font-size: 1.125rem;
+            opacity: 0.7;
+            margin-bottom: 30px;
+        }
+        
+        .path-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .path-features li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+        
+        .path-features li::before {
+            content: '✅';
+            margin-right: 12px;
+        }
+        
+        .path-perfect {
+            margin-bottom: 40px;
+        }
+        
+        .path-perfect h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #dc2626;
+        }
+        
+        .path-perfect ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .path-perfect li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .path-perfect li::before {
+            content: '•';
+            color: #dc2626;
+            margin-right: 8px;
+        }
+        
+     @media (max-width: 768px) {
+  .section {
+    padding: 80px 0;
+  }
+
+  .benefits-grid,
+  .problems-grid,
+  .brain-grid,
+  .path-comparison {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding: 80px 0;
+  }
+
+  .video-container {
+    height: 300px;
+  }
+
+  .path-mockup {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    display: block;
+    margin: 0 auto 24px;
+    border-radius: 12px;
+    object-fit: contain;
+  }
+
+  .card-flex {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: black;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: flex;
+  }
+}
+
+/* Desktop only (fix for path-mockup) */
+@media screen and (min-width: 768px) {
+  .path-mockup {
+    max-width: 180px;
+  }
+
+  .card-flex {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-flex img {
+    max-width: 300px;
+    flex-shrink: 0;
+  }
+
+  .card-text {
+    padding-left: 32px;
+    text-align: left;
+  }
+}
+            
+.nav-bar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: black;
+  padding: 12px 24px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  margin: 0;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.nav-links li a:hover {
+  color: #dc2626;
+}
+
+/* Hamburger hidden on desktop */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  height: 3px;
+  width: 25px;
+  background: white;
+  margin: 4px 0;
+  border-radius: 5px;
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: black;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+}
+    
+
+  /* --- small additions for the simplified layout --- */
+  .cta-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .cta-button.secondary {
+    background: transparent;
+    border: 1px solid #333;
+    box-shadow: none;
+  }
+  .cta-button.secondary:hover {
+    box-shadow: 0 20px 40px rgba(255,255,255,0.06);
+  }
+  .cta-button.outline-red {
+    background: transparent;
+    border: 1px solid #dc2626;
+    box-shadow: none;
+  }
+  .cta-button.outline-red:hover {
+    box-shadow: 0 20px 40px rgba(220, 38, 38, 0.18);
+  }
+
+  .micro-copy {
+    max-width: 820px;
+    margin: 0 auto;
+    opacity: 0.85;
+    font-size: 1.125rem;
+  }
+
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+    margin-top: 40px;
+  }
+  .course-card {
+    padding: 34px 28px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 16px;
+    border: 1px solid #333;
+    transition: all 0.3s ease;
+  }
+  .course-card:hover {
+    transform: translateY(-6px);
+    border-color: #dc2626;
+  }
+  .course-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .course-desc {
+    opacity: 0.85;
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+  .course-meta {
+    opacity: 0.75;
+    font-size: 0.98rem;
+    margin-bottom: 22px;
+  }
+  .course-actions {
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .mini-btn {
+    display:inline-block;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background: transparent;
+    font-weight: 600;
+    transition: all 0.25s ease;
+  }
+  .mini-btn:hover {
+    border-color: #dc2626;
+    transform: translateY(-2px);
+  }
+  .mini-btn.primary {
+    border: none;
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  }
+  </style>
+</head>
+
+<body>
+  <!-- NAV BAR -->
+  <div class="nav-bar">
+    <a href="#home" class="nav-logo">
+      <img src="Logo.PNG" alt="NRP Logo" style="height: 40px; width: auto;">
+    </a>
+
+    <div class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+      <span></span><span></span><span></span>
+    </div>
+
+    <ul class="nav-links">
+      <!-- TODO: replace the FREE LESSON URL when ready -->
+      <li><a href="https://go.nihongoredpillbyrin.com/free" target="_blank" rel="noopener noreferrer">Free Lesson</a></li>
+      <li><a href="#what-casual-unlocks">What You Unlock</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#testimonials">Results</a></li>
+      <li><a href="#Q&A">Q&A</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </div>
+
+  <!-- MAIN -->
+  <section class="hero" id="home">
+    <div class="container">
+
+      <h1 class="hero-headline">
+        Casual Japanese is the language of <span class="power-word">connection</span>.
+      </h1>
+
+      <p class="hero-subheadline">
+        Stop sounding like a textbook. Start sounding like a real human.
+      </p>
+
+      <p class="micro-copy" style="text-align:center; margin-top:-24px;">
+        Most learners speak “correct” Japanese but still fail socially.  
+        This is the system for learning the Japanese people actually use in real life.
+      </p>
+
+      <div class="cta-row">
+        <a href="https://go.nihongoredpillbyrin.com/free" class="cta-button" target="_blank" rel="noopener noreferrer">Get Free Lesson</a>
+        <a href="#courses" class="cta-button secondary">View Courses</a>
+        <!-- TODO: replace with your Dojo checkout link -->
+        <a href="https://whop.com/nihongoredlippcourse/nihiongo-red-pill/" class="cta-button outline-red" target="_blank" rel="noopener noreferrer">Enter the Dojo</a>
+      </div>
+
+      <!-- Optional homepage VSL (keep short + calm). Remove this block if you want no video here. -->
+      <div style="max-width: 880px; margin: 44px auto 0; opacity: 0.85;">
+        <div style="text-align:center; margin-bottom: 12px; font-weight: 600;">
+          Optional: 2-minute overview
+        </div>
+        <div class="video-container">
+          <iframe
+            src="https://player.vimeo.com/video/1123790496?title=0&byline=0&portrait=0&dnt=1"
+            title="NRP Overview"
+            allow="fullscreen; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SELLING POINTS (keep this) -->
+  <section class="section" id="what-casual-unlocks">
+    <div class="container">
+      <h2 class="section-title">
+        What <span style="white-space: nowrap; color: red;">Casual Japanese</span> <span style="color: white;">Unlocks</span>
+      </h2>
+
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon"><img src="connection.jpg" alt="Connection"></div>
+          <h3 class="benefit-title">Real Connection</h3>
+          <ul class="benefit-list">
+            <li>Build friendships beyond polite small talk</li>
+            <li>Get treated like a real person, not a guest</li>
+            <li>Feel socially “in” instead of outside</li>
+          </ul>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon"><img src="gesture.jpg" alt="Emotion"></div>
+          <h3 class="benefit-title">Emotion & Personality</h3>
+          <ul class="benefit-list">
+            <li>Sound natural, relaxed, and human</li>
+            <li>Express nuance, humor, and vibe</li>
+            <li>Stop translating in your head</li>
+          </ul>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon"><img src="dating .jpg" alt="Dating"></div>
+          <h3 class="benefit-title">Natural Romance</h3>
+          <ul class="benefit-list">
+            <li>Flirt without sounding weird or stiff</li>
+            <li>Make conversations feel fun, not like interviews</li>
+            <li>Let chemistry flow naturally</li>
+          </ul>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon"><img src="wathicng tv.jpg" alt="Media"></div>
+          <h3 class="benefit-title">Native Media</h3>
+          <ul class="benefit-list">
+            <li>Understand what people actually mean</li>
+            <li>Catch jokes, sarcasm, and emotion</li>
+            <li>Watch like a native, not a student</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align:center;">
+        <a href="https://go.nihongoredpillbyrin.com/free" class="cta-button" target="_blank" rel="noopener noreferrer">Start With the Free Lesson</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES (replaces "choose your path") -->
+  <section class="section" id="courses">
+    <div class="container">
+      <h2 class="section-title">Core Training Programs</h2>
+
+      <p class="micro-copy" style="text-align:center;">
+        Each course sharpens one specific “identity-level” skill in casual Japanese.  
+        Read the course page, then check out on Whop when you’re ready.
+      </p>
+
+      <div class="courses-grid">
+
+        <div class="course-card">
+          <div class="course-title">Casual Japanese Foundation</div>
+          <div class="course-desc">Build the base that makes you sound natural in real conversation.</div>
+          <div class="course-meta">Best for: beginners to intermediate who feel “stiff”.</div>
+          <div class="course-actions">
+            <!-- TODO: replace links once you create these GitHub pages -->
+            <a class="mini-btn" href="/foundation.html">View course page</a>
+            <a class="mini-btn primary" href="https://whop.com/nihongoredlippcourse/nihiongo-red-pill/" target="_blank" rel="noopener noreferrer">Checkout</a>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-title">Masculine Japanese</div>
+          <div class="course-desc">Grounded, confident patterns that change your vibe instantly.</div>
+          <div class="course-meta">Best for: men who want real casual tone (not polite-default).</div>
+          <div class="course-actions">
+            <a class="mini-btn" href="/masculine.html">View course page</a>
+            <a class="mini-btn primary" href="https://whop.com/nihongoredlippcourse/nihiongo-red-pill/" target="_blank" rel="noopener noreferrer">Checkout</a>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-title">Native Expressions</div>
+          <div class="course-desc">The subtle phrases natives use that change the feel of your sentence.</div>
+          <div class="course-meta">Best for: intermediate+ who want “real Japanese energy”.</div>
+          <div class="course-actions">
+            <a class="mini-btn" href="/native-expressions.html">View course page</a>
+            <a class="mini-btn primary" href="https://whop.com/nihongoredlippcourse/nihiongo-red-pill/" target="_blank" rel="noopener noreferrer">Checkout</a>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-title">NRP Dojo (Membership)</div>
+          <div class="course-desc">The Netflix of casual Japanese: courses, updates, practice, and community.</div>
+          <div class="course-meta">Includes: all courses + ongoing drops + community training.</div>
+          <div class="course-actions">
+            <!-- TODO: replace with your Dojo checkout link -->
+            <a class="mini-btn" href="https://www.skool.com/nihongo-red-pill/about?ref=b013f5d7358247f7a5176d745bfeaf5c" target="_blank" rel="noopener noreferrer">View Dojo</a>
+            <a class="mini-btn primary" href="https://whop.com/nihongoredlippcourse/nihiongo-red-pill/" target="_blank" rel="noopener noreferrer">Checkout</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS (kept) -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <h2 class="section-title">What my students are saying</h2>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <video controls width="100%" style="border-radius: 12px; margin-bottom: 20px;">
+            <source src="ian.mp4" type="video/mp4">
+          </video>
+          <p class="testimonial-quote">"After joining, I found that I could speak more naturally and express myself much more"</p>
+          <p class="testimonial-name">- Ian</p>
+        </div>
+
+        <div class="testimonial-card">
+          <video controls width="100%" style="border-radius: 12px; margin-bottom: 20px;">
+            <source src="aaron.mp4" type="video/mp4">
+          </video>
+          <p class="testimonial-quote">"Before joining I couldn't show emotion but I started picking up emotion in speech and I sound more like a person now"</p>
+          <p class="testimonial-name">- Aaron</p>
+        </div>
+
+        <div class="testimonial-card">
+          <video controls width="100%" style="border-radius: 12px; margin-bottom: 20px;">
+            <source src="Luketesto.mp4" type="video/mp4">
+          </video>
+          <p class="testimonial-quote">"When I used what Rin taught me, it opened up the conversation"</p>
+          <p class="testimonial-name">- Luke</p>
+        </div>
+
+        <div class="testimonial-card">
+          <video controls width="100%" style="border-radius: 12px; margin-bottom: 20px;">
+            <source src="Timtest.mp4" type="video/mp4">
+          </video>
+          <p class="testimonial-quote">"Nihongo Red Pill is the powerhouse of Japanese learning"</p>
+          <p class="testimonial-name">- Tim</p>
+        </div>
+
+        <div class="testimonial-card"><img src="Andreas.jpeg" alt="Andreas" class="testimonial-image"><p class="testimonial-name">- Andreas</p></div>
+        <div class="testimonial-card"><img src="Lili.jpeg" alt="Lili" class="testimonial-image"><p class="testimonial-name">- Lili</p></div>
+        <div class="testimonial-card"><img src="Chris.png" alt="Chris" class="testimonial-image"><p class="testimonial-name">- Chris</p></div>
+        <div class="testimonial-card"><img src="Matthieu.png" alt="Matthieu" class="testimonial-image"><p class="testimonial-name">- Matthieu</p></div>
+        <div class="testimonial-card"><img src="Brendan.png" alt="Brendan" class="testimonial-image"><p class="testimonial-name">- Brendan</p></div>
+      </div>
+
+      <div style="text-align:center;">
+        <a href="https://go.nihongoredpillbyrin.com/free" class="cta-button" target="_blank" rel="noopener noreferrer">Get the Free Lesson</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ (kept) -->
+  <section class="section" id="Q&A">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3 class="faq-question">Won't casual Japanese be rude in business settings?</h3>
+          <p class="faq-answer">It's always safe to stay polite in business first. But imagine you're at dinner with colleagues and they start speaking casually to each other. You'll miss the real conversation, the jokes, the bonding. Learning casual Japanese means you can understand when others use it, even if you choose to stay formal.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">What if I make mistakes and offend someone?</h3>
+          <p class="faq-answer">Japanese people are forgiving when they see you're trying to connect genuinely. Making small casual mistakes shows you're human. Staying formal forever often signals distance, not respect.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">Is this just slang and bad grammar?</h3>
+          <p class="faq-answer">No. Casual Japanese follows patterns. It's not “wrong Japanese” — it's the Japanese used daily in real relationships.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">Is this okay if I'm a beginner?</h3>
+          <p class="faq-answer">Yes. Start with a foundation (hiragana + basic listening). Learning casual patterns early prevents you from getting stuck in formal-only mode.</p>
+        </div>
+      </div>
+
+      <div style="text-align:center;">
+        <a href="https://go.nihongoredpillbyrin.com/free" class="cta-button" target="_blank" rel="noopener noreferrer">Start Free</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT (kept, lightly tightened) -->
+  <section id="about" class="section">
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title">About Rin</h2>
+
+      <div style="max-width: 600px; margin: 0 auto;">
+        <img src="profile.PNG" alt="Profile Photo"
+             style="width: 200px; height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 20px;">
+
+        <p style="font-size: 1.125rem; line-height: 1.7; opacity: 0.85;">
+          I’m Rin. A native Japanese speaker obsessed with how people actually talk.
+          I built Nihongo Red Pill for learners who want real connection, not textbook perfection.
+        </p>
+
+        <p style="font-size: 1.125rem; line-height: 1.7; opacity: 0.85; margin-top: 18px;">
+          If you’re ready to stop sounding stiff and start sounding natural, start with the free lesson.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="container">
+      <p class="final-text">
+        Start with the free lesson. Then choose the course that sharpens your identity in Japanese.
+      </p>
+
+      <div class="cta-row">
+        <a href="https://go.nihongoredpillbyrin.com/free" class="cta-button" target="_blank" rel="noopener noreferrer">Get Free Lesson</a>
+        <a href="https://whop.com/nihongoredlippcourse/nihiongo-red-pill/" class="cta-button outline-red" target="_blank" rel="noopener noreferrer">Checkout</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- No "Choose Your Path" page. No toggle JS. -->
+</body>
+</html>
