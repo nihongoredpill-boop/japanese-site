@@ -307,36 +307,81 @@
   }
 }
 
-.price-testimonial {
-  background: #fff;
-  border: 1px solid #e7e2d6;
-  border-radius: 14px;
-  padding: 28px;
-  text-align: center;
+/* ===== BIG NCI-STYLE TESTIMONIAL CARDS (inside price box) ===== */
+.price-testimonials {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: 1fr;   /* stacked like NCI */
+  gap: 18px;
 }
 
+.price-testimonial {
+  background: #fff;
+  border: 4px solid #1f2937;   /* dark blue-ish border like NCI */
+  border-radius: 18px;
+  padding: 26px 22px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+.price-testimonial::before,
+.price-testimonial::after {
+  content: "“";
+  position: absolute;
+  top: 20px;
+  font-size: 48px;
+  line-height: 1;
+  color: rgba(17,17,17,0.65);
+  font-weight: 900;
+}
+
+.price-testimonial::before { left: 18px; transform: rotate(180deg); }
+.price-testimonial::after  { right: 18px; content: "”"; }
+
 .price-testimonial .student-avatar {
-  width: 96px;          /* BIG FACE */
-  height: 96px;
+  width: 118px;                 /* BIG FACE */
+  height: 118px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #dc2626; /* red ring like NCI */
-  margin-bottom: 14px;
+  border: 6px solid #dc2626;    /* red ring */
+  margin: 0 auto 14px;
+  display: block;
 }
 
 .price-testimonial .word-quote {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 14px;
+  font-size: 1rem;
+  line-height: 1.75;
+  margin: 0 auto 14px;
+  max-width: 520px;
+  opacity: 0.95;
+}
+
+.price-testimonial .stars {
+  font-size: 1.25rem;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
 }
 
 .price-testimonial .student-name-row {
   justify-content: center;
 }
 
-.price-testimonial .stars {
-  font-size: 0.9rem;
-  margin-bottom: 8px;
+.price-testimonial .student-name {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  font-weight: 900;
+  padding: 10px 18px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+
+/* Desktop: make the card wider in the right column */
+@media (min-width: 981px) {
+  .price-testimonial {
+    padding: 30px 26px;
+  }
 }
 /* ===== NCI-style 2 column layout ===== */
 .foundation-split {
