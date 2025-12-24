@@ -338,7 +338,84 @@
   font-size: 0.9rem;
   margin-bottom: 8px;
 }
+/* ===== NCI-style 2 column layout ===== */
+.foundation-split {
+  background: #ffffff;
+  color: #111;
+  border-top: 1px solid #e7e2d6;
+  padding: 90px 20px;
+}
 
+.foundation-split-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.split-left h2 {
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+  font-weight: 900;
+}
+
+.split-left p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  opacity: 0.92;
+  margin-bottom: 14px;
+}
+
+/* sticky box on desktop */
+.split-right {
+  position: sticky;
+  top: 96px; /* adjust if needed */
+}
+
+/* price box should fill the column */
+.price-box {
+  margin: 0;
+}
+
+/* testimonials inside price box: 2 columns on desktop, 1 on mobile */
+.price-testimonials {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.price-testimonial {
+  padding: 18px;
+  text-align: left;
+}
+
+.price-testimonial .student-avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 4px solid #dc2626;
+  margin: 0 0 12px 0;
+}
+
+@media (max-width: 980px) {
+  .foundation-split-inner {
+    grid-template-columns: 1fr;
+  }
+  .split-right {
+    position: static;
+  }
+  .price-testimonials {
+    grid-template-columns: 1fr;
+  }
+  .price-testimonial {
+    text-align: center;
+  }
+}
   </style>
 </head>
 
@@ -393,77 +470,93 @@
   </section>
 
   <!-- Placeholder for your next sections -->
-  <section class="foundation-cta">
-  <div class="foundation-cta-inner">
+<section class="foundation-split" id="next">
+  <div class="foundation-split-inner">
 
- <div class="price-box">
-      <!-- IMAGE GOES HERE LATER -->
-      <!-- <img src="foundation-bundle.png" alt="Foundation Course Bundle" class="bundle-image"> -->
-
-      <p class="price-line">
-        Only <span class="old-price">$756</span>
-        <span class="new-price">$147</span>
+    <!-- LEFT SIDE (your copy) -->
+    <div class="split-left">
+      <h2>What you get inside the Foundation Course</h2>
+      <p>
+        You’re not buying “more Japanese.” You’re buying the missing layer that turns correct Japanese into
+        casual Japanese that feels natural in real conversations.
       </p>
-
-      <p class="save-line">Save $609 today</p>
-
-      <p class="access-line">
-        Full access to the Foundation Course and included bonuses.<br>
-        Delivered instantly.
+      <p>
+        This is the course that fixes the “I can speak but I still don’t feel connected” problem.
       </p>
+      <p>
+        If you’ve been stuck in polite mode, this is your bridge into real human Japanese.
+      </p>
+    </div>
 
-      <a href="YOUR-CHECKOUT-LINK" class="cta-main">
-        GET INSTANT ACCESS →
-      </a>
-    
-<div class="security-line">
-      <span class="shield">🛡</span>
-      <span>100% Secure Checkout · Instant Access</span>
-</div> 
-   <div class="price-testimonials">
+    <!-- RIGHT SIDE (price box) -->
+    <div class="split-right">
+      <div class="price-box">
 
- <div class="price-testimonial">
-  <img src="Akira.png" alt="Akira" class="student-avatar">
+        <!-- IMAGE GOES HERE LATER -->
+        <!-- <img src="foundation-bundle.png" alt="Foundation Course Bundle" class="bundle-image"> -->
 
-  <p class="word-quote">
-    “Conversations with my Japanese friends feel more real. I noticed a clear difference in their reactions and engagement.”
-  </p>
+        <p class="price-line">
+          Only <span class="old-price">$756</span>
+          <span class="new-price">$147</span>
+        </p>
 
-  <div class="stars">★★★★★</div>
+        <p class="save-line">Save $609 today</p>
 
-  <div class="student-name-row">
-    <span class="student-name">Akira</span>
+        <p class="access-line">
+          Full access to the Foundation Course and included bonuses.<br>
+          Delivered instantly.
+        </p>
+
+        <a href="YOUR-CHECKOUT-LINK" class="cta-main">
+          GET INSTANT ACCESS →
+        </a>
+
+        <div class="security-line" style="margin-top:14px;">
+          <span class="shield">🛡</span>
+          <span>100% Secure Checkout · Instant Access</span>
+        </div>
+
+        <div class="price-testimonials">
+
+          <div class="price-testimonial">
+            <img src="Akira.png" alt="Akira" class="student-avatar">
+            <p class="word-quote">
+              “Conversations with my Japanese friends feel more real. I noticed a clear difference in their reactions and engagement.”
+            </p>
+            <div class="stars">★★★★★</div>
+            <div class="student-name-row">
+              <span class="student-name">Akira</span>
+            </div>
+          </div>
+
+          <div class="price-testimonial">
+            <img src="And.png" alt="Andreas" class="student-avatar">
+            <p class="word-quote">
+              “The first videos blew my mind. The emotions, filler words, and human side of Japanese finally clicked.”
+            </p>
+            <div class="stars">★★★★★</div>
+            <div class="student-name-row">
+              <span class="student-name">Andreas</span>
+            </div>
+          </div>
+
+          <div class="price-testimonial">
+            <img src="Aaron.png" alt="Aaron" class="student-avatar">
+            <p class="word-quote">
+              “Before joining, I couldn’t express emotion. Now I finally sound like a person.”
+            </p>
+            <div class="stars">★★★★★</div>
+            <div class="student-name-row">
+              <span class="student-name">Aaron</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
-</div>
-
-<div class="price-testimonial">
-  <img src="And.png" alt="Andreas" class="student-avatar">
-
-  <p class="word-quote">
-    “The first videos blew my mind. The emotions, filler words, and human side of Japanese finally clicked.”
-  </p>
-
-  <div class="stars">★★★★★</div>
-
-  <div class="student-name-row">
-    <span class="student-name">Andreas</span>
-  </div>
-</div>
-
-<div class="price-testimonial">
-  <img src="Aaron.png" alt="Aaron" class="student-avatar">
-
-  <p class="word-quote">
-    “Before joining, I couldn’t express emotion. Now I finally sound like a person.”
-  </p>
-
-  <div class="stars">★★★★★</div>
-
-  <div class="student-name-row">
-    <span class="student-name">Aaron</span>
-  </div>
-  </div>
-
-</div>
-
- 
+</section>
+  
+</body>
+</html>
