@@ -188,26 +188,34 @@
     @media (max-width: 768px) {
       .nav-links { gap: 12px; }
     }
+    .logo-header {
+  padding: 28px 24px;
+  display: flex;
+  justify-content: center; /* change to flex-start if you want left */
+  border-bottom: 1px solid #111;
+}
+
+.logo-header img {
+  height: 42px;
+  width: auto;
+}
   </style>
 </head>
 
 <body>
-  <div class="nav-bar">
-    <a href="/" style="font-weight:900;">NIHONGO RED PILL</a>
-    <ul class="nav-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="#what">What it is</a></li>
-      <li><a href="#next">What’s next</a></li>
-    </ul>
-  </div>
+  <header class="logo-header">
+  <a href="index.html">
+    <img src="Logo.PNG" alt="Nihongo Red Pill" />
+  </a>
+</header>
 
   <!-- TOP SECTION (NCI structure → Foundation version) -->
   <section class="foundation-hero">
     <div class="container">
 
       <p class="qualifier">
-        FOR LEARNERS WHO CAN SPEAK “CORRECT” JAPANESE<br>
-        BUT STILL DON’T FEEL CONNECTED
+        FOR LEARNERS WHO WANT TO SPEAK CASUAL JAPANESE<br>
+        AND BUILD REAL HUMAN CONNECTION IN JAPANESE
       </p>
 
       <h1 class="headline">
