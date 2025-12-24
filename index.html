@@ -185,6 +185,129 @@
 
     .section { padding: 120px 0; position: relative; }
 
+    /* =========================
+       FOUNDATION PAGE SECTION
+       ========================= */
+    .foundation-section {
+      padding: 110px 0;
+      background: #000;
+      border-top: 1px solid #111;
+      border-bottom: 1px solid #111;
+    }
+
+    .foundation-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .foundation-kicker {
+      color: #dc2626;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .foundation-title {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.15;
+      text-align: center;
+      margin-bottom: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .foundation-subtitle {
+      text-align: center;
+      font-size: 1.15rem;
+      opacity: 0.85;
+      max-width: 850px;
+      margin: 0 auto 60px;
+    }
+
+    .foundation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+      margin-top: 40px;
+    }
+
+    .foundation-block {
+      border: 1px solid #222;
+      border-radius: 14px;
+      padding: 26px;
+      background: #0b0b0b;
+    }
+
+    .foundation-block h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .foundation-block p {
+      opacity: 0.86;
+      line-height: 1.75;
+      font-size: 1rem;
+    }
+
+    .foundation-list {
+      margin-top: 14px;
+      padding-left: 18px;
+    }
+
+    .foundation-list li {
+      margin: 10px 0;
+      opacity: 0.9;
+    }
+
+    .foundation-cta {
+      margin-top: 54px;
+      text-align: center;
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .price-box {
+      margin-top: 26px;
+      border: 1px solid rgba(220,38,38,0.35);
+      border-radius: 14px;
+      padding: 28px;
+      background: radial-gradient(circle at top, rgba(220,38,38,0.10) 0%, rgba(0,0,0,0) 55%);
+      text-align: center;
+    }
+
+    .price-title {
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.95rem;
+      opacity: 0.9;
+      margin-bottom: 10px;
+    }
+
+    .price-amount {
+      font-size: 2.6rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .price-note {
+      opacity: 0.8;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+      .foundation-grid { grid-template-columns: 1fr; }
+    }
+
     /* COURSES (NCI-ish white cards on dark) */
     .courses-section {
       padding: 90px 20px;
@@ -198,23 +321,22 @@
       margin-bottom: 48px;
     }
 
- .courses-eyebrow {
-  color: #dc2626;                 /* RED */
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: clamp(1.6rem, 3.4vw, 2.6rem);  /* BIGGEST */
-  line-height: 1.15;
-  opacity: 1;                      /* don’t fade it */
-  margin-bottom: 14px;
-}
+    .courses-eyebrow {
+      color: #dc2626;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+      line-height: 1.15;
+      opacity: 1;
+      margin-bottom: 14px;
+    }
 
-   .courses-subline {
-  font-size: clamp(1.6rem, 3.4vw, 2.6rem); /* SAME SIZE */
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  opacity: 0.9;
-
+    .courses-subline {
+      font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      opacity: 0.9;
     }
 
     .courses-subline-strong {
@@ -286,7 +408,7 @@
       color: #dc2626;
     }
 
-    /* WORD ON SECTION (FIX: black text + yellow stars always visible) */
+    /* WORD ON SECTION */
     .word-section {
       background: #f7f4ee;
       padding: 90px 20px;
@@ -337,41 +459,10 @@
       visibility: visible !important;
     }
 
-    .word-quote {
-      line-height: 1.65;
-      margin: 0 0 18px;
-      opacity: 0.92;
-      color: #111 !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-
-    .word-name {
-      font-weight: 700;
-      margin: 0;
-      color: #111 !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-    .student-name-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.student-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #e7e2d6; /* optional, clean look */
-  background: #000;
-}
-
-.student-name {
-  font-weight: 700;
-  color: #111;
-}
+    .word-quote { line-height: 1.65; margin: 0 0 18px; color: #111 !important; }
+    .student-name-row { display: flex; align-items: center; gap: 12px; }
+    .student-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid #e7e2d6; background: #000; }
+    .student-name { font-weight: 700; color: #111; }
 
     /* FREE MASTERCLASS */
     .free-masterclass {
@@ -456,96 +547,90 @@
     }
 
     /* ABOUT */
-  .about-hero{
-  position:relative;
-  padding:110px 20px;
-  background: radial-gradient(1200px 600px at 15% 35%, rgba(255,255,255,0.06), transparent 60%),
-              linear-gradient(135deg, #0b141a 0%, #061015 55%, #050b10 100%);
-  border-top:1px solid rgba(220,38,38,0.35);
-  border-bottom:1px solid rgba(220,38,38,0.35);
-  overflow:hidden;
-}
+    .about-hero{
+      position:relative;
+      padding:110px 20px;
+      background: radial-gradient(1200px 600px at 15% 35%, rgba(255,255,255,0.06), transparent 60%),
+                  linear-gradient(135deg, #0b141a 0%, #061015 55%, #050b10 100%);
+      border-top:1px solid rgba(220,38,38,0.35);
+      border-bottom:1px solid rgba(220,38,38,0.35);
+      overflow:hidden;
+    }
 
-.about-inner{
-  max-width:1200px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap:64px;
-  align-items:end;
-  position:relative;
-}
+    .about-inner{
+      max-width:1200px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap:64px;
+      align-items:end;
+      position:relative;
+    }
 
-.about-bg-word{
-  position:absolute;
-  left:-10px;
-  top:-20px;
-  font-size: clamp(4.5rem, 14vw, 10rem);
-  font-weight:900;
-  letter-spacing:-0.06em;
-  color:rgba(255,255,255,0.10);
-  line-height:1;
-  pointer-events:none;
-  user-select:none;
-}
+    .about-bg-word{
+      position:absolute;
+      left:-10px;
+      top:-20px;
+      font-size: clamp(4.5rem, 14vw, 10rem);
+      font-weight:900;
+      letter-spacing:-0.06em;
+      color:rgba(255,255,255,0.10);
+      line-height:1;
+      pointer-events:none;
+      user-select:none;
+    }
 
-.about-left{
-  position:relative;
-  z-index:2;
-  display:flex;
-  justify-content:center;
-  align-items:flex-end;
-}
+    .about-left{
+      position:relative;
+      z-index:2;
+      display:flex;
+      justify-content:center;
+      align-items:flex-end;
+    }
 
-.about-photo{
-  width:min(420px, 90%);
-  height:auto;
-  filter: drop-shadow(0 40px 80px rgba(0,0,0,0.55));
-  transform: translateY(8px);
-}
+    .about-photo{
+      width:min(420px, 90%);
+      height:auto;
+      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.55));
+      transform: translateY(8px);
+    }
 
-.about-right{
-  position:relative;
-  z-index:2;
-  padding-bottom:10px;
-}
+    .about-right{
+      position:relative;
+      z-index:2;
+      padding-bottom:10px;
+    }
 
-.about-kicker{
-  color:#dc2626;
-  font-weight:800;
-  letter-spacing:0.12em;
-  font-size:0.95rem;
-  margin-bottom:12px;
-}
+    .about-kicker{
+      color:#dc2626;
+      font-weight:800;
+      letter-spacing:0.12em;
+      font-size:0.95rem;
+      margin-bottom:12px;
+    }
 
-.about-quote{
-  font-size: clamp(1.15rem, 2vw, 1.6rem);
-  font-style: italic;
-  font-weight:600;
-  opacity:0.95;
-  margin-bottom:22px;
-}
+    .about-quote{
+      font-size: clamp(1.15rem, 2vw, 1.6rem);
+      font-style: italic;
+      font-weight:600;
+      opacity:0.95;
+      margin-bottom:22px;
+    }
 
-.about-body p{
-  margin:0 0 14px;
-  font-size:1.05rem;
-  line-height:1.75;
-  opacity:0.9;
-  max-width: 560px;
-}
+    .about-body p{
+      margin:0 0 14px;
+      font-size:1.05rem;
+      line-height:1.75;
+      opacity:0.9;
+      max-width: 560px;
+    }
 
-/* Mobile */
-@media (max-width: 900px){
-  .about-inner{
-    grid-template-columns: 1fr;
-    gap:28px;
-    align-items:center;
-    text-align:left;
-  }
-  .about-left{ justify-content:flex-start; }
-  .about-photo{ width:min(340px, 92%); }
-  .about-bg-word{ left:-6px; top:-10px; }
-}
+    @media (max-width: 900px){
+      .about-inner{ grid-template-columns: 1fr; gap:28px; align-items:center; text-align:left; }
+      .about-left{ justify-content:flex-start; }
+      .about-photo{ width:min(340px, 92%); }
+      .about-bg-word{ left:-6px; top:-10px; }
+    }
   </style>
 </head>
 
@@ -562,6 +647,7 @@
 
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
+      <li><a href="#foundation">Foundation</a></li>
       <li><a href="#courses">Courses</a></li>
       <li><a href="#word">Results</a></li>
       <li><a href="#free-masterclass">Free Class</a></li>
@@ -596,6 +682,135 @@
              target="_blank" rel="noopener">
             Enter the Dojo
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUNDATION PAGE CONTENT (NEW) -->
+    <section id="foundation" class="foundation-section">
+      <div class="container">
+        <div class="foundation-wrap">
+
+          <div class="foundation-kicker">FOUNDATION COURSE</div>
+          <h2 class="foundation-title">
+            The Bridge Between Correct Japanese<br>
+            and <span class="power-word">Human</span> Japanese
+          </h2>
+          <p class="foundation-subtitle">
+            If the free class flipped a switch, this is the next step.
+            This course builds the core mechanics of casual Japanese so you can use it on purpose, in real life.
+          </p>
+
+          <div class="foundation-grid">
+            <div class="foundation-block">
+              <h3>Why you’re here</h3>
+              <p>
+                You already know the issue isn’t vocabulary.
+                It’s not grammar.
+                It’s the gap between speaking correctly and sounding human.
+              </p>
+              <p style="margin-top:10px;">
+                Formal Japanese keeps you in “polite mode.”
+                Casual Japanese activates a different mode where conversations feel relaxed and real.
+              </p>
+            </div>
+
+            <div class="foundation-block">
+              <h3>Why I made this</h3>
+              <p>
+                This isn’t theory from textbooks.
+                It comes from how Japanese people actually speak:
+                friends, family, everyday conversations, silence, reactions.
+              </p>
+              <p style="margin-top:10px;">
+                I spent hundreds of hours reverse-engineering this layer because most courses never teach it clearly.
+              </p>
+            </div>
+
+            <div class="foundation-block">
+              <h3>What you learn inside</h3>
+              <p>Core mechanics that make casual Japanese feel natural:</p>
+              <ul class="foundation-list">
+                <li>How casual Japanese is actually built</li>
+                <li>What natives drop, and why it feels natural</li>
+                <li>How sentences shorten without losing meaning</li>
+                <li>How reactions replace full sentences</li>
+                <li>How tone + endings change the vibe instantly</li>
+              </ul>
+            </div>
+
+            <div class="foundation-block">
+              <h3>What it changes for you</h3>
+              <p>
+                You stop sounding like a textbook.
+                You stop “performing” Japanese.
+              </p>
+              <p style="margin-top:10px;">
+                You start sounding human.
+                People relax around you more.
+                Conversations feel less stiff and more real.
+              </p>
+              <p style="margin-top:10px; opacity:0.85;">
+                (You don’t need to be extroverted for this. I’m introverted too.)
+              </p>
+            </div>
+
+            <div class="foundation-block">
+              <h3>Exclusive bonuses</h3>
+              <p>
+                You’re not just getting the Foundation.
+                You also get access to supporting pieces that make the transition smoother.
+              </p>
+              <ul class="foundation-list">
+                <li><strong>Grammar Bridge</strong> (for masu-form learners)</li>
+                <li><strong>Practical patterns</strong> you can use immediately</li>
+                <li><strong>Private Dojo access</strong> (focused community path)</li>
+              </ul>
+              <p style="margin-top:10px;">
+                The Dojo is for people on the same path.
+                Not tourists. Not dabblers. People who actually want the shift.
+              </p>
+            </div>
+
+            <div class="foundation-block">
+              <h3>Safe + structured</h3>
+              <p>
+                You’re not forcing confidence.
+                You’re not changing who you are.
+              </p>
+              <p style="margin-top:10px;">
+                Everything is structured.
+                You apply one pattern at a time and see how people respond.
+                This is real Japanese that already exists in real life.
+              </p>
+            </div>
+          </div>
+
+          <div class="price-box">
+            <div class="price-title">One-time purchase</div>
+            <div class="price-amount">$149</div>
+            <p class="price-note">
+              Lifetime access to the Foundation. Core mechanics + bonuses included.
+            </p>
+
+            <div class="foundation-cta">
+              <a class="cta-button" href="#" target="_blank" rel="noopener">Start the Foundation</a>
+              <a class="cta-button" href="#word" style="background:transparent; border:1px solid #333;">See Results</a>
+            </div>
+          </div>
+
+          <div style="margin-top:56px; text-align:center; opacity:0.9;">
+            <h3 style="font-size:1.2rem; font-weight:900; margin-bottom:10px;">
+              Two Paths
+            </h3>
+            <p style="max-width:900px; margin:0 auto;">
+              Most learners stay in polite Japanese forever, speaking carefully and wondering why nothing changes.<br>
+              A few decide to learn casual Japanese on purpose, and finally start getting real reactions and real connection.<br><br>
+              If you’re the type of person who wants to skip avoidable mistakes and start using Japanese the way people actually do,
+              the Foundation is the next step.
+            </p>
+          </div>
+
         </div>
       </div>
     </section>
@@ -639,7 +854,7 @@
       </div>
     </section>
 
-    <!-- WORD ON (FIXED) -->
+    <!-- WORD ON -->
     <section id="word" class="word-section">
       <div class="word-inner">
         <p class="word-eyebrow">THE WORD ON NIHONGO RED PILL </p>
@@ -649,55 +864,55 @@
           <div class="word-card">
             <div class="stars">★★★★★</div>
             <p class="word-quote">“Conversations with my Japanese friends feel more real. I noticed a clear difference in their reactions and engagement. I went from struggling to speak to actually looking forward to conversations.”</p>
-           <div class="student-name-row">
-  <img src="Akira.png" alt="Akira" class="student-avatar">
-  <span class="student-name">Akira</span>
-</div>
+            <div class="student-name-row">
+              <img src="Akira.png" alt="Akira" class="student-avatar">
+              <span class="student-name">Akira</span>
+            </div>
           </div>
 
           <div class="word-card">
             <div class="stars">★★★★★</div>
             <p class="word-quote">“The first videos blew my mind. It felt like a floodgate opened. The emotions, filler words, and human side of Japanese finally clicked. It completely changed how I understand real interactions.”</p>
-           <div class="student-name-row">
-  <img src="And.png" alt="Andreas" class="student-avatar">
-  <span class="student-name">Andreas</span>
-</div>
+            <div class="student-name-row">
+              <img src="And.png" alt="Andreas" class="student-avatar">
+              <span class="student-name">Andreas</span>
+            </div>
           </div>
 
           <div class="word-card">
             <div class="stars">★★★★★</div>
             <p class="word-quote">“Before joining, I couldn’t express emotion. Now I can hear and use emotion in speech. I finally sound like a person.”</p>
             <div class="student-name-row">
-  <img src="Aaron.png" alt="Aaron" class="student-avatar">
-  <span class="student-name">Aaron</span>
-</div>
+              <img src="Aaron.png" alt="Aaron" class="student-avatar">
+              <span class="student-name">Aaron</span>
+            </div>
           </div>
 
           <div class="word-card">
             <div class="stars">★★★★★</div>
             <p class="word-quote">“Something started to change naturally. I began recalling what I learned during real conversations and using it without forcing it. It felt like the first real step toward speaking naturally.”</p>
-         <div class="student-name-row">
-  <img src="Lili.png" alt="Lili" class="student-avatar">
-  <span class="student-name">Lili</span>
-</div>
+            <div class="student-name-row">
+              <img src="Lili.png" alt="Lili" class="student-avatar">
+              <span class="student-name">Lili</span>
+            </div>
           </div>
 
           <div class="word-card">
             <div class="stars">★★★★★</div>
             <p class="word-quote">“I finally understood how casual conversations flow. Shadowing gave me rhythm and pitch. Japanese started to feel natural instead of constructed.”</p>
-           <div class="student-name-row">
-  <img src="Ian.png" alt="Ian" class="student-avatar">
-  <span class="student-name">Ian</span>
-</div>
+            <div class="student-name-row">
+              <img src="Ian.png" alt="Ian" class="student-avatar">
+              <span class="student-name">Ian</span>
+            </div>
           </div>
 
           <div class="word-card">
             <div class="stars">★★★★★</div>
             <p class="word-quote">“Even while attending an online language school, I still sounded robotic. I realized it was working when I had meaningful conversations using both polite and casual Japanese.”</p>
             <div class="student-name-row">
-  <img src="Brendan.png" alt="Brendan" class="student-avatar">
-  <span class="student-name">Brendan</span>
-</div>
+              <img src="Brendan.png" alt="Brendan" class="student-avatar">
+              <span class="student-name">Brendan</span>
+            </div>
           </div>
         </div>
       </div>
@@ -734,33 +949,32 @@
       </div>
     </section>
 
-    <!-- ABOUT (kept) -->
-   <section class="about-hero" id="about">
-  <div class="about-inner">
+    <!-- ABOUT -->
+    <section class="about-hero" id="about">
+      <div class="about-inner">
+        <div class="about-bg-word">ABOUT</div>
 
-    <div class="about-bg-word">ABOUT</div>
+        <div class="about-left">
+          <img src="profile-cutout.png" alt="Rin" class="about-photo">
+        </div>
 
-    <div class="about-left">
-      <img src="profile-cutout.png" alt="Rin" class="about-photo">
-    </div>
+        <div class="about-right">
+          <div class="about-kicker">WHO IS RIN?</div>
 
-    <div class="about-right">
-      <div class="about-kicker">WHO IS RIN?</div>
+          <div class="about-quote">
+            “Deep connections always happen in casual Japanese. EVERY TIME.”
+          </div>
 
-      <div class="about-quote">
-        “Deep connections always happen in casual Japanese. EVERY TIME.”
+          <div class="about-body">
+            <p>Rin is a native Japanese speaker who studies how people actually talk in real life.</p>
+            <p>He founded the #1 community focused exclusively on casual Japanese.</p>
+            <p>He became fluent in English through real-world immersion, not textbooks.</p>
+            <p>Now he teaches the exact system that makes Japanese feel human, not robotic.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="about-body">
-        <p>Rin is a native Japanese speaker who studies how people actually talk in real life.</p>
-        <p>He founded the #1 community focused exclusively on casual Japanese.</p>
-        <p>He became fluent in English through real-world immersion, not textbooks.</p>
-        <p>Now he teaches the exact system that makes Japanese feel human, not robotic.</p>
-      </div>
-    </div>
-
-  </div>
-</section>
   </div>
 </body>
 </html>
