@@ -199,6 +199,99 @@
   height: 42px;
   width: auto;
 }
+    .foundation-cta {
+  padding: 100px 20px;
+  background: #ffffff;
+  color: #111;
+  border-top: 1px solid #e7e2d6;
+}
+
+.foundation-cta-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.security-line {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  opacity: 0.85;
+  margin-bottom: 18px;
+}
+
+.price-box {
+  border: 3px solid #dc2626;
+  border-radius: 16px;
+  padding: 40px 26px;
+  margin-bottom: 40px;
+}
+
+.price-line {
+  font-size: 2.3rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.old-price {
+  text-decoration: line-through;
+  opacity: 0.5;
+  margin-right: 10px;
+}
+
+.new-price {
+  color: #dc2626;
+}
+
+.save-line {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.access-line {
+  font-size: 1rem;
+  opacity: 0.85;
+  margin-bottom: 30px;
+}
+
+.cta-main {
+  display: inline-block;
+  background: #dc2626;
+  color: #fff;
+  padding: 18px 38px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta-main:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(220,38,38,0.35);
+}
+
+.reviews-preview {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.stars {
+  color: #f5b301;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.review-text {
+  font-style: italic;
+  margin-bottom: 6px;
+}
+
+.review-name {
+  font-weight: 700;
+}
   </style>
 </head>
 
@@ -252,15 +345,44 @@
   </section>
 
   <!-- Placeholder for your next sections -->
-  <section class="section" id="next">
-    <div class="container">
-      <div class="section-title">Next: Add the rest of the page sections below this</div>
-      <p class="muted">
-        (Mechanics list, bonuses, proof, CTA, etc.)<br>
-        You can paste your next blocks here one by one and we’ll tighten them.
-      </p>
-    </div>
-  </section>
+  <section class="foundation-cta">
+  <div class="foundation-cta-inner">
 
-</body>
-</html>
+    <div class="security-line">
+      <span class="shield">🛡</span>
+      <span>100% Secure Checkout · Instant Access</span>
+    </div>
+
+    <div class="price-box">
+
+      <!-- IMAGE GOES HERE LATER -->
+      <!-- <img src="foundation-bundle.png" alt="Foundation Course Bundle" class="bundle-image"> -->
+
+      <p class="price-line">
+        Only <span class="old-price">$756</span>
+        <span class="new-price">$147</span>
+      </p>
+
+      <p class="save-line">Save $609 today</p>
+
+      <p class="access-line">
+        Full access to the Foundation Course and included bonuses.<br>
+        Delivered instantly.
+      </p>
+
+      <a href="YOUR-CHECKOUT-LINK" class="cta-main">
+        GET INSTANT ACCESS →
+      </a>
+    </div>
+
+    <!-- REVIEW REUSE -->
+    <div class="reviews-preview">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">
+        “The first videos blew my mind. Japanese finally felt human instead of robotic.”
+      </p>
+      <p class="review-name">– Andreas</p>
+    </div>
+
+  </div>
+</section>
