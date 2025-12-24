@@ -292,6 +292,50 @@
 .review-name {
   font-weight: 700;
 }
+    /* PRICE BOX TESTIMONIALS */
+.price-testimonials {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.price-testimonial {
+  background: #fff;
+  border: 1px solid #e7e2d6;
+  border-radius: 10px;
+  padding: 18px;
+  text-align: left;
+}
+
+.price-testimonial .stars {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.price-testimonial .word-quote {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+
+.price-testimonial .student-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price-testimonial .student-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.price-testimonial .student-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
   </style>
 </head>
 
@@ -300,6 +344,7 @@
   <a href="index.html">
     <img src="Logo.png" alt="Nihongo Red Pill" />
   </a>
+
 </header>
 
   <!-- TOP SECTION (NCI structure → Foundation version) -->
@@ -367,21 +412,46 @@
       <a href="YOUR-CHECKOUT-LINK" class="cta-main">
         GET INSTANT ACCESS →
       </a>
-    </div>
     
 <div class="security-line">
       <span class="shield">🛡</span>
       <span>100% Secure Checkout · Instant Access</span>
-    </div>
+</div> 
+   <div class="price-testimonials">
 
-    <!-- REVIEW REUSE -->
-    <div class="reviews-preview">
-      <div class="stars">★★★★★</div>
-      <p class="review-text">
-        “The first videos blew my mind. Japanese finally felt human instead of robotic.”
-      </p>
-      <p class="review-name">– Andreas</p>
+  <div class="price-testimonial">
+    <div class="stars">★★★★★</div>
+    <p class="word-quote">
+      “Conversations with my Japanese friends feel more real. I noticed a clear difference in their reactions and engagement.”
+    </p>
+    <div class="student-name-row">
+      <img src="Akira.png" alt="Akira" class="student-avatar">
+      <span class="student-name">Akira</span>
     </div>
-
   </div>
-</section>
+
+  <div class="price-testimonial">
+    <div class="stars">★★★★★</div>
+    <p class="word-quote">
+      “The first videos blew my mind. The emotions, filler words, and human side of Japanese finally clicked.”
+    </p>
+    <div class="student-name-row">
+      <img src="And.png" alt="Andreas" class="student-avatar">
+      <span class="student-name">Andreas</span>
+    </div>
+  </div>
+
+  <div class="price-testimonial">
+    <div class="stars">★★★★★</div>
+    <p class="word-quote">
+      “Before joining, I couldn’t express emotion. Now I finally sound like a person.”
+    </p>
+    <div class="student-name-row">
+      <img src="Aaron.png" alt="Aaron" class="student-avatar">
+      <span class="student-name">Aaron</span>
+    </div>
+  </div>
+
+</div>
+
+ 
