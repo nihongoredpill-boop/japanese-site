@@ -897,7 +897,66 @@
   font-size: 0.95rem;
   color: #444;
 }
+/* ===== Final Included (NCI-style centered item image) ===== */
+.final-item-stack{
+  padding: 26px 0;
+  border-top: 1px solid #f1ede4;
+}
 
+.final-item-stack:first-child{
+  border-top: none;
+}
+
+.final-item-media{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.final-item-img{
+  width: min(360px, 100%);
+  height: auto;
+  display: block;
+  object-fit: contain;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+.final-item-title{
+  text-align: center;
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.final-item-sub{
+  text-align: center;
+  font-size: 0.98rem;
+  color: #333;
+  line-height: 1.75;
+  max-width: 820px;
+  margin: 0 auto 14px;
+}
+
+.final-item-meta{
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+  font-weight: 900;
+  color: #111;
+}
+
+.final-item-meta .was{
+  text-decoration: line-through;
+  opacity: 0.45;
+}
+
+.final-item-meta .now{
+  color: #dc2626;
+}
 @media (max-width: 720px) {
   .final-item {
     grid-template-columns: 1fr;
@@ -1582,73 +1641,73 @@
 </div>
     <div class="final-box">
 
-     <div class="final-item">
-  <div class="final-row">
-    <img src="1.png" alt="Foundation Course" class="final-thumb">
-    <div class="final-left">
-      <div class="final-name">Foundation Course (One-Time)</div>
-      <div class="final-desc">The core system to switch into casual Japanese that sounds human.</div>
-    </div>
-    <div class="final-price">
-      <span class="was">$199</span>
-      <span class="now">$147</span>
-    </div>
+    <div class="final-item-stack">
+  <div class="final-item-media">
+    <img src="1.png" alt="Foundation Course" class="final-item-img">
+  </div>
+  <div class="final-item-title">Foundation Course (One-Time)</div>
+  <div class="final-item-sub">
+    The core system to switch into casual Japanese that sounds human.
+  </div>
+  <div class="final-item-meta">
+    <span class="was">$199</span>
+    <span class="now">$147</span>
   </div>
 </div>
-      
-      <div class="final-item">
-  <div class="final-row">
-    <img src="2.png" alt="Casual Grammar Foundation" class="final-thumb">
-    <div class="final-left">
-      <div class="final-name">Casual Grammar Foundation <span class="bonus">(Bonus)</span></div>
-      <div class="final-desc">The minimum structure you need before you start layering casual speech.</div>
-    </div>
-    <div class="final-price">
-      <span class="was">$99</span>
-      <span class="now">$0</span>
-    </div>
+
+<div class="final-item-stack">
+  <div class="final-item-media">
+    <img src="2.png" alt="Casual Grammar Foundation" class="final-item-img">
+  </div>
+  <div class="final-item-title">Casual Grammar Foundation <span class="bonus">(Bonus)</span></div>
+  <div class="final-item-sub">
+    The minimum structure you need before you start layering casual speech.
+  </div>
+  <div class="final-item-meta">
+    <span class="was">$99</span>
+    <span class="now">$0</span>
   </div>
 </div>
-      
-    <div class="final-item">
-  <div class="final-row">
-    <img src="3.png" alt="Casual Playbook" class="final-thumb">
-    <div class="final-left">
-      <div class="final-name">Casual Japanese Playbook <span class="bonus">(Bonus)</span></div>
-      <div class="final-desc">The invisible rules natives follow that textbooks never teach.</div>
-    </div>
-    <div class="final-price">
-      <span class="was">$99</span>
-      <span class="now">$0</span>
-    </div>
+
+<div class="final-item-stack">
+  <div class="final-item-media">
+    <img src="3.png" alt="Casual Japanese Playbook" class="final-item-img">
+  </div>
+  <div class="final-item-title">Casual Japanese Playbook <span class="bonus">(Bonus)</span></div>
+  <div class="final-item-sub">
+    When to use casual, when not to, foreigner positioning, mindset, and real connection.
+  </div>
+  <div class="final-item-meta">
+    <span class="was">$99</span>
+    <span class="now">$0</span>
   </div>
 </div>
-      
-   <div class="final-item">
-  <div class="final-row">
-    <img src="4.png" alt="Community Access" class="final-thumb">
-    <div class="final-left">
-      <div class="final-name">Community Access </div>
-      <div class="final-desc">Observe real learner examples, breakdowns, and discussions.</div>
-    </div>
-    <div class="final-price">
-      <span class="was">$117</span>
-      <span class="now">$0</span>
-    </div>
+
+<div class="final-item-stack">
+  <div class="final-item-media">
+    <img src="4.png" alt="Community Access" class="final-item-img">
+  </div>
+  <div class="final-item-title">Community Access</div>
+  <div class="final-item-sub">
+    Observe real learner examples, breakdowns, and discussions.
+  </div>
+  <div class="final-item-meta">
+    <span class="was">$117</span>
+    <span class="now">$0</span>
   </div>
 </div>
-      
-    <div class="final-item">
-  <div class="final-row">
-    <img src="5.png" alt="Weekly Freestyle Challenge" class="final-thumb">
-    <div class="final-left">
-      <div class="final-name">Weekly Freestyle Challenge</div>
-      <div class="final-desc">Weekly prompts to force real output and build momentum.</div>
-    </div>
-    <div class="final-price">
-      <span class="was">$49</span>
-      <span class="now">$0</span>
-    </div>
+
+<div class="final-item-stack">
+  <div class="final-item-media">
+    <img src="5.png" alt="Weekly Freestyle Challenge" class="final-item-img">
+  </div>
+  <div class="final-item-title">Weekly Freestyle Challenge</div>
+  <div class="final-item-sub">
+    Weekly prompts to force real output and build momentum.
+  </div>
+  <div class="final-item-meta">
+    <span class="was">$49</span>
+    <span class="now">$0</span>
   </div>
 </div>
 
