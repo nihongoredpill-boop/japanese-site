@@ -292,6 +292,253 @@
       .price-testimonial { text-align: center; }
       .student-avatar { margin-left: auto; margin-right: auto; }
     }
+    /* ===== NCI-style “Shortcut + Included” split section ===== */
+.foundation-shortcut {
+  background: #fff;
+  border-top: 1px solid #e7e2d6;
+  padding: 90px 20px;
+}
+
+.foundation-shortcut-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 52px;
+  align-items: start;
+}
+
+.shortcut-left h2 {
+  font-size: clamp(2.2rem, 3.6vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+  margin-bottom: 18px;
+  color: #111;
+}
+
+.shortcut-left .lead {
+  font-size: 1.08rem;
+  line-height: 1.9;
+  color: #2b2b2b;
+  margin-bottom: 18px;
+  max-width: 760px;
+}
+
+.shortcut-left .em {
+  font-weight: 900;
+  color: #111;
+}
+
+.shortcut-left .underline {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+
+.shortcut-left .compare-grid {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  max-width: 760px;
+}
+
+.compare-card {
+  border: 1px solid #e7e2d6;
+  border-radius: 16px;
+  padding: 18px 16px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.05);
+}
+
+.compare-title {
+  font-weight: 900;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.compare-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.compare-card li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: #222;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  padding: 8px 0;
+  border-top: 1px solid #f1ede4;
+}
+
+.compare-card li:first-child { border-top: none; }
+
+.badge-x, .badge-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  flex: 0 0 22px;
+  margin-top: 2px;
+}
+
+.badge-x {
+  background: rgba(220,38,38,0.10);
+  color: #dc2626;
+  border: 1px solid rgba(220,38,38,0.35);
+}
+
+.badge-check {
+  background: rgba(34,197,94,0.10);
+  color: #16a34a;
+  border: 1px solid rgba(34,197,94,0.35);
+}
+
+/* Right side included card */
+.shortcut-right {
+  position: sticky;
+  top: 96px;
+}
+
+.included-card {
+  border: 3px solid #dc2626;
+  border-radius: 18px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+}
+
+.included-head {
+  padding: 22px 20px 18px;
+  border-bottom: 1px solid #efe9dc;
+  text-align: center;
+}
+
+.included-head .kicker {
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.92rem;
+  color: #111;
+}
+
+.included-head .subkicker {
+  margin-top: 8px;
+  color: #333;
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.included-body {
+  padding: 18px 20px 18px;
+}
+
+.included-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  padding: 14px 0;
+  border-top: 1px solid #f1ede4;
+}
+
+.included-item:first-child { border-top: none; }
+
+.included-item .name {
+  font-weight: 900;
+  color: #111;
+  line-height: 1.4;
+}
+
+.included-item .desc {
+  margin-top: 6px;
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.price-mini {
+  text-align: right;
+  white-space: nowrap;
+  font-weight: 900;
+  color: #111;
+}
+
+.price-mini .was {
+  text-decoration: line-through;
+  opacity: 0.45;
+  margin-right: 8px;
+}
+
+.price-mini .now {
+  color: #dc2626;
+}
+
+.included-footer {
+  padding: 18px 20px 22px;
+  border-top: 1px solid #efe9dc;
+  text-align: center;
+}
+
+.total-line {
+  font-weight: 900;
+  font-size: 1rem;
+  color: #111;
+  margin-bottom: 10px;
+}
+
+.total-line .total-was {
+  text-decoration: line-through;
+  opacity: 0.45;
+  margin-right: 10px;
+}
+
+.total-line .total-now {
+  color: #dc2626;
+}
+
+.cta-main {
+  display: block;
+  text-align: center;
+  background: #dc2626;
+  color: #fff;
+  padding: 16px 18px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta-main:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(220,38,38,0.25);
+}
+
+.security-line {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* responsive */
+@media (max-width: 980px) {
+  .foundation-shortcut-inner { grid-template-columns: 1fr; }
+  .shortcut-right { position: static; }
+  .shortcut-left .compare-grid { grid-template-columns: 1fr; }
+}
   </style>
 </head>
 
@@ -411,89 +658,133 @@
     </div>
   </section>
 
-  <!-- MOVED DOWN (no container box) -->
- <section class="foundation-split" id="shortcut">
-  <div class="foundation-split-inner">
+ <section class="foundation-shortcut" id="included">
+  <div class="foundation-shortcut-inner">
 
-    <!-- LEFT: MESSAGE -->
-    <div class="split-left">
+    <!-- LEFT: big promise + transformation -->
+    <div class="shortcut-left">
       <h2>
-        The Foundation Course is a shortcut to skills that usually take years to master.
+        The Foundation Course is a <span class="power-word">shortcut</span> to skills<br>
+        that usually take years to master.
       </h2>
 
-      <p>
-        Most Japanese learners don’t fail because they’re lazy or untalented.
-        They fail because they spend years learning <em>correct</em> Japanese
-        without ever learning how real people actually speak.
+      <p class="lead">
+        Most learners can make correct sentences.
+        But <span class="em underline">correct</span> doesn’t automatically create connection.
       </p>
 
-      <p>
-        The Foundation Course compresses that gap.
-        It shows you how native Japanese actually sounds in daily life, so you can
-        stop guessing and start speaking in a way that feels human.
+      <p class="lead">
+        This course gives you the missing layer:
+        the casual patterns that make Japanese feel <span class="em">human</span>,
+        natural, and emotionally real in conversation.
       </p>
 
-      <p>
-        Instead of slowly piecing things together through trial and error,
-        you get a clear structure for casual Japanese that normally only comes
-        after years of immersion.
-      </p>
+      <div class="compare-grid">
+
+        <div class="compare-card">
+          <div class="compare-title">Before Foundation</div>
+          <ul>
+            <li><span class="badge-x">✕</span> Stuck in polite mode</li>
+            <li><span class="badge-x">✕</span> Overthinking every sentence</li>
+            <li><span class="badge-x">✕</span> Sounds “correct” but not natural</li>
+            <li><span class="badge-x">✕</span> Conversation feels distant</li>
+            <li><span class="badge-x">✕</span> Low confidence in real-time</li>
+          </ul>
+        </div>
+
+        <div class="compare-card">
+          <div class="compare-title">With Foundation</div>
+          <ul>
+            <li><span class="badge-check">✓</span> Casual, natural speaking mode</li>
+            <li><span class="badge-check">✓</span> Less translating in your head</li>
+            <li><span class="badge-check">✓</span> Sounds like a person, not a textbook</li>
+            <li><span class="badge-check">✓</span> Real reactions from natives</li>
+            <li><span class="badge-check">✓</span> Calm confidence + flow</li>
+          </ul>
+        </div>
+
+      </div>
     </div>
 
-    <!-- RIGHT: VALUE + PRICE -->
-    <div class="split-right">
-      <div class="price-box">
+    <!-- RIGHT: everything included (value stack) -->
+    <div class="shortcut-right">
+      <div class="included-card">
 
-        <h3 style="text-align:center; font-weight:900; margin-bottom:22px;">
-          HERE’S EVERYTHING INCLUDED
-        </h3>
+        <div class="included-head">
+          <div class="kicker">HERE’S EVERYTHING INCLUDED:</div>
+          <div class="subkicker">
+            One-time purchase. Instant access.<br>
+            Bonuses included today.
+          </div>
+        </div>
 
-        <ul style="list-style:none; padding:0; margin:0 0 24px;">
-          <li style="margin-bottom:14px;">
-            <strong>Foundation Course</strong><br>
-            <span style="opacity:0.75;">Casual Japanese fundamentals for real conversation</span><br>
-            <span class="old-price">$199</span> <span class="new-price">$147</span>
-          </li>
+        <div class="included-body">
 
-          <li style="margin-bottom:14px;">
-            <strong>Casual Grammar Course <span style="color:#dc2626;">(Bonus)</span></strong><br>
-            <span style="opacity:0.75;">How natives bend grammar in real speech</span><br>
-            <span class="old-price">$99</span> <span class="new-price">$0</span>
-          </li>
+          <div class="included-item">
+            <div>
+              <div class="name">Foundation Course (One-Time)</div>
+              <div class="desc">The core system to switch into casual Japanese that sounds human.</div>
+            </div>
+            <div class="price-mini">
+              <span class="was">$199</span><span class="now">$147</span>
+            </div>
+          </div>
 
-          <li style="margin-bottom:14px;">
-            <strong>Casual Secrets Course <span style="color:#dc2626;">(Bonus)</span></strong><br>
-            <span style="opacity:0.75;">Fillers, softeners, and hidden speech patterns</span><br>
-            <span class="old-price">$99</span> <span class="new-price">$0</span>
-          </li>
+          <div class="included-item">
+            <div>
+              <div class="name">Casual Grammar Course (Bonus)</div>
+              <div class="desc">The only grammar you need to stop sounding stiff in daily talk.</div>
+            </div>
+            <div class="price-mini">
+              <span class="was">$99</span><span class="now">$0</span>
+            </div>
+          </div>
 
-          <li style="margin-bottom:14px;">
-            <strong>Community Access (View-Only)</strong><br>
-            <span style="opacity:0.75;">Observe real learners and real output</span><br>
-            <span class="old-price">$117</span> <span class="new-price">$0</span>
-          </li>
+          <div class="included-item">
+            <div>
+              <div class="name">Casual Secrets Course (Bonus)</div>
+              <div class="desc">The “invisible rules” natives follow that textbooks never teach.</div>
+            </div>
+            <div class="price-mini">
+              <span class="was">$99</span><span class="now">$0</span>
+            </div>
+          </div>
 
-          <li>
-            <strong>Weekly Freestyle Challenge</strong><br>
-            <span style="opacity:0.75;">Practice writing casual Japanese naturally</span><br>
-            <span class="old-price">$49</span> <span class="new-price">$0</span>
-          </li>
-        </ul>
+          <div class="included-item">
+            <div>
+              <div class="name">Community Access (View-Only)</div>
+              <div class="desc">Watch learning posts + examples. No feedback tier.</div>
+            </div>
+            <div class="price-mini">
+              <span class="was">$117</span><span class="now">$0</span>
+            </div>
+          </div>
 
-        <hr style="border:none; border-top:1px solid #e7e2d6; margin:22px 0;">
+          <div class="included-item">
+            <div>
+              <div class="name">Weekly Freestyle Challenge</div>
+              <div class="desc">A weekly prompt to force real output (and build momentum).</div>
+            </div>
+            <div class="price-mini">
+              <span class="was">$49</span><span class="now">$0</span>
+            </div>
+          </div>
 
-        <p class="price-line" style="text-align:center;">
-          Total Value <span class="old-price">$563</span><br>
-          <span class="new-price">$147 Today</span>
-        </p>
+        </div>
 
-        <a href="YOUR-CHECKOUT-LINK" class="cta-main">
-          GET INSTANT ACCESS →
-        </a>
+        <div class="included-footer">
+          <div class="total-line">
+            Total Value:
+            <span class="total-was">$563</span>
+            <span class="total-now">$147</span>
+          </div>
 
-        <div class="security-line">
-          <span>🛡</span>
-          <span>Instant access · Secure checkout</span>
+          <a href="YOUR-CHECKOUT-LINK" class="cta-main">GET INSTANT ACCESS →</a>
+
+          <div class="security-line">
+            <span>🛡</span>
+            <span>100% Secure Checkout · Instant Access</span>
+          </div>
         </div>
 
       </div>
@@ -501,6 +792,3 @@
 
   </div>
 </section>
-
-</body>
-</html>
