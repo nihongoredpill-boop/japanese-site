@@ -505,7 +505,38 @@
 .total-line .total-now {
   color: #dc2626;
 }
+.final-price-stack{
+  margin: 24px 0 20px;
+  text-align: center;
+}
 
+.final-only-line{
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: #dc2626;
+  line-height: 1.1;
+}
+
+.final-was{
+  text-decoration: line-through;
+  opacity: 0.45;
+  margin: 0 6px;
+}
+
+.final-now{
+  color: #dc2626;
+}
+
+.final-save-line{
+  margin-top: 6px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.final-save-line span{
+  color: #dc2626;
+}
 .cta-main {
   display: block;
   text-align: center;
@@ -1537,15 +1568,13 @@
 
 </div>
 
-        <div class="included-footer">
-         <div class="total-line">
-  <span style="color:#dc2626; font-weight:900;">
-    Only <span style="text-decoration:line-through; opacity:0.5;">$753</span> $147
-  </span>
-</div>
-
-<div style="margin-top:8px; font-weight:800;">
-  Save <span style="color:#dc2626;">$606</span> today
+       <div class="final-price-stack">
+  <div class="final-only-line">
+    Only <span class="final-was">$753</span> <span class="final-now">$147</span>
+  </div>
+  <div class="final-save-line">
+    Save <span>$606</span> today
+  </div>
 </div>
 
           <a href="YOUR-CHECKOUT-LINK" class="cta-main">GET INSTANT ACCESS →</a>
