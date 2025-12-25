@@ -777,6 +777,141 @@
     grid-template-columns: 1fr;
   }
 }
+    .final-included {
+  padding: 90px 20px;
+  background: #fff;
+  border-top: 1px solid #e7e2d6;
+}
+
+.final-included-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.final-title {
+  text-align: center;
+  font-size: clamp(2.1rem, 3.6vw, 3rem);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 40px;
+  color: #111;
+}
+
+.price-emphasis {
+  color: #dc2626;
+}
+
+.final-box {
+  background: #fff;
+  border: 1px solid #e7e2d6;
+  border-radius: 18px;
+  padding: 28px 26px;
+}
+
+.final-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  padding: 18px 0;
+  border-top: 1px solid #f1ede4;
+}
+
+.final-item:first-child {
+  border-top: none;
+}
+
+.final-name {
+  font-weight: 900;
+  font-size: 1.05rem;
+  color: #111;
+}
+
+.final-desc {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.bonus {
+  font-weight: 800;
+  color: #dc2626;
+}
+
+.final-price {
+  text-align: right;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.final-price .was {
+  text-decoration: line-through;
+  opacity: 0.45;
+  margin-right: 10px;
+}
+
+.final-price .now {
+  color: #dc2626;
+}
+
+.final-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 2px solid #111;
+  font-weight: 900;
+}
+
+.total-was {
+  opacity: 0.45;
+}
+
+.total-now {
+  color: #dc2626;
+  font-size: 1.15rem;
+}
+
+.final-cta {
+  display: block;
+  margin-top: 26px;
+  text-align: center;
+  background: #dc2626;
+  color: #fff;
+  padding: 18px;
+  border-radius: 14px;
+  font-weight: 900;
+  font-size: 1.05rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.final-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(220,38,38,0.25);
+}
+
+.final-security {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+@media (max-width: 720px) {
+  .final-item {
+    grid-template-columns: 1fr;
+  }
+
+  .final-price {
+    text-align: left;
+  }
+
+  .final-total {
+    flex-direction: column;
+    gap: 6px;
+  }
+}
   </style>
 </head>
 
@@ -1190,5 +1325,97 @@
       </div>
 
     </div>
+  </div>
+</section>
+<section class="final-included">
+  <div class="final-included-inner">
+
+    <h2 class="final-title">
+      Here’s Everything You’re Getting<br>
+      <span class="price-emphasis">For Only $147 Today</span>
+    </h2>
+
+    <div class="final-box">
+
+      <div class="final-item">
+        <div class="final-left">
+          <div class="final-name">Foundation Course (One-Time)</div>
+          <div class="final-desc">
+            The core system to switch into casual Japanese that sounds human.
+          </div>
+        </div>
+        <div class="final-price">
+          <span class="was">$199</span>
+          <span class="now">$147</span>
+        </div>
+      </div>
+
+      <div class="final-item">
+        <div class="final-left">
+          <div class="final-name">Casual Grammar Course <span class="bonus">(Bonus)</span></div>
+          <div class="final-desc">
+            The only grammar you need to stop sounding stiff in daily talk.
+          </div>
+        </div>
+        <div class="final-price">
+          <span class="was">$99</span>
+          <span class="now">$0</span>
+        </div>
+      </div>
+
+      <div class="final-item">
+        <div class="final-left">
+          <div class="final-name">Casual Secrets Course <span class="bonus">(Bonus)</span></div>
+          <div class="final-desc">
+            The invisible rules natives follow that textbooks never teach.
+          </div>
+        </div>
+        <div class="final-price">
+          <span class="was">$99</span>
+          <span class="now">$0</span>
+        </div>
+      </div>
+
+      <div class="final-item">
+        <div class="final-left">
+          <div class="final-name">Community Access (View-Only)</div>
+          <div class="final-desc">
+            Observe real learner examples, breakdowns, and discussions.
+          </div>
+        </div>
+        <div class="final-price">
+          <span class="was">$117</span>
+          <span class="now">$0</span>
+        </div>
+      </div>
+
+      <div class="final-item">
+        <div class="final-left">
+          <div class="final-name">Weekly Freestyle Challenge</div>
+          <div class="final-desc">
+            Weekly prompts to force real output and build momentum.
+          </div>
+        </div>
+        <div class="final-price">
+          <span class="was">$49</span>
+          <span class="now">$0</span>
+        </div>
+      </div>
+
+      <div class="final-total">
+        <span class="total-was">Total Value $563</span>
+        <span class="total-now">Today $147</span>
+      </div>
+
+      <a href="YOUR-CHECKOUT-LINK" class="final-cta">
+        GET INSTANT ACCESS →
+      </a>
+
+      <div class="final-security">
+        🛡 100% Secure Checkout · Instant Access
+      </div>
+
+    </div>
+
   </div>
 </section>
