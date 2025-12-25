@@ -1068,6 +1068,56 @@
   transform: translateY(-2px);
   box-shadow: 0 18px 40px rgba(220,38,38,0.25);
 }
+    /* ===== Included image (8.png) in the first included card ===== */
+.included-hero-wrap{
+  padding: 18px 20px 0;
+}
+
+.included-hero-img{
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  border: 1px solid #e7e2d6;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+  background: #fff;
+}
+
+/* ===== Thumbs for FINAL included (1–5) ===== */
+.final-row{
+  display: grid;
+  grid-template-columns: 74px 1fr auto;
+  gap: 14px;
+  align-items: start;
+}
+
+.final-thumb{
+  width: 74px;
+  height: 74px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid #e7e2d6;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+  background: #fff;
+}
+
+/* Fix class collision: your final included button should NOT use .final-cta */
+.final-included-cta{
+  display:block;
+  margin-top:26px;
+  text-align:center;
+  background:#dc2626;
+  color:#fff;
+  padding:18px;
+  border-radius:14px;
+  font-weight:900;
+  font-size:1.05rem;
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+.final-included-cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 40px rgba(220,38,38,0.25);
+}
   </style>
 </head>
 
@@ -1315,7 +1365,10 @@
             Bonuses included today.
           </div>
         </div>
-
+        
+<div class="included-hero-wrap">
+  <img src="8.png" alt="Everything included" class="included-hero-img">
+</div>
    <div class="included-body">
 
   <div class="included-item">
@@ -1511,75 +1564,75 @@
 </div>
     <div class="final-box">
 
-      <div class="final-item">
-        <div class="final-left">
-          <div class="final-name">Foundation Course (One-Time)</div>
-          <div class="final-desc">
-            The core system to switch into casual Japanese that sounds human.
-          </div>
-        </div>
-        <div class="final-price">
-          <span class="was">$199</span>
-          <span class="now">$147</span>
-        </div>
-      </div>
+     <div class="final-item">
+  <div class="final-row">
+    <img src="1.png" alt="Foundation Course" class="final-thumb">
+    <div class="final-left">
+      <div class="final-name">Foundation Course (One-Time)</div>
+      <div class="final-desc">The core system to switch into casual Japanese that sounds human.</div>
+    </div>
+    <div class="final-price">
+      <span class="was">$199</span>
+      <span class="now">$147</span>
+    </div>
+  </div>
+</div>
 
-      <div class="final-item">
-        <div class="final-left">
-          <div class="final-name">Casual Grammar Course <span class="bonus">(Bonus)</span></div>
-          <div class="final-desc">
-            The only grammar you need to stop sounding stiff in daily talk.
-          </div>
-        </div>
-        <div class="final-price">
-          <span class="was">$99</span>
-          <span class="now">$0</span>
-        </div>
-      </div>
-
-      <div class="final-item">
-        <div class="final-left">
-          <div class="final-name">Casual Secrets Course <span class="bonus">(Bonus)</span></div>
-          <div class="final-desc">
-            The invisible rules natives follow that textbooks never teach.
-          </div>
-        </div>
-        <div class="final-price">
-          <span class="was">$99</span>
-          <span class="now">$0</span>
-        </div>
-      </div>
-
-      <div class="final-item">
-        <div class="final-left">
-          <div class="final-name">Community Access (View-Only)</div>
-          <div class="final-desc">
-            Observe real learner examples, breakdowns, and discussions.
-          </div>
-        </div>
-        <div class="final-price">
-          <span class="was">$117</span>
-          <span class="now">$0</span>
-        </div>
-      </div>
-
-      <div class="final-item">
-        <div class="final-left">
-          <div class="final-name">Weekly Freestyle Challenge</div>
-          <div class="final-desc">
-            Weekly prompts to force real output and build momentum.
-          </div>
-        </div>
-        <div class="final-price">
-          <span class="was">$49</span>
-          <span class="now">$0</span>
-        </div>
-      </div>
-
-      <div class="final-total">
-        <span class="total-was">Total Value $563</span>
-        <span class="total-now">Today $147</span>
-      </div>
+     <div class="final-item">
+  <div class="final-row">
+    <img src="1.png" alt="Foundation Course" class="final-thumb">
+    <div class="final-left">
+      <div class="final-name">Foundation Course (One-Time)</div>
+      <div class="final-desc">The core system to switch into casual Japanese that sounds human.</div>
+    </div>
+    <div class="final-price">
+      <span class="was">$199</span>
+      <span class="now">$147</span>
+    </div>
+  </div>
+</div>
+      
+    <div class="final-item">
+  <div class="final-row">
+    <img src="3.png" alt="Casual Playbook" class="final-thumb">
+    <div class="final-left">
+      <div class="final-name">Casual Japanese Playbook <span class="bonus">(Bonus)</span></div>
+      <div class="final-desc">The invisible rules natives follow that textbooks never teach.</div>
+    </div>
+    <div class="final-price">
+      <span class="was">$99</span>
+      <span class="now">$0</span>
+    </div>
+  </div>
+</div>
+      
+   <div class="final-item">
+  <div class="final-row">
+    <img src="4.png" alt="Community Access" class="final-thumb">
+    <div class="final-left">
+      <div class="final-name">Community Access </div>
+      <div class="final-desc">Observe real learner examples, breakdowns, and discussions.</div>
+    </div>
+    <div class="final-price">
+      <span class="was">$117</span>
+      <span class="now">$0</span>
+    </div>
+  </div>
+</div>
+      
+    <div class="final-item">
+  <div class="final-row">
+    <img src="5.png" alt="Weekly Freestyle Challenge" class="final-thumb">
+    <div class="final-left">
+      <div class="final-name">Weekly Freestyle Challenge</div>
+      <div class="final-desc">Weekly prompts to force real output and build momentum.</div>
+    </div>
+    <div class="final-price">
+      <span class="was">$49</span>
+      <span class="now">$0</span>
+    </div>
+  </div>
+</div>
 
   <a href="YOUR-CHECKOUT-LINK" class="final-included-cta">
   GET INSTANT ACCESS →
