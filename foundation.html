@@ -702,6 +702,81 @@
 @media (max-width:700px){
   .real-cta{ font-size:1.2rem; padding:18px 16px; }
 }
+    .foundation-testimonials {
+  background: #fff;
+  padding: 90px 20px;
+  border-top: 1px solid #e7e2d6;
+}
+
+.foundation-testimonials-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.testimonials-title {
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin-bottom: 56px;
+  color: #111;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.testimonial-card {
+  border: 1px solid #e7e2d6;
+  border-radius: 18px;
+  padding: 32px 26px;
+  background: #fff;
+}
+
+.testimonial-avatar {
+  margin-bottom: 18px;
+}
+
+.testimonial-avatar img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #dc2626;
+}
+
+.testimonial-text {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #222;
+  margin-bottom: 18px;
+}
+
+.testimonial-stars {
+  color: #f5b301;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+.testimonial-name {
+  display: inline-block;
+  background: #111;
+  color: #fff;
+  font-weight: 900;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}
   </style>
 </head>
 
@@ -1054,5 +1129,66 @@
       <span class="real-cta-sub">GET YOUR TRAINING NOW!</span>
     </a>
 
+  </div>
+</section>
+  <section class="foundation-testimonials">
+  <div class="foundation-testimonials-inner">
+
+    <h2 class="testimonials-title">
+      Real Results From Real Conversations
+    </h2>
+
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card">
+        <div class="testimonial-avatar">
+          <img src="avatar-1.png" alt="Student photo">
+        </div>
+        <p class="testimonial-text">
+          Every lesson clicked immediately.
+          Japanese stopped feeling like rules and started feeling human.
+          I noticed people reacting differently without me trying.
+        </p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-name">Name Here</div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-avatar">
+          <img src="avatar-2.png" alt="Student photo">
+        </div>
+        <p class="testimonial-text">
+          This filled the exact gap I couldn’t explain before.
+          I stopped translating in my head and started responding naturally.
+        </p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-name">Name Here</div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-avatar">
+          <img src="avatar-3.png" alt="Student photo">
+        </div>
+        <p class="testimonial-text">
+          The changes were subtle but powerful.
+          Conversations felt lighter, smoother, and more real.
+        </p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-name">Name Here</div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-avatar">
+          <img src="avatar-4.png" alt="Student photo">
+        </div>
+        <p class="testimonial-text">
+          For the first time, Japanese felt natural instead of forced.
+          This changed how I show up in conversations.
+        </p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-name">Name Here</div>
+      </div>
+
+    </div>
   </div>
 </section>
