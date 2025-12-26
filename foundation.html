@@ -398,6 +398,46 @@
       background:transparent;
       display:block;
     }
+    /* =========================
+   MOBILE: make first "included-card" match final-included style
+   ========================= */
+@media (max-width: 768px){
+
+  .included-body{ padding: 18px 18px 20px; }
+
+  .included-row{
+    grid-template-columns: 1fr;   /* no side layout */
+    text-align: center;
+    justify-items: center;
+    gap: 10px;
+  }
+
+  .included-thumb{
+    width: min(360px, 92vw);      /* big like final */
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .name{
+    font-size: 1.35rem;
+    line-height: 1.2;
+  }
+
+  .desc{
+    font-size: 1.18rem;
+    line-height: 1.7;
+    max-width: 32ch;
+    margin: 8px auto 0;
+  }
+
+  .price-mini{
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.35rem;
+  }
+
+  .price-mini .was{ margin-right: 10px; }
+}
     .name{ font-weight:900; color:#111; line-height:1.4; }
     .desc{ margin-top:6px; color:#333; font-size:1.08rem; line-height:1.7; }
 
@@ -1272,8 +1312,7 @@
       </div>
     </div>
 
- <p class="video-quote">“After joining,I found that I could speak much more naturally and express myself more clearly.”</span>
-</p>
+ <p class="video-quote">“After joining,I found that I could speak much more naturally and express myself more clearly.”</p>
 
     <div class="video-meta">
       <span class="video-name">Ian</span>
@@ -1441,10 +1480,9 @@
 
       <div class="final-footer">
         <p>© Nihongo Red Pill</p>
-        <p><a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></p>
+           <img src="Logo.png" alt="Nihongo Red Pill" />
       </div>
     </div>
   </section>
-<a class="sticky-desktop-cta" href="#checkout">Get Instant Access</a>
 </body>
 </html>
