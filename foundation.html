@@ -22,7 +22,25 @@
     .power-word{ color:#dc2626; font-weight:900; }
     .underline{ text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
     .bonus-label{ color:#dc2626; font-weight:900; text-transform:uppercase; margin-right:6px; }
+    }
+    
+.sticky-desktop-cta{
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 9999;
 
+  background:#dc2626;
+  color:#fff;
+  font-weight:900;
+  padding:14px 18px;
+  border-radius:999px;
+  box-shadow:0 18px 40px rgba(220,38,38,0.25);
+}
+
+@media (max-width:768px){
+  .sticky-desktop-cta{ display:none; }
+}
     /* HEADER */
     .logo-header{
       padding:22px 24px;
@@ -30,7 +48,7 @@
       justify-content:center;
       border-bottom:1px solid #e7e2d6;
       background:#fff;
-      position:sticky;
+      position:static;
       top:0;
       z-index:999;
     }
@@ -695,257 +713,94 @@
       .faq-title{ font-size:28px; }
       .real-cta{ font-size:1.2rem; padding:18px 16px; }
     }
-    /* =========================
-   FINAL VIDEO TESTIMONIALS
+/* =========================
+   FINAL VIDEO TESTIMONIALS (CLEAN)
    ========================= */
 
-.final-video-proof{
-  padding:100px 20px;
-  background:#fff;
-}
-
-.video-testimonial-grid{
-  max-width:900px;
-  margin:48px auto 0;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:48px;
-}
-
-.video-testimonial-card{
-  text-align:center;
-}
-
-.video-frame{
-  position:relative;
-  border-radius:18px;
-  padding:3px;
-  background:linear-gradient(
-    135deg,
-    #dc2626,
-    #ff4d4d,
-    #dc2626
-  );
-  box-shadow:0 20px 50px rgba(220,38,38,.25);
-}
-
-.video-frame video{
-  width:100%;
-  display:block;
-  border-radius:15px;
-  background:#000;
-}
-
-/* Punchline */
-.video-punchline{
-  font-size:1.15rem;
-  line-height:1.7;
-  margin:18px auto 10px;
-  max-width:420px;
-  color:#111;
-}
-
-/* Name + stars */
-.video-meta{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
-  font-size:1.05rem;
-}
-
-.video-name{
-  font-weight:800;
-}
-
-.video-stars{
-  color:#dc2626;
-  letter-spacing:1px;
-}
-
-/* Mobile */
-@media (max-width:768px){
-  .video-testimonial-grid{
-    grid-template-columns:1fr;
-    gap:56px;
-  }
-
-  .final-video-proof{
-    padding:80px 16px;
-  }
-
-  .video-punchline{
-    font-size:1.1rem;
-  }
-}
-    @media (max-width: 768px) {
-  .included-row {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .included-thumb {
-    margin: 0 auto 12px;
-    width: 120px;
-    height: auto;
-  }
-
-  .price-mini {
-    text-align: center;
-    margin-top: 8px;
-  }
-      /* =========================
-   VIDEO TESTIMONIALS (PREMIUM)
-   ========================= */
-
-/* FINAL REVIEW SECTION - video sizing fix (desktop) */
-.video-review-card{
-  background:#fff;
-  border:2px solid rgba(0,0,0,.08);
-  border-radius:18px;
-  padding:22px;
-  max-width:520px;            /* stops each card from becoming gigantic */
-  margin:0 auto;
-}
-
-.video-frame{
-  width:100%;
-  display:flex;
-  justify-content:center;     /* centers the square inside the card */
-}
-
-.video-square{
-  width:min(320px, 100%);     /* desktop cap */
-  aspect-ratio:1 / 1;         /* keeps it square */
-  border:3px solid #d62828;   /* shiny red border */
-  border-radius:18px;
-  overflow:hidden;
-  box-shadow:0 10px 25px rgba(214,40,40,.18);
-}
-
-.video-square video{
-  width:100%;
-  height:100%;
-  object-fit:cover;           /* fills the square without distortion */
-  display:block;
-}
-
-/* optional: make desktop a little tighter */
-@media (min-width: 900px){
-  .video-square{ width:280px; }
-}
-
-/* Punchline quote (thicker + more premium) */
-.video-quote{
-  margin-top: 18px;
-  font-size: 1.1rem;
-  line-height: 1.75;
-  color: #111;
-  font-weight: 800;               /* thicker */
-  letter-spacing: -0.01em;
-}
-
-/* Name + stars row */
-.video-meta{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 14px;
-}
-
-.video-name{
-  font-weight: 900;
-  color: #111;
-  font-size: 1.05rem;
-}
-
-/* ✅ gold/yellow stars */
-.video-stars{
-  color: #f5b301;
-  font-size: 1.15rem;
-  letter-spacing: 3px;
-  transform: translateY(-1px);
-}
-
-/* Mobile */
-@media (max-width: 900px){
-  .video-reviews-grid{
-    grid-template-columns: 1fr;
-  }
-  .video-review-card{
-    padding: 18px;
-  }
-}
-
-  .desc {
-    max-width: 90%;
-    margin: 0 auto;
-  }
-}
-    /* 1) Constrain the whole final review section width on desktop */
-.foundation-testimonials,
-.final-testimonials,
-.video-testimonials-section {
+.video-testimonials-grid{
   max-width: 1100px;
-  margin: 0 auto;
-  padding: 60px 20px;
-}
-
-/* 2) Make the grid not create giant cards */
-.video-testimonials-grid {
+  margin: 48px auto 0;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 28px;
   align-items: start;
 }
 
-/* 3) Card styling + prevent stretching */
-.video-review-card {
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 18px;
-  padding: 22px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
-  justify-self: center;   /* key */
-  width: 100%;
-  max-width: 520px;       /* key */
+.video-review-card{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.10);
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+  justify-self:center;
+  width:100%;
+  max-width:520px;
+  text-align:center;
 }
 
-/* 4) HARD LIMIT the square on desktop */
-.video-square {
-  width: clamp(220px, 22vw, 320px);  /* key */
+/* neutral wrapper (NO red background here) */
+.video-frame{
+  display:flex;
+  justify-content:center;
+}
+
+/* square container = the ONLY place we do the red border */
+.video-square{
+  width: clamp(220px, 18vw, 300px); /* desktop cap */
   aspect-ratio: 1 / 1;
-  border-radius: 18px;
-  overflow: hidden;
-  margin: 0 auto;
+  border-radius:18px;
+  overflow:hidden;
+  background:#000;
+
+  border:3px solid #dc2626;
+  box-shadow:0 14px 30px rgba(220,38,38,0.18);
 }
 
-/* 5) Video fills square nicely */
-.video-square video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.video-square video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
 }
 
-/* 6) Shiny red line around the video */
-.video-frame {
-  border: 3px solid #d11f1f;
-  border-radius: 22px;
-  padding: 10px;
-  box-shadow: 0 14px 30px rgba(209,31,31,0.15);
+/* thicker quote */
+.video-quote{
+  margin:18px auto 10px;
+  max-width:420px;
+  font-size:1.12rem;
+  line-height:1.7;
+  font-weight:800;
+  color:#111;
 }
 
-/* Mobile: stack + allow bigger square */
-@media (max-width: 768px) {
-  .video-testimonials-grid {
-    grid-template-columns: 1fr;
+/* name + stars */
+.video-meta{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin-top:10px;
+}
+
+.video-name{
+  font-weight:900;
+  font-size:1.05rem;
+  color:#111;
+}
+
+.video-stars{
+  color:#f5b301;  /* gold */
+  letter-spacing:3px;
+  font-size:1.15rem;
+}
+
+/* mobile stack */
+@media (max-width:768px){
+  .video-testimonials-grid{
+    grid-template-columns:1fr;
+    gap:34px;
   }
-  .video-review-card {
-    max-width: 560px;
-  }
-  .video-square {
+  .video-square{
     width: min(92vw, 360px);
   }
 }
@@ -1302,49 +1157,43 @@
 section class="final-testimonials video-testimonials-section">
   <h2 class="testimonials-title">Transformation o</h2>
 
-  <div class="video-testimonials-grid">
-
-    <div class="video-review-card">
-      <div class="video-frame">
-        <div class="video-square">
-          <video controls playsinline preload="metadata" poster="ian-poster.jpg">
-            <source src="ian.mp4" type="video/mp4" />
-          </video>
-        </div>
+ <div class="video-testimonials-grid">
+  <!-- Ian -->
+  <div class="video-review-card">
+    <div class="video-frame">
+      <div class="video-square">
+        <video controls playsinline preload="metadata" poster="ian-poster.jpg">
+          <source src="ian.mp4" type="video/mp4" />
+        </video>
       </div>
+    </div>
 
-        <p class="video-quote">
-          “After joining, I found that I could speak much more naturally and express myself more clearly.”
-        </p>
+    <p class="video-quote">“After joining, I found that I could speak much more naturally and express myself more clearly.”</p>
 
-        <div class="video-meta">
-          <div class="video-name">Ian</div>
-          <div class="video-stars" aria-label="5 stars">★★★★★</div>
-        </div>
-      </div>
-
-      <!-- Tim -->
-      <div class="video-review-card">
-      <div class="video-frame">
-        <div class="video-square">
-          <video controls playsinline preload="metadata" poster="ian-poster.jpg">
-            <source src="timtest.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
-
-        <p class="video-quote">
-          “The phrases I learned here really opened up the conversation.”
-        </p>
-
-        <div class="video-meta">
-          <div class="video-name">Tim</div>
-          <div class="video-stars" aria-label="5 stars">★★★★★</div>
-        </div>
-      </div>
-
+    <div class="video-meta">
+      <span class="video-name">Ian</span>
+      <span class="video-stars">★★★★★</span>
     </div>
   </div>
+
+  <!-- Tim -->
+  <div class="video-review-card">
+    <div class="video-frame">
+      <div class="video-square">
+        <video controls playsinline preload="metadata" poster="tim-poster.jpg">
+          <source src="Timtest.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+
+    <p class="video-quote">“The phrases I learned here really opened up the conversation.”</p>
+
+    <div class="video-meta">
+      <span class="video-name">Tim</span>
+      <span class="video-stars">★★★★★</span>
+    </div>
+  </div>
+</div>
 </section>
   <section class="final-included">
   <div class="final-included-inner">
@@ -1491,6 +1340,6 @@ section class="final-testimonials video-testimonials-section">
       </div>
     </div>
   </section>
-
+<a class="sticky-desktop-cta" href="#checkout">Get Instant Access</a>
 </body>
 </html>
