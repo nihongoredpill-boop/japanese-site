@@ -720,6 +720,113 @@
     text-align: center;
     margin-top: 8px;
   }
+      /* =========================
+   VIDEO TESTIMONIALS (PREMIUM)
+   ========================= */
+
+.video-reviews{
+  background:#fff;
+  padding: 90px 20px;
+  border-top: 1px solid #e7e2d6;
+}
+
+.video-reviews-inner{
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.video-reviews-title{
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin-bottom: 56px;
+  color: #111;
+}
+
+.video-reviews-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+
+/* Card box (premium container) */
+.video-review-card{
+  border: 1px solid #e7e2d6;
+  border-radius: 20px;
+  background: #fff;
+  padding: 22px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.06);
+}
+
+/* Outer frame (makes the video feel “seated” inside a box) */
+.video-frame{
+  border-radius: 18px;
+  padding: 10px;
+  background: linear-gradient(180deg, rgba(220,38,38,0.06), rgba(0,0,0,0));
+}
+
+/* Red shiny border around the video container */
+.video-square{
+  aspect-ratio: 1 / 1;            /* ✅ square */
+  width: 100%;
+  border-radius: 16px;
+  border: 3px solid #dc2626;      /* red line */
+  box-shadow: 0 18px 40px rgba(220,38,38,0.12);
+  overflow: hidden;
+  background: #0b0b0b;            /* looks clean while loading */
+}
+
+/* Video fills the square */
+.video-square video{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;              /* ✅ keeps it tight (no tall video) */
+}
+
+/* Punchline quote (thicker + more premium) */
+.video-quote{
+  margin-top: 18px;
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: #111;
+  font-weight: 800;               /* thicker */
+  letter-spacing: -0.01em;
+}
+
+/* Name + stars row */
+.video-meta{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.video-name{
+  font-weight: 900;
+  color: #111;
+  font-size: 1.05rem;
+}
+
+/* ✅ gold/yellow stars */
+.video-stars{
+  color: #f5b301;
+  font-size: 1.15rem;
+  letter-spacing: 3px;
+  transform: translateY(-1px);
+}
+
+/* Mobile */
+@media (max-width: 900px){
+  .video-reviews-grid{
+    grid-template-columns: 1fr;
+  }
+  .video-review-card{
+    padding: 18px;
+  }
+}
 
   .desc {
     max-width: 90%;
@@ -1069,49 +1176,53 @@
     </div>
   </section>
 
-  <section class="foundation-testimonials final-video-proof">
-  <div class="foundation-testimonials-inner">
+<section class="video-reviews">
+  <div class="video-reviews-inner">
+    <h2 class="video-reviews-title">Real Results From Real Conversations</h2>
 
-    <h2 class="testimonials-title">
-      Real Results From Real Conversations
-    </h2>
-
-    <div class="video-testimonial-grid">
+    <div class="video-reviews-grid">
 
       <!-- Ian -->
-      <div class="video-testimonial-card">
+      <div class="video-review-card">
         <div class="video-frame">
-          <video src="ian.mp4" controls playsinline></video>
+          <div class="video-square">
+            <video controls playsinline preload="metadata" poster="ian-poster.jpg">
+              <source src="ian.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
 
-        <p class="video-punchline">
+        <p class="video-quote">
           “After joining, I found that I could speak much more naturally and express myself more clearly.”
         </p>
 
         <div class="video-meta">
-          <span class="video-name">Ian</span>
-          <span class="video-stars">★★★★★</span>
+          <div class="video-name">Ian</div>
+          <div class="video-stars" aria-label="5 stars">★★★★★</div>
         </div>
       </div>
 
       <!-- Tim -->
-      <div class="video-testimonial-card">
+      <div class="video-review-card">
         <div class="video-frame">
-          <video src="Timtest.mp4" controls playsinline></video>
+          <div class="video-square">
+            <video controls playsinline preload="metadata" poster="tim-poster.jpg">
+              <source src="Timtest.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
 
-        <p class="video-punchline">
+        <p class="video-quote">
           “The phrases I learned here really opened up the conversation.”
         </p>
 
         <div class="video-meta">
-          <span class="video-name">Tim</span>
-          <span class="video-stars">★★★★★</span>
+          <div class="video-name">Tim</div>
+          <div class="video-stars" aria-label="5 stars">★★★★★</div>
         </div>
       </div>
 
     </div>
-
   </div>
 </section>
   <section class="final-included">
