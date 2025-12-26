@@ -7,205 +7,621 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
- /* =========================
-   RESET + BASE
-   ========================= */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body{
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  background:#fff;
-  color:#111;
-  overflow-x:hidden;
-  font-size:19px;
-  line-height:1.8;
-}
+    body{
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background:#fff;
+      color:#111;
+      overflow-x:hidden;
+      font-size:19px;
+      line-height:1.8;
+    }
 
-a{ color:inherit; text-decoration:none; }
-.power-word{ color:#dc2626; font-weight:900; }
+    a{ color:inherit; text-decoration:none; }
+    .power-word{ color:#dc2626; font-weight:900; }
+    .underline{ text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+    .bonus-label{ color:#dc2626; font-weight:900; text-transform:uppercase; margin-right:6px; }
 
-/* =========================
-   HEADER
-   ========================= */
-.logo-header{
-  padding:22px 24px;
-  display:flex;
-  justify-content:center;
-  border-bottom:1px solid #e7e2d6;
-  background:#fff;
-  position:sticky;
-  top:0;
-  z-index:999;
-}
+    /* HEADER */
+    .logo-header{
+      padding:22px 24px;
+      display:flex;
+      justify-content:center;
+      border-bottom:1px solid #e7e2d6;
+      background:#fff;
+      position:sticky;
+      top:0;
+      z-index:999;
+    }
+    .logo-header img{ height:56px; width:auto; }
+    @media (max-width:768px){
+      .logo-header img{ height:48px; }
+    }
 
-.logo-header img{
-  height:56px;
-}
+    /* HERO */
+    .foundation-hero{ padding:78px 0 56px; background:#fff; }
+    .hero-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0 24px;
+      text-align:center;
+    }
+    .qualifier{
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      font-weight:900;
+      font-size:0.95rem;
+      color:#111;
+      margin-bottom:16px;
+      display:inline-block;
+      padding-bottom:6px;
+      border-bottom:3px solid #111;
+    }
+    .headline{
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      line-height:1.12;
+      font-weight:900;
+      letter-spacing:-0.02em;
+      margin-bottom:18px;
+      color:#111;
+    }
+    .subheadline{
+      font-size:1.28rem;
+      color:#444;
+      max-width:900px;
+      margin:0 auto 10px;
+      line-height:1.85;
+    }
 
-@media(max-width:768px){
-  .logo-header img{ height:48px; }
-}
+    /* BUTTONS */
+    .cta-main{
+      display:block;
+      text-align:center;
+      background:#dc2626;
+      color:#fff;
+      padding:16px 18px;
+      font-size:1.05rem;
+      font-weight:900;
+      border-radius:12px;
+      transition:transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cta-main:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 40px rgba(220,38,38,0.25);
+    }
 
-/* =========================
-   HERO
-   ========================= */
-.foundation-hero{
-  padding:78px 0 56px;
-}
+    /* SPLIT SECTION */
+    .foundation-split{
+      background:#fff;
+      color:#111;
+      border-top:1px solid #e7e2d6;
+      padding:80px 20px;
+    }
+    .foundation-split-inner{
+      max-width:1200px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1.2fr 0.8fr;
+      gap:48px;
+      align-items:start;
+    }
+    .split-left h2{
+      font-size: clamp(2rem, 3.2vw, 3rem);
+      line-height:1.15;
+      letter-spacing:-0.02em;
+      margin-bottom:18px;
+      font-weight:900;
+      color:#111;
+    }
+    .split-left p{
+      font-size:1.18rem;
+      line-height:1.9;
+      color:#222;
+      margin-bottom:16px;
+      max-width:780px;
+    }
 
-.hero-inner{
-  max-width:1100px;
-  margin:0 auto;
-  padding:0 24px;
-  text-align:center;
-}
+    .split-right{ position:sticky; top:96px; }
 
-.qualifier{
-  text-transform:uppercase;
-  letter-spacing:.12em;
-  font-weight:900;
-  font-size:.95rem;
-  margin-bottom:16px;
-  display:inline-block;
-  padding-bottom:6px;
-  border-bottom:3px solid #111;
-}
+    .price-box{
+      border:3px solid #dc2626;
+      border-radius:16px;
+      padding:34px 22px;
+      background:#fff;
+    }
+    .price-line{
+      font-size:2.1rem;
+      font-weight:900;
+      margin-bottom:8px;
+      color:#111;
+    }
+    .old-price{ text-decoration:line-through; opacity:0.45; margin-right:10px; }
+    .new-price{ color:#dc2626; }
+    .save-line{
+      font-size:1.05rem;
+      font-weight:800;
+      margin-bottom:16px;
+      color:#111;
+    }
+    .access-line{
+      font-size:1.05rem;
+      color:#333;
+      margin-bottom:22px;
+      line-height:1.7;
+    }
+    .security-line{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      font-size:1.05rem;
+      color:#333;
+      margin-top:14px;
+    }
 
-.headline{
-  font-size:clamp(2.4rem,5vw,3.8rem);
-  line-height:1.12;
-  font-weight:900;
-  margin-bottom:18px;
-}
+    /* PRICE BOX TESTIMONIALS: always stacked */
+    .price-testimonials{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+    .price-testimonial{
+      background:#fff;
+      border:1px solid #e7e2d6;
+      border-radius:14px;
+      padding:18px;
+    }
+    .student-avatar{
+      width:84px;
+      height:84px;
+      border-radius:50%;
+      object-fit:cover;
+      border:4px solid #dc2626;
+      margin-bottom:10px;
+      display:block;
+    }
+    .word-quote{
+      font-size:1.08rem;
+      line-height:1.75;
+      color:#222;
+      margin:0 0 10px;
+    }
+    .stars{ color:#f5b301; font-size:1.05rem; letter-spacing:3px; margin-bottom:10px; }
+    .student-name{
+      display:inline-block;
+      background:#111;
+      color:#fff;
+      font-weight:900;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:0.95rem;
+    }
+    @media (min-width:981px){
+      .price-testimonial{
+        display:grid;
+        grid-template-columns:92px 1fr;
+        gap:16px;
+        align-items:start;
+        text-align:left;
+      }
+      .student-avatar{ margin:0; }
+    }
 
-.subheadline{
-  font-size:1.28rem;
-  color:#444;
-  max-width:900px;
-  margin:0 auto 26px;
-  line-height:1.85;
-}
+    /* SHORTCUT SECTION */
+    .foundation-shortcut{
+      background:#fff;
+      border-top:1px solid #e7e2d6;
+      padding:90px 20px;
+    }
+    .foundation-shortcut-inner{
+      max-width:1200px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1.15fr 0.85fr;
+      gap:52px;
+      align-items:start;
+    }
+    .shortcut-left h2{
+      font-size: clamp(2.2rem, 3.6vw, 3.4rem);
+      line-height:1.08;
+      letter-spacing:-0.03em;
+      font-weight:900;
+      margin-bottom:18px;
+      color:#111;
+    }
+    .shortcut-left p{
+      font-size:1.18rem;
+      line-height:1.9;
+      color:#2b2b2b;
+      margin-bottom:14px;
+      max-width:760px;
+    }
+    .shortcut-section-break{
+      margin:34px auto 26px;
+      max-width:760px;
+      padding:18px 18px;
+      border:1px solid #e7e2d6;
+      border-radius:16px;
+      background:#fff;
+      text-align:center;
+      box-shadow:0 10px 24px rgba(0,0,0,0.04);
+    }
+    .shortcut-section-break .kicker{
+      font-weight:900;
+      letter-spacing:0.10em;
+      text-transform:uppercase;
+      font-size:0.92rem;
+      color:#111;
+      margin-bottom:8px;
+    }
+    .shortcut-section-break .sub{
+      font-size:1.05rem;
+      line-height:1.75;
+      color:#333;
+      max-width:680px;
+      margin:0 auto;
+    }
 
-/* =========================
-   GLOBAL TEXT
-   ========================= */
-p{
-  font-size:1.18rem;
-  line-height:1.9;
-  color:#222;
-}
+    .compare-grid{
+      margin-top:26px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      max-width:760px;
+    }
+    .compare-card{
+      border:1px solid #e7e2d6;
+      border-radius:16px;
+      padding:18px 16px;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(0,0,0,0.05);
+    }
+    .compare-title{
+      font-weight:900;
+      font-size:0.95rem;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+      color:#111;
+    }
+    .compare-card ul{ list-style:none; padding:0; margin:0; }
+    .compare-card li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      color:#222;
+      font-size:0.98rem;
+      line-height:1.65;
+      padding:8px 0;
+      border-top:1px solid #f1ede4;
+    }
+    .compare-card li:first-child{ border-top:none; }
+    .badge-x,.badge-check{
+      width:22px;
+      height:22px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      flex:0 0 22px;
+      margin-top:2px;
+    }
+    .badge-x{ background:rgba(220,38,38,0.10); color:#dc2626; border:1px solid rgba(220,38,38,0.35); }
+    .badge-check{ background:rgba(34,197,94,0.10); color:#16a34a; border:1px solid rgba(34,197,94,0.35); }
 
-.word-quote{
-  font-size:1.05rem;
-  line-height:1.75;
-}
+    .shortcut-right{ position:sticky; top:96px; }
+    .included-card{
+      border:3px solid #dc2626;
+      border-radius:18px;
+      background:#fff;
+      overflow:hidden;
+      box-shadow:0 18px 40px rgba(0,0,0,0.08);
+    }
+    .included-head{
+      padding:22px 20px 18px;
+      border-bottom:1px solid #efe9dc;
+      text-align:center;
+    }
+    .included-head .kicker{
+      font-weight:900;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      font-size:0.92rem;
+      color:#111;
+    }
+    .included-head .subkicker{
+      margin-top:8px;
+      color:#333;
+      font-size:1.05rem;
+      line-height:1.65;
+    }
+    .included-hero-wrap{
+      padding:16px 20px 4px;
+      text-align:center;
+    }
+    .included-hero-img{
+      max-width:520px;
+      width:100%;
+      height:auto;
+      display:block;
+      margin:0 auto;
+      border:none;
+      box-shadow:none;
+      background:transparent;
+    }
+    .included-body{ padding:18px 20px 18px; }
 
-/* =========================
-   SPLIT SECTION
-   ========================= */
-.foundation-split{
-  border-top:1px solid #e7e2d6;
-  padding:80px 20px;
-}
+    .included-item{ padding:14px 0; border-top:1px solid #f1ede4; }
+    .included-item:first-child{ border-top:none; }
 
-.foundation-split-inner{
-  max-width:1200px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:48px;
-}
+    .included-row{
+      display:grid;
+      grid-template-columns:92px 1fr auto;
+      gap:14px;
+      align-items:start;
+    }
+    .included-thumb{
+      width:84px;
+      height:84px;
+      object-fit:contain;
+      border:none;
+      box-shadow:none;
+      background:transparent;
+      display:block;
+    }
+    .name{ font-weight:900; color:#111; line-height:1.4; }
+    .desc{ margin-top:6px; color:#333; font-size:1.08rem; line-height:1.7; }
 
-.split-left h2{
-  font-size:clamp(2rem,3.2vw,3rem);
-  font-weight:900;
-  margin-bottom:18px;
-}
+    .price-mini{
+      text-align:right;
+      white-space:nowrap;
+      font-weight:900;
+      color:#111;
+    }
+    .price-mini .was{ text-decoration:line-through; opacity:0.45; margin-right:8px; }
+    .price-mini .now{ color:#dc2626; }
 
-.split-left p{
-  margin-bottom:16px;
-  max-width:780px;
-}
+    .final-price-stack{ margin:24px 0 20px; text-align:center; }
+    .final-only-line{ font-size:2.1rem; font-weight:900; color:#dc2626; line-height:1.1; }
+    .final-was{ text-decoration:line-through; opacity:0.45; margin:0 6px; color:#111; }
+    .final-now{ color:#dc2626; }
+    .final-save-line{ margin-top:6px; font-size:1.15rem; font-weight:800; color:#111; }
+    .final-save-line span{ color:#dc2626; }
 
-/* =========================
-   PRICE BOX
-   ========================= */
-.split-right{ position:sticky; top:96px; }
+    /* REAL PROOF */
+    .real-convo-proof{
+      background:#fff;
+      border-top:1px solid #e7e2d6;
+      padding:90px 20px;
+    }
+    .real-convo-inner{ max-width:1100px; margin:0 auto; text-align:center; }
+    .real-title{
+      font-size:clamp(2.2rem, 4.2vw, 3.4rem);
+      line-height:1.08;
+      letter-spacing:-0.03em;
+      font-weight:900;
+      color:#111;
+      margin-bottom:14px;
+    }
+    .real-sub{
+      font-size:1.18rem;
+      line-height:1.85;
+      color:#333;
+      max-width:900px;
+      margin:0 auto 34px;
+    }
+    .real-image-wrap{ max-width:980px; margin:0 auto 34px; }
+    .real-image{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:18px;
+      border:1px solid #e7e2d6;
+      box-shadow:0 18px 40px rgba(0,0,0,0.08);
+    }
+    .real-image-note{ margin-top:14px; font-size:1.08rem; color:#444; }
+    .real-cta{
+      display:block;
+      max-width:860px;
+      margin:0 auto;
+      background:#dc2626;
+      color:#fff;
+      border-radius:14px;
+      padding:22px 20px;
+      font-weight:900;
+      font-size:1.55rem;
+      letter-spacing:-0.01em;
+      transition:transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .real-cta:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 40px rgba(220,38,38,0.25);
+    }
+    .real-cta-sub{
+      display:block;
+      margin-top:10px;
+      font-size:0.92rem;
+      font-weight:800;
+      opacity:0.9;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+    }
 
-.price-box{
-  border:3px solid #dc2626;
-  border-radius:16px;
-  padding:34px 22px;
-}
+    /* TESTIMONIAL GRID */
+    .foundation-testimonials{
+      background:#fff;
+      padding:90px 20px;
+      border-top:1px solid #e7e2d6;
+    }
+    .foundation-testimonials-inner{ max-width:1100px; margin:0 auto; }
+    .testimonials-title{
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-weight:900;
+      letter-spacing:-0.02em;
+      text-align:center;
+      margin-bottom:56px;
+      color:#111;
+    }
+    .testimonials-grid{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:32px;
+    }
+    .testimonial-card{
+      border:1px solid #e7e2d6;
+      border-radius:18px;
+      padding:32px 26px;
+      background:#fff;
+    }
+    .testimonial-avatar img{
+      width:72px;
+      height:72px;
+      border-radius:50%;
+      object-fit:cover;
+      border:3px solid #dc2626;
+    }
+    .testimonial-text{
+      font-size:1.12rem;
+      line-height:1.75;
+      color:#222;
+      margin:18px 0;
+    }
+    .testimonial-stars{ color:#f5b301; font-size:1.1rem; letter-spacing:3px; margin-bottom:10px; }
+    .testimonial-name{
+      display:inline-block;
+      background:#111;
+      color:#fff;
+      font-weight:900;
+      padding:8px 16px;
+      border-radius:999px;
+      font-size:0.9rem;
+    }
 
-.price-line{
-  font-size:2.1rem;
-  font-weight:900;
-}
+    /* FINAL INCLUDED */
+    .final-included{
+      padding:90px 20px;
+      background:#fff;
+      border-top:1px solid #e7e2d6;
+    }
+    .final-included-inner{ max-width:1000px; margin:0 auto; }
+    .final-title{
+      text-align:center;
+      font-size: clamp(2.1rem, 3.6vw, 3rem);
+      font-weight:900;
+      line-height:1.15;
+      margin-bottom:40px;
+      color:#111;
+    }
+    .price-emphasis{ color:#dc2626; }
 
-.old-price{ text-decoration:line-through; opacity:.45; }
-.new-price{ color:#dc2626; }
+    .final-bundle-image-wrap{ text-align:center; max-width:980px; margin:0 auto 34px; }
+    .final-bundle-image{
+      max-width:820px;
+      width:100%;
+      height:auto;
+      display:block;
+      margin:0 auto;
+      border:none;
+      box-shadow:none;
+      background:transparent;
+    }
 
-.save-line{
-  font-weight:800;
-  margin:12px 0 16px;
-}
+    .final-box{
+      background:#fff;
+      border:1px solid #e7e2d6;
+      border-radius:18px;
+      padding:28px 26px;
+    }
+    .final-item-stack{ padding:26px 0; border-top:1px solid #f1ede4; }
+    .final-item-stack:first-child{ border-top:none; }
+    .final-item-media{ display:flex; justify-content:center; margin-bottom:14px; }
+    .final-item-img{ width:min(360px, 100%); height:auto; object-fit:contain; background:transparent; }
+    .final-item-title{ text-align:center; font-weight:900; font-size:1.25rem; color:#111; margin-bottom:6px; }
+    .final-item-sub{ text-align:center; font-size:1.08rem; color:#333; line-height:1.75; max-width:820px; margin:0 auto 14px; }
+    .final-item-meta{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      align-items:center;
+      font-weight:900;
+      color:#111;
+    }
+    .final-item-meta .was{ text-decoration:line-through; opacity:0.45; }
+    .final-item-meta .now{ color:#dc2626; }
 
-.access-line{
-  font-size:1.05rem;
-  color:#333;
-  margin-bottom:22px;
-}
+    .final-included-cta{
+      display:block;
+      margin-top:26px;
+      text-align:center;
+      background:#dc2626;
+      color:#fff;
+      padding:18px;
+      border-radius:14px;
+      font-weight:900;
+      font-size:1.05rem;
+      transition:transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .final-included-cta:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 40px rgba(220,38,38,0.25);
+    }
+    .final-security{ margin-top:14px; text-align:center; font-size:1.05rem; color:#444; }
 
-.cta-main{
-  display:block;
-  background:#dc2626;
-  color:#fff;
-  padding:16px;
-  border-radius:12px;
-  font-weight:900;
-  text-align:center;
-}
+    /* FAQ */
+    .faq-section{ padding:80px 20px; background:#fff; border-top:1px solid #e7e2d6; }
+    .faq-inner{ max-width:1100px; margin:0 auto; }
+    .faq-title{ text-align:center; font-size:36px; font-weight:900; margin-bottom:60px; }
+    .faq-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:32px; }
+    .faq-item{ border:1px solid #e7e2d6; border-radius:12px; padding:24px 26px; }
+    .faq-item h3{ font-size:1.22rem; font-weight:900; margin-bottom:12px; }
+    .faq-item p{ font-size:1.12rem; line-height:1.7; color:#333; }
 
-.cta-main:hover{
-  transform:translateY(-2px);
-  box-shadow:0 18px 40px rgba(220,38,38,.25);
-}
+    /* FINAL CTA SECTION (rename to avoid collisions) */
+    .final-cta-section{
+      background: linear-gradient(to right, #000, #1a1a1a);
+      padding:100px 20px 80px;
+      color:#fff;
+      text-align:center;
+      border-top:1px solid #111;
+    }
+    .final-cta-inner{ max-width:1000px; margin:0 auto; }
+    .final-product-visual img{ max-width:520px; width:100%; margin-bottom:40px; }
+    .final-cta-button{
+      display:inline-block;
+      background:#e6463a;
+      color:#fff;
+      font-size:20px;
+      font-weight:900;
+      padding:18px 36px;
+      border-radius:10px;
+      transition:transform 0.15s ease, background 0.15s ease;
+    }
+    .final-cta-button:hover{ background:#d13f34; transform:translateY(-2px); }
+    .final-cta-note{ margin-top:18px; font-size:14px; color:#ccc; }
+    .final-footer{ margin-top:60px; font-size:12px; color:#999; }
+    .final-footer a{ color:#999; text-decoration:none; }
+    .final-footer a:hover{ text-decoration:underline; }
 
-.security-line{
-  margin-top:14px;
-  font-size:1.05rem;
-  display:flex;
-  justify-content:center;
-  gap:8px;
-}
-
-/* =========================
-   RESPONSIVE
-   ========================= */
-@media(max-width:980px){
-  .foundation-split-inner{
-    grid-template-columns:1fr;
-  }
-  .split-right{ position:static; }
-}
-
-@media(max-width:768px){
-  body{
-    font-size:18px;
-  }
-  p{
-    font-size:1.1rem;
-  }
-  .subheadline{
-    font-size:1.18rem;
-  }
-}
-    <style>
+    /* RESPONSIVE */
+    @media (max-width:980px){
+      .foundation-split-inner{ grid-template-columns:1fr; }
+      .split-right{ position:static; }
+      .foundation-shortcut-inner{ grid-template-columns:1fr; }
+      .shortcut-right{ position:static; }
+    }
+    @media (max-width:900px){
+      .testimonials-grid{ grid-template-columns:1fr; }
+    }
+    @media (max-width:768px){
+      body{ font-size:18px; }
+      .compare-grid{ grid-template-columns:1fr; }
+      .faq-grid{ grid-template-columns:1fr; }
+      .faq-title{ font-size:28px; }
+      .real-cta{ font-size:1.2rem; padding:18px 16px; }
+    }
+  </style>
 </head>
 
 <body>
@@ -215,7 +631,6 @@ p{
     </a>
   </header>
 
-  <!-- HERO -->
   <section class="foundation-hero">
     <div class="hero-inner">
       <p class="qualifier">
@@ -223,49 +638,46 @@ p{
         AND BUILD REAL HUMAN CONNECTION IN JAPANESE
       </p>
 
-<h1 class="headline">
-  Learn to Speak Casual Japanese<br>
-  and Build <span class="power-word">Real Human Connection</span><br>
-  Without Years of Study or Social Guesswork
-</h1>
+      <h1 class="headline">
+        Learn to Speak Casual Japanese<br>
+        and Build <span class="power-word">Real Human Connection</span><br>
+        Without Years of Study or Social Guesswork
+      </h1>
 
-<p class="subheadline">
- Crafted by a bilingual native Japanese who spent thousands of hours breaking down real casual speech.
-</p>
+      <p class="subheadline">
+        Crafted by a bilingual native Japanese who spent thousands of hours breaking down real casual speech.
+      </p>
+    </div>
+  </section>
 
-  <!-- SPLIT SECTION (this comes first like your reference) -->
   <section class="foundation-split" id="next">
     <div class="foundation-split-inner">
+      <div class="split-left">
+        <h2>What is the NRP Casual Japanese Foundation Course?</h2>
 
-     <!-- LEFT -->
-<div class="split-left">
-  <h2>What is the NRP Casual Japanese Foundation Course?</h2>
+        <p>
+          The Foundation Course is more than just lessons. It’s your
+          <span class="underline">fast track to casual Japanese and real human connection</span>.
+        </p>
 
-  <p>
-    The Foundation Course is more than just lessons. It’s your
-    <span class="underline">fast track to casual Japanese and real human connection</span>.
-  </p>
+        <p>
+          In a world full of textbooks, language schools, apps, and AI, there’s one thing most of them have in common:
+          <strong>they never teach real casual Japanese.</strong> This course is built to fix that.
+        </p>
 
-  <p>
-    In a world full of textbooks, language schools, apps, and AI,
-    there’s one thing most of them have in common:
-    <strong>they never teach real casual Japanese.</strong>
-    This course is built to fix that.
-  </p>
+        <p>
+          This isn’t <strong>slang memorization</strong> or <strong>confidence tricks</strong>.
+          It’s learning how Japanese is actually used in
+          <strong>real friendships, real relationships, and real moments</strong>.
+        </p>
 
-  <p>
-    This isn’t <strong>slang memorization</strong> or <strong>confidence tricks</strong>.
-    It’s learning how Japanese is actually used in
-    <strong>real friendships, real relationships, and real moments</strong>.
-  </p>
+        <p>
+          The goal is simple:
+          <strong>stop sounding like a textbook, and start speaking Japanese like a real person</strong>
+          so you can unlock a version of Japan you’ll never reach using polite Japanese alone.
+        </p>
+      </div>
 
-  <p>
-    The goal is simple:
-    <strong>stop sounding like a textbook, and start speaking Japanese like a real person</strong>
-    so you can unlock a version of Japan you’ll never reach using polite Japanese alone.
-  </p>
-</div>
-      <!-- RIGHT -->
       <div class="split-right">
         <div class="price-box">
           <p class="price-line">
@@ -280,9 +692,7 @@ p{
             Delivered instantly.
           </p>
 
-          <a href="YOUR-CHECKOUT-LINK" class="cta-main">
-            GET INSTANT ACCESS →
-          </a>
+          <a href="YOUR-CHECKOUT-LINK" class="cta-main">GET INSTANT ACCESS →</a>
 
           <div class="security-line">
             <span>🛡</span>
@@ -290,32 +700,193 @@ p{
           </div>
 
           <div class="price-testimonials">
-
             <div class="price-testimonial">
               <img src="Akira.png" alt="Akira" class="student-avatar">
-              <p class="word-quote">
-                “Conversations with my Japanese friends feel more real. I noticed a clear difference in their reactions and engagement.”
-              </p>
-              <div class="stars">★★★★★</div>
-              <div class="student-name">Akira</div>
+              <div>
+                <p class="word-quote">
+                  “Conversations with my Japanese friends feel more real. I noticed a clear difference in their reactions and engagement.”
+                </p>
+                <div class="stars">★★★★★</div>
+                <div class="student-name">Akira</div>
+              </div>
             </div>
 
             <div class="price-testimonial">
               <img src="And.png" alt="Andreas" class="student-avatar">
-              <p class="word-quote">
-                “The first videos blew my mind. The emotions, filler words, and human side of Japanese finally clicked.”
-              </p>
-              <div class="stars">★★★★★</div>
-              <div class="student-name">Andreas</div>
+              <div>
+                <p class="word-quote">
+                  “The first videos blew my mind. The emotions, filler words, and human side of Japanese finally clicked.”
+                </p>
+                <div class="stars">★★★★★</div>
+                <div class="student-name">Andreas</div>
+              </div>
             </div>
 
             <div class="price-testimonial">
               <img src="Aaron.png" alt="Aaron" class="student-avatar">
-              <p class="word-quote">
-                “Before joining, I couldn’t express emotion. Now I finally sound like a person.”
-              </p>
-              <div class="stars">★★★★★</div>
-              <div class="student-name">Aaron</div>
+              <div>
+                <p class="word-quote">
+                  “Before joining, I couldn’t express emotion. Now I finally sound like a person.”
+                </p>
+                <div class="stars">★★★★★</div>
+                <div class="student-name">Aaron</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="foundation-shortcut" id="included">
+    <div class="foundation-shortcut-inner">
+
+      <div class="shortcut-left">
+        <h2>
+          A Shortcut to <span class="power-word">Casual Japanese</span><br>
+          That Normally Takes Years
+        </h2>
+
+        <p>This course is a direct path to skills that usually take years of living in Japan to develop.</p>
+
+        <p>
+          Casual Japanese isn’t something most learners ever truly “study.”
+          It’s absorbed slowly through thousands of conversations, awkward moments,
+          failed interactions, and social mistakes textbooks never explain.
+        </p>
+
+        <div class="shortcut-section-break">
+          <div class="kicker">THE PROBLEM</div>
+          <div class="sub">You can “know Japanese”… and still feel stiff, distant, or unnatural in real conversations.</div>
+        </div>
+
+        <div class="compare-grid">
+          <div class="compare-card">
+            <div class="compare-title">Without Casual Japanese</div>
+            <ul>
+              <li><span class="badge-x">✕</span> Stuck in polite mode</li>
+              <li><span class="badge-x">✕</span> Overthinking every sentence</li>
+              <li><span class="badge-x">✕</span> Sounds “correct” but not natural</li>
+              <li><span class="badge-x">✕</span> Conversation feels distant</li>
+              <li><span class="badge-x">✕</span> Low confidence in real-time</li>
+            </ul>
+          </div>
+
+          <div class="compare-card">
+            <div class="compare-title">With Casual Japanese</div>
+            <ul>
+              <li><span class="badge-check">✓</span> Casual, natural speaking mode</li>
+              <li><span class="badge-check">✓</span> Less translating in your head</li>
+              <li><span class="badge-check">✓</span> Sounds like a person, not a textbook</li>
+              <li><span class="badge-check">✓</span> Real reactions from natives</li>
+              <li><span class="badge-check">✓</span> Calm confidence + flow</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="shortcut-section-break">
+          <div class="kicker">THE SOLUTION</div>
+          <div class="sub">I reverse-engineered what natives do automatically, into patterns you can use immediately.</div>
+        </div>
+
+        <p>
+          I’ve spent thousands of hours breaking down real conversations,
+          isolating what natives do without thinking, and reverse-engineering it into patterns learners can actually use.
+        </p>
+
+        <p><strong>Not slang lists.</strong><br><strong>Not confidence tricks.</strong><br><strong>Not “just be more casual.”</strong></p>
+
+        <ul style="margin-left:20px; margin-top:12px; line-height:1.9;">
+          <li>why a sentence feels stiff</li>
+          <li>how natives soften, dodge, imply, or connect</li>
+          <li>how learners can use the same instincts immediately</li>
+        </ul>
+
+        <p style="margin-top:18px;">
+          A system that lets you skip years of guessing, avoid social dead ends, and start speaking Japanese the way real relationships are built.
+        </p>
+      </div>
+
+      <div class="shortcut-right">
+        <div class="included-card">
+          <div class="included-head">
+            <div class="kicker">HERE’S EVERYTHING INCLUDED:</div>
+            <div class="subkicker">One-time purchase. Instant access.<br>Bonuses included today.</div>
+          </div>
+
+          <div class="included-hero-wrap">
+            <img src="8.png" alt="Everything included" class="included-hero-img">
+          </div>
+
+          <div class="included-body">
+
+            <div class="included-item">
+              <div class="included-row">
+                <img src="1.png" alt="Foundation Course" class="included-thumb">
+                <div>
+                  <div class="name">Casual Japanese Foundation Course</div>
+                  <div class="desc">The core system to switch into casual Japanese that sounds human.</div>
+                </div>
+                <div class="price-mini"><span class="was">$199</span><span class="now">$147</span></div>
+              </div>
+            </div>
+
+            <div class="included-item">
+              <div class="included-row">
+                <img src="2.png" alt="Casual Grammar" class="included-thumb">
+                <div>
+                  <div class="name"><span class="bonus-label">BONUS:</span> Casual Grammar Foundation</div>
+                  <div class="desc">The minimum structure you need before you start layering casual speech.</div>
+                </div>
+                <div class="price-mini"><span class="was">$79</span><span class="now">FREE</span></div>
+              </div>
+            </div>
+
+            <div class="included-item">
+              <div class="included-row">
+                <img src="3.png" alt="Playbook" class="included-thumb">
+                <div>
+                  <div class="name"><span class="bonus-label">BONUS:</span> Casual Japanese Playbook</div>
+                  <div class="desc">When to use casual, when not to, foreigner positioning, mindset, and real connection.</div>
+                </div>
+                <div class="price-mini"><span class="was">$129</span><span class="now">FREE</span></div>
+              </div>
+            </div>
+
+            <div class="included-item">
+              <div class="included-row">
+                <img src="4.png" alt="Community" class="included-thumb">
+                <div>
+                  <div class="name"><span class="bonus-label">BONUS:</span> Community Access</div>
+                  <div class="desc">Practice, post, and learn through real examples and breakdowns.</div>
+                </div>
+                <div class="price-mini"><span class="was">$197</span><span class="now">FREE</span></div>
+              </div>
+            </div>
+
+            <div class="included-item">
+              <div class="included-row">
+                <img src="5.png" alt="Challenge" class="included-thumb">
+                <div>
+                  <div class="name"><span class="bonus-label">BONUS:</span> Weekly Freestyle Challenge</div>
+                  <div class="desc">A weekly prompt to force real output and build momentum.</div>
+                </div>
+                <div class="price-mini"><span class="was">$149</span><span class="now">FREE</span></div>
+              </div>
+            </div>
+
+            <div class="final-price-stack">
+              <div class="final-only-line">Only <span class="final-was">$753</span> <span class="final-now">$147</span></div>
+              <div class="final-save-line">Save <span>$606</span> today</div>
+            </div>
+
+            <a href="YOUR-CHECKOUT-LINK" class="cta-main">GET INSTANT ACCESS →</a>
+
+            <div class="security-line">
+              <span>🛡</span>
+              <span>100% Secure Checkout · Instant Access</span>
             </div>
 
           </div>
@@ -325,596 +896,112 @@ p{
     </div>
   </section>
 
-<section class="foundation-shortcut" id="included">
-  <div class="foundation-shortcut-inner">
-
-    <!-- LEFT -->
-  <div class="shortcut-left">
-
-  <!-- PART 1 -->
-  <h2>
-    A Shortcut to <span class="power-word">Casual Japanese</span><br>
-    That Normally Takes Years
-  </h2>
-
-  <p>
-    This course is a direct path to skills that usually take years of living in Japan to develop.
-  </p>
-
-  <p>
-    Casual Japanese isn’t something most learners ever truly “study.”
-    It’s absorbed slowly through thousands of conversations, awkward moments,
-    failed interactions, and social mistakes textbooks never explain.
-  </p>
-
-  <p>
-    As a native Japanese speaker, I grew up inside this language.
-    But what makes this course different is that I also understand the learner’s pain.
-  </p>
-
-  <p>
-    Casual Japanese often can’t be translated cleanly.
-    The meaning lives in tone, timing, silence, social position,
-    and emotional context.
-  </p>
-
-  <!-- MID TITLE / RESET -->
-  <div class="shortcut-section-break">
-    <div class="kicker">THE PROBLEM</div>
-    <div class="sub">
-      You can “know Japanese”… and still feel stiff, distant, or unnatural in real conversations.
-    </div>
-  </div>
-
-  <!-- WITHOUT / WITH (MOVE THIS UP HERE) -->
-  <div class="compare-grid">
-
-    <div class="compare-card">
-      <div class="compare-title">Without Casual Japanese</div>
-      <ul>
-        <li><span class="badge-x">✕</span> Stuck in polite mode</li>
-        <li><span class="badge-x">✕</span> Overthinking every sentence</li>
-        <li><span class="badge-x">✕</span> Sounds “correct” but not natural</li>
-        <li><span class="badge-x">✕</span> Conversation feels distant</li>
-        <li><span class="badge-x">✕</span> Low confidence in real-time</li>
-      </ul>
-    </div>
-
-    <div class="compare-card">
-      <div class="compare-title">With Casual Japanese</div>
-      <ul>
-        <li><span class="badge-check">✓</span> Casual, natural speaking mode</li>
-        <li><span class="badge-check">✓</span> Less translating in your head</li>
-        <li><span class="badge-check">✓</span> Sounds like a person, not a textbook</li>
-        <li><span class="badge-check">✓</span> Real reactions from natives</li>
-        <li><span class="badge-check">✓</span> Calm confidence + flow</li>
-      </ul>
-    </div>
-
-  </div>
-
-  <!-- SECOND MID TITLE -->
-  <div class="shortcut-section-break">
-    <div class="kicker">THE SOLUTION</div>
-    <div class="sub">
-      I reverse-engineered what natives do automatically, into patterns you can use immediately.
-    </div>
-  </div>
-
-  <!-- PART 2 -->
-  <p>
-    I’ve spent thousands of hours breaking down real conversations,
-    isolating what natives do without thinking,
-    and reverse-engineering it into patterns learners can actually use.
-  </p>
-
-  <p>
-    <strong>Not slang lists.</strong><br>
-    <strong>Not confidence tricks.</strong><br>
-    <strong>Not “just be more casual.”</strong>
-  </p>
-
-  <p>
-    I questioned everything traditional Japanese education teaches,
-    discarded what doesn’t survive real conversation,
-    and rebuilt casual Japanese from the ground up.
-  </p>
-
-  <p>
-    After years of analysis, observation, and refinement,
-    I reached a point where I could clearly explain:
-  </p>
-
-  <ul style="margin-left:20px; margin-top:12px; line-height:1.9;">
-    <li>why a sentence feels stiff</li>
-    <li>how natives soften, dodge, imply, or connect</li>
-    <li>and how learners can use the same instincts immediately</li>
-  </ul>
-
-  <p style="margin-top:18px;">
-    This course is the result of that process.
-  </p>
-
-  <p>
-    A system that lets you skip years of guessing,
-    avoid social dead ends,
-    and start speaking Japanese the way real relationships are built.
-  </p>
-
-
-      <!-- Testimonials under comparison (LEFT) -->
-      <div class="nci-testimonials">
-
-        <div class="nci-testimonial-card">
-          <div class="nci-avatar-wrap">
-            <img class="nci-avatar" src="PERSON1.png" alt="Person 1">
-          </div>
-          <div class="nci-quote-left">“</div>
-          <div class="nci-quote-right">“</div>
-          <p class="nci-quote-text">
-            I have to say that every little thing I hear and every video is eye-opening and I can implement it immediately.
-            What I love the most is how clear and usable everything is. The more I learn, the more confident I feel.
-          </p>
-          <div class="nci-stars">★★★★★</div>
-          <div class="nci-name-pill">Name Here</div>
-        </div>
-
-        <div class="nci-testimonial-card">
-          <div class="nci-avatar-wrap">
-            <img class="nci-avatar" src="PERSON2.png" alt="Person 2">
-          </div>
-          <div class="nci-quote-left">“</div>
-          <div class="nci-quote-right">“</div>
-          <p class="nci-quote-text">
-            For the first time, Japanese stopped feeling like rules and started feeling human.
-            Conversations feel lighter, smoother, and people react differently.
-          </p>
-          <div class="nci-stars">★★★★★</div>
-          <div class="nci-name-pill">Name Here</div>
-        </div>
-
-        <div class="nci-testimonial-card">
-          <div class="nci-avatar-wrap">
-            <img class="nci-avatar" src="PERSON3.png" alt="Person 3">
-          </div>
-          <div class="nci-quote-left">“</div>
-          <div class="nci-quote-right">“</div>
-          <p class="nci-quote-text">
-            This filled the exact gap I didn’t know how to fix. I stopped translating in my head and started responding naturally.
-          </p>
-          <div class="nci-stars">★★★★★</div>
-          <div class="nci-name-pill">Name Here</div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- RIGHT -->
-    <div class="shortcut-right">
-      <div class="included-card">
-
-        <div class="included-head">
-          <div class="kicker">HERE’S EVERYTHING INCLUDED:</div>
-          <div class="subkicker">
-            One-time purchase. Instant access.<br>
-            Bonuses included today.
-          </div>
-        </div>
-
-        <div class="included-hero-wrap">
-          <img src="8.png" alt="Everything included" class="included-hero-img">
-        </div>
-
-        <div class="included-body">
-
-          <div class="included-item">
-            <div class="included-row">
-              <img src="1.png" alt="Foundation Course" class="included-thumb">
-              <div>
-                <div class="name">Casual Japanese Foundation Course</div>
-                <div class="desc">The core system to switch into casual Japanese that sounds human.</div>
-              </div>
-              <div class="price-mini">
-                <span class="was">$199</span><span class="now">$147</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="included-item">
-            <div class="included-row">
-              <img src="2.png" alt="Casual Grammar Foundation" class="included-thumb">
-              <div>
-                <div class="name"><span class="bonus-label">BONUS:</span> Casual Grammar Foundation</div>
-                <div class="desc">The minimum structure you need before you start layering casual speech.</div>
-              </div>
-              <div class="price-mini">
-                <span class="was">$79</span><span class="now">FREE</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="included-item">
-            <div class="included-row">
-              <img src="3.png" alt="Casual Playbook" class="included-thumb">
-              <div>
-                <div class="name"><span class="bonus-label">BONUS:</span> Casual Japanese Playbook</div>
-                <div class="desc">When to use casual, when not to, foreigner positioning, mindset, and real connection.</div>
-              </div>
-              <div class="price-mini">
-                <span class="was">$129</span><span class="now">FREE</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="included-item">
-            <div class="included-row">
-              <img src="4.png" alt="Community Access" class="included-thumb">
-              <div>
-                <div class="name"><span class="bonus-label">BONUS:</span> Community Access</div>
-                <div class="desc">Practice, post, and learn through real examples and breakdowns.</div>
-              </div>
-              <div class="price-mini">
-                <span class="was">$197</span><span class="now">FREE</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="included-item">
-            <div class="included-row">
-              <img src="5.png" alt="Weekly Freestyle Challenge" class="included-thumb">
-              <div>
-                <div class="name"><span class="bonus-label">BONUS:</span> Weekly Freestyle Challenge</div>
-                <div class="desc">A weekly prompt to force real output and build momentum.</div>
-              </div>
-              <div class="price-mini">
-                <span class="was">$149</span><span class="now">FREE</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="final-price-stack">
-          <div class="final-only-line">
-            Only <span class="final-was">$753</span> <span class="final-now">$147</span>
-          </div>
-          <div class="final-save-line">
-            Save <span>$606</span> today
-          </div>
-        </div>
-
-        <a href="YOUR-CHECKOUT-LINK" class="cta-main">GET INSTANT ACCESS →</a>
-
-        <div class="security-line">
-          <span>🛡</span>
-          <span>100% Secure Checkout · Instant Access</span>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</section>
-  <!-- REAL CONVERSATION PROOF (Option B) -->
-<section class="real-convo-proof" id="real-proof">
-  <div class="real-convo-inner">
-
-    <h2 class="real-title">Everything Here Is Designed to Work in Real Conversations.</h2>
-
-    <p class="real-sub">
-      Everything in this training comes from how Japanese is actually spoken in daily life.<br>
-      Not classroom Japanese. Not “safe” phrases.<br>
-      You learn what natives do, not what learners memorize.
-    </p>
-
-    <!-- IMAGE PLACEHOLDER (drop your comparison image here later) -->
-    <div class="real-image-wrap">
-      <!-- Replace src with your image later -->
-      <img
-        src="YOUR-IMAGE.png"
-        alt="Textbook vs Casual Japanese comparison"
-        class="real-image"
-      />
-      <!-- Optional tiny line under image -->
-      <p class="real-image-note">This is the difference most learners never get shown.</p>
-    </div>
-
-    <!-- CTA (same vibe as NCI) -->
-    <a href="YOUR-CHECKOUT-LINK" class="real-cta">
-      GET INSTANT ACCESS FOR ONLY $147
-      <span class="real-cta-sub">GET YOUR TRAINING NOW!</span>
-    </a>
-
-  </div>
-</section>
-  <section class="foundation-testimonials">
-  <div class="foundation-testimonials-inner">
-
-    <h2 class="testimonials-title">
-      Real Results From Real Conversations
-    </h2>
-
-    <div class="testimonials-grid">
-
-      <div class="testimonial-card">
-        <div class="testimonial-avatar">
-          <img src="avatar-1.png" alt="Student photo">
-        </div>
-        <p class="testimonial-text">
-          Every lesson clicked immediately.
-          Japanese stopped feeling like rules and started feeling human.
-          I noticed people reacting differently without me trying.
-        </p>
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-name">Name Here</div>
-      </div>
-
-      <div class="testimonial-card">
-        <div class="testimonial-avatar">
-          <img src="avatar-2.png" alt="Student photo">
-        </div>
-        <p class="testimonial-text">
-          This filled the exact gap I couldn’t explain before.
-          I stopped translating in my head and started responding naturally.
-        </p>
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-name">Name Here</div>
-      </div>
-
-      <div class="testimonial-card">
-        <div class="testimonial-avatar">
-          <img src="avatar-3.png" alt="Student photo">
-        </div>
-        <p class="testimonial-text">
-          The changes were subtle but powerful.
-          Conversations felt lighter, smoother, and more real.
-        </p>
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-name">Name Here</div>
-      </div>
-
-      <div class="testimonial-card">
-        <div class="testimonial-avatar">
-          <img src="avatar-4.png" alt="Student photo">
-        </div>
-        <p class="testimonial-text">
-          For the first time, Japanese felt natural instead of forced.
-          This changed how I show up in conversations.
-        </p>
-        <div class="testimonial-stars">★★★★★</div>
-        <div class="testimonial-name">Name Here</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-<section class="final-included">
-  <div class="final-included-inner">
-
-    <h2 class="final-title">
-      Here’s Everything You’re Getting<br>
-      <span class="price-emphasis">For Only $147 Today</span>
-    </h2>
-    
-<div class="final-bundle-image-wrap">
-  <img src="8.png" alt="Everything included" class="final-bundle-image">
-</div>
-    <div class="final-box">
-
-    <div class="final-item-stack">
-  <div class="final-item-media">
-    <img src="1.png" alt="Foundation Course" class="final-item-img">
-  </div>
-  <div class="final-item-title">Foundation Course (One-Time)</div>
-  <div class="final-item-sub">
-    The core system to switch into casual Japanese that sounds human.
-  </div>
-  <div class="final-item-meta">
-    <span class="was">$199</span>
-    <span class="now">$147</span>
-  </div>
-</div>
-
-<div class="final-item-stack">
-  <div class="final-item-media">
-    <img src="2.png" alt="Casual Grammar Foundation" class="final-item-img">
-  </div>
-<div class="final-item-title">
-  <span class="bonus-label">Bonus:</span> Casual Grammar Foundation
-</div>
-  <div class="final-item-sub">
-    The minimum structure you need before you start layering casual speech.
-  </div>
-  <div class="final-item-meta">
-    <span class="was">$79</span>
-    <span class="now">FREE</span>
-  </div>
-</div>
-
-<div class="final-item-stack">
-  <div class="final-item-media">
-    <img src="3.png" alt="Casual Japanese Playbook" class="final-item-img">
-  </div>
- <div class="final-item-title">
-  <span class="bonus-label">Bonus:</span> Casual Japanese Playbook
-</div>
-  <div class="final-item-sub">
-    When to use casual, when not to, foreigner positioning, mindset, and real connection.
-  </div>
-  <div class="final-item-meta">
-    <span class="was">$129</span>
-    <span class="now">FREE</span>
-  </div>
-</div>
-
-<div class="final-item-stack">
-  <div class="final-item-media">
-    <img src="4.png" alt="Community Access" class="final-item-img">
-  </div>
-<div class="final-item-title">
-  <span class="bonus-label">Bonus:</span> Community Access
-</div>
-  <div class="final-item-sub">
-    Observe real learner examples, breakdowns, and discussions.
-  </div>
-  <div class="final-item-meta">
-    <span class="was">$197</span>
-    <span class="now">FREE</span>
-  </div>
-</div>
-
-<div class="final-item-stack">
-  <div class="final-item-media">
-    <img src="5.png" alt="Weekly Freestyle Challenge" class="final-item-img">
-  </div>
-<div class="final-item-title">
-  <span class="bonus-label">Bonus:</span> Weekly Freestyle Challenge
-</div>
-  <div class="final-item-sub">
-    Weekly prompts to force real output and build momentum.
-  </div>
-  <div class="final-item-meta">
-    <span class="was">$149</span>
-    <span class="now">FREE</span>
-  </div>
-</div>
-
-  <a href="YOUR-CHECKOUT-LINK" class="final-included-cta">
-  GET INSTANT ACCESS FOR ONLY $147→
-</a>
-
-      <div class="final-security">
-        🛡 100% Secure Checkout · Instant Access
-      </div>
-
-    </div>
-
-  </div>
-</section>
-  <section class="faq-section">
-  <div class="faq-inner">
-
-    <h2 class="faq-title">Frequently Asked Questions</h2>
-
-    <div class="faq-grid">
-
-      <div class="faq-item">
-        <h3>Will I sound rude if I start using casual Japanese?</h3>
-        <p>
-          No. You’ll learn when casual Japanese is appropriate, when it’s not, and how to leverage your position as a learner naturally. This course teaches social awareness, not reckless slang.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>I’m not fluent yet. Is this too advanced for me?</h3>
-        <p>
-          No. You’ll get a Casual Grammar Foundation (bonus) that gives you the minimum structure you need, then you layer casual speech naturally instead of waiting years.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>I understand Japanese, but I freeze when I try to speak. Will this help?</h3>
-        <p>
-          Yes. You’ll learn powerful, reusable phrases that replace awkward silence with real connection, so you always know what to say next.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3> Will this help me stop translating in my head?</h3>
-        <p>
-          Yes. This system is built around patterns and instincts natives actually use, which naturally reduces mental translation over time.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>How is this different from textbooks, apps, or JLPT-style learning?</h3>
-        <p>
-          Textbooks teach safe, polite Japanese that often sounds unnatural in real life. This course is built from real casual conversations and how natives actually speak day to day.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>How much time do I need per day?</h3>
-        <p>
-          About 15 minutes a day. Consistency beats intensity. This is about daily exposure, not grinding.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>What level is this for?</h3>
-        <p>
-          Any level. If human connection matters to you, this course fits. Beginners to advanced learners all benefit.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Can I use this even if I don’t live in Japan?</h3>
-        <p>
-          Absolutely. Even short encounters can turn into meaningful interactions when you know how to speak naturally.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Is this about passing tests?</h3>
-        <p>
-          No. This is about using Japanese that actually works in real life, not scoring points on exams.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Is this a subscription?</h3>
-        <p>
-          No. This is a one-time purchase.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Do I get lifetime access?</h3>
-        <p>
-          Yes. Once you join, it’s yours forever.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3> What if I’m worried about using casual Japanese in the wrong situation?</h3>
-        <p>
-          You’ll learn exactly when to use it, when not to, and how to adjust naturally depending on context.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Who is this not for?</h3>
-        <p>
-          This is not for native Japanese speakers. It’s for learners who want real connection, not textbook perfection.
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
-  <section class="final-cta">
-  <div class="final-cta-inner">
-
-    <div class="final-product-visual">
-      <!-- Replace src with your product image -->
-      <img src="8.png" alt="Casual Japanese Foundation Course">
-    </div>
-
-    <a href="#checkout" class="final-cta-button">
-      GET INSTANT ACCESS NOW →
-    </a>
-
-    <p class="final-cta-note">
-      One-time purchase · Lifetime access · Price increases soon
-    </p>
-
-    <div class="final-footer">
-      <p>© Nihongo Red Pill</p>
-      <p>
-        <a href="/terms">Terms</a> ·
-        <a href="/privacy">Privacy</a>
+  <section class="real-convo-proof" id="real-proof">
+    <div class="real-convo-inner">
+      <h2 class="real-title">Everything Here Is Designed to Work in Real Conversations.</h2>
+      <p class="real-sub">
+        Everything in this training comes from how Japanese is actually spoken in daily life.<br>
+        Not classroom Japanese. Not “safe” phrases.<br>
+        You learn what natives do, not what learners memorize.
       </p>
-    </div>
 
-  </div>
-</section>
+      <div class="real-image-wrap">
+        <img src="YOUR-IMAGE.png" alt="Textbook vs Casual Japanese comparison" class="real-image" />
+        <p class="real-image-note">This is the difference most learners never get shown.</p>
+      </div>
+
+      <a href="YOUR-CHECKOUT-LINK" class="real-cta">
+        GET INSTANT ACCESS FOR ONLY $147
+        <span class="real-cta-sub">GET YOUR TRAINING NOW!</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="foundation-testimonials">
+    <div class="foundation-testimonials-inner">
+      <h2 class="testimonials-title">Real Results From Real Conversations</h2>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-avatar"><img src="avatar-1.png" alt="Student photo"></div>
+          <p class="testimonial-text">Every lesson clicked immediately. Japanese stopped feeling like rules and started feeling human.</p>
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-name">Name Here</div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-avatar"><img src="avatar-2.png" alt="Student photo"></div>
+          <p class="testimonial-text">This filled the exact gap I couldn’t explain before. I stopped translating in my head and started responding naturally.</p>
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-name">Name Here</div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-avatar"><img src="avatar-3.png" alt="Student photo"></div>
+          <p class="testimonial-text">The changes were subtle but powerful. Conversations felt lighter, smoother, and more real.</p>
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-name">Name Here</div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-avatar"><img src="avatar-4.png" alt="Student photo"></div>
+          <p class="testimonial-text">For the first time, Japanese felt natural instead of forced. This changed how I show up in conversations.</p>
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-name">Name Here</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="faq-inner">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+
+      <div class="faq-grid">
+        <div class="faq-item">
+          <h3>Will I sound rude if I start using casual Japanese?</h3>
+          <p>No. You’ll learn when casual Japanese is appropriate, when it’s not, and how to leverage your position as a learner naturally.</p>
+        </div>
+        <div class="faq-item">
+          <h3>I’m not fluent yet. Is this too advanced for me?</h3>
+          <p>No. You’ll get a Casual Grammar Foundation (bonus) that gives you the minimum structure you need, then you layer casual speech naturally.</p>
+        </div>
+        <div class="faq-item">
+          <h3>I understand Japanese, but I freeze when I try to speak. Will this help?</h3>
+          <p>Yes. You’ll learn reusable phrases that replace awkward silence with real connection, so you always know what to say next.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Will this help me stop translating in my head?</h3>
+          <p>Yes. This system is built around patterns and instincts natives actually use, which naturally reduces mental translation over time.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is this a subscription?</h3>
+          <p>No. This is a one-time purchase.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Do I get lifetime access?</h3>
+          <p>Yes. Once you join, it’s yours forever.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta-section">
+    <div class="final-cta-inner">
+      <div class="final-product-visual">
+        <img src="8.png" alt="Casual Japanese Foundation Course">
+      </div>
+
+      <a href="YOUR-CHECKOUT-LINK" class="final-cta-button">GET INSTANT ACCESS NOW →</a>
+
+      <p class="final-cta-note">One-time purchase · Lifetime access · Price increases soon</p>
+
+      <div class="final-footer">
+        <p>© Nihongo Red Pill</p>
+        <p><a href="/terms">Terms</a> · <a href="/privacy">Privacy</a></p>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
