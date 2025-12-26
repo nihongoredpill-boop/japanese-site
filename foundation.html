@@ -440,6 +440,13 @@
       margin:0 auto 34px;
     }
     .real-image-wrap{ max-width:980px; margin:0 auto 34px; }
+
+    .real-image-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
     .real-image{
       max-width: 700px; 
       width:100%;
@@ -449,7 +456,24 @@
       border:1px solid #e7e2d6;
       box-shadow:0 18px 40px rgba(0,0,0,0.08);
     }
-    .real-image-note{ margin-top:14px; font-size:1.08rem; color:#444; }
+ .real-image-note {
+  max-width: 720px;
+  margin-top: 16px;
+}
+
+.real-image-note p {
+  font-size: 1.15rem;        /* ~18–19px */
+  line-height: 1.7;
+  color: #222;
+  margin-bottom: 12px;
+}
+    .real-transform {
+  font-size: 1.3rem;         /* bigger */
+  font-weight: 500;
+  margin-top: 20px;
+  line-height: 1.6;
+}
+    
     .real-cta{
       display:block;
       max-width:860px;
@@ -781,6 +805,15 @@
   line-height:1.7;
   font-weight:800;
   color:#111;
+}
+    .video-quote span {
+  display: inline;
+}
+
+@media (max-width: 768px) {
+  .video-quote span {
+    display: block;
+  }
 }
 
 /* name + stars */
@@ -1210,7 +1243,6 @@
     </div>
   </section>
 
-section class="final-testimonials video-testimonials-section">
   <h2 class="testimonials-title">Real students. Real conversations. Real change.</h2>
 
  <div class="video-testimonials-grid">
@@ -1224,7 +1256,11 @@ section class="final-testimonials video-testimonials-section">
       </div>
     </div>
 
-    <p class="video-quote">“After joining, I found that I could speak much more naturally and express myself more clearly.”</p>
+ <p class="video-quote">
+  <span>“After joining,</span>
+  <span>I found that I could speak much more naturally</span>
+  <span>and express myself more clearly.”</span>
+</p>
 
     <div class="video-meta">
       <span class="video-name">Ian</span>
