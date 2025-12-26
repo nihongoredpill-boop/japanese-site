@@ -516,6 +516,18 @@
       margin-bottom:56px;
       color:#111;
     }
+    /* keep desktop normal */
+.testimonials-title span { display: inline; }
+
+/* mobile: force each phrase to its own line */
+@media (max-width: 768px){
+  .testimonials-title span{
+    display:block;
+    line-height:1.15;
+  }
+  .testimonials-title .t2{ margin-top:6px; }
+  .testimonials-title .t3{ margin-top:6px; }
+}
     .testimonials-grid{
       display:grid;
       grid-template-columns: repeat(2, 1fr);
@@ -1242,8 +1254,12 @@
       </a>
     </div>
   </section>
-
-  <h2 class="testimonials-title">Real students. Real conversations. Real change.</h2>
+  
+<h2 class="testimonials-title">
+  <span class="t1">Real students.</span>
+  <span class="t2">Real conversations.</span>
+  <span class="t3">Real change.</span>
+</h2>
 
  <div class="video-testimonials-grid">
   <!-- Ian -->
@@ -1256,10 +1272,7 @@
       </div>
     </div>
 
- <p class="video-quote">
-  <span>“After joining,</span>
-  <span>I found that I could speak much more naturally</span>
-  <span>and express myself more clearly.”</span>
+ <p class="video-quote">“After joining,I found that I could speak much more naturally and express myself more clearly.”</span>
 </p>
 
     <div class="video-meta">
