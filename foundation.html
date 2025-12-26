@@ -1075,7 +1075,43 @@
   color: #ffffff;
   text-align: center;
 }
+/* =========================
+   PRICE BOX TESTIMONIALS
+   Desktop: stack vertically
+   ========================= */
 
+/* was: grid-template-columns: repeat(2, 1fr); */
+.price-testimonials{
+  display: grid;
+  grid-template-columns: 1fr;  /* ✅ 1 per row */
+  gap: 16px;
+}
+
+/* Optional: make each one feel more premium */
+.price-testimonial{
+  padding: 18px;
+}
+
+/* Keep avatar + text aligned nicely */
+@media (min-width: 981px){
+  .price-testimonial{
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 16px;
+    align-items: start;
+    text-align: left;
+  }
+
+  .student-avatar{
+    margin: 0;
+    width: 84px;
+    height: 84px;
+  }
+
+  .stars, .student-name{
+    justify-self: start;
+  }
+}
 .final-cta-inner {
   max-width: 1000px;
   margin: 0 auto;
