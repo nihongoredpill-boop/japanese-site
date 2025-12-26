@@ -1331,7 +1331,6 @@ body{
 .faq-item h3{
   font-size: 1.15rem;
 }
-<style>
 /* --- Shortcut section structure fixes --- */
 .shortcut-section-break{
   margin: 34px auto 26px;
@@ -1365,7 +1364,7 @@ body{
 .shortcut-left p{
   margin-bottom: 14px;
 }
-</style>
+
 /* Mobile tuning */
 @media (max-width: 768px){
   body{ font-size: 17px; }
@@ -1385,8 +1384,86 @@ body{
   .subheadline{
     font-size: 1.12rem;
   }
+  /* =========================
+   GLOBAL FONT SCALE (FINAL)
+   ========================= */
+
+/* Base */
+body{
+  font-size: 19px;        /* desktop reading sweet spot */
+  line-height: 1.8;
 }
-  </style>
+
+/* Core paragraph text */
+p,
+.split-left p,
+.foundation-explain p,
+.shortcut-left p,
+.real-sub,
+.faq-item p,
+.testimonial-text,
+.nci-quote-text,
+.access-line,
+.word-quote{
+  font-size: 1.18rem;    /* ~22.4px */
+  line-height: 1.9;
+}
+
+/* Hero subheadline */
+.subheadline{
+  font-size: 1.28rem;
+  line-height: 1.85;
+}
+
+/* Included + bonus descriptions */
+.included-item .desc,
+.final-item-sub,
+.real-image-note{
+  font-size: 1.08rem;
+  line-height: 1.75;
+}
+
+/* FAQ titles */
+.faq-item h3{
+  font-size: 1.22rem;
+}
+
+/* Small UI text that should still be readable */
+.save-line,
+.security-line,
+.included-head .subkicker{
+  font-size: 1.05rem;
+}
+
+/* =========================
+   MOBILE TUNING
+   ========================= */
+@media (max-width: 768px){
+  body{
+    font-size: 18px;
+    line-height: 1.8;
+  }
+
+  p,
+  .split-left p,
+  .foundation-explain p,
+  .shortcut-left p,
+  .real-sub,
+  .faq-item p,
+  .testimonial-text,
+  .nci-quote-text,
+  .access-line,
+  .word-quote{
+    font-size: 1.1rem;
+    line-height: 1.85;
+  }
+
+  .subheadline{
+    font-size: 1.18rem;
+  }
+}
+    
+    <style>
 </head>
 
 <body>
