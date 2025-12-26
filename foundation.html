@@ -883,6 +883,72 @@
     margin: 0 auto;
   }
 }
+    /* 1) Constrain the whole final review section width on desktop */
+.foundation-testimonials,
+.final-testimonials,
+.video-testimonials-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+/* 2) Make the grid not create giant cards */
+.video-testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  align-items: start;
+}
+
+/* 3) Card styling + prevent stretching */
+.video-review-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+  justify-self: center;   /* key */
+  width: 100%;
+  max-width: 520px;       /* key */
+}
+
+/* 4) HARD LIMIT the square on desktop */
+.video-square {
+  width: clamp(220px, 22vw, 320px);  /* key */
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+/* 5) Video fills square nicely */
+.video-square video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 6) Shiny red line around the video */
+.video-frame {
+  border: 3px solid #d11f1f;
+  border-radius: 22px;
+  padding: 10px;
+  box-shadow: 0 14px 30px rgba(209,31,31,0.15);
+}
+
+/* Mobile: stack + allow bigger square */
+@media (max-width: 768px) {
+  .video-testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+  .video-review-card {
+    max-width: 560px;
+  }
+  .video-square {
+    width: min(92vw, 360px);
+  }
+}
   </style>
 </head>
 
