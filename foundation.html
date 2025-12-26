@@ -798,65 +798,41 @@
    VIDEO TESTIMONIALS (PREMIUM)
    ========================= */
 
-.video-reviews{
-  background:#fff;
-  padding: 90px 20px;
-  border-top: 1px solid #e7e2d6;
-}
-
-.video-reviews-inner{
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.video-reviews-title{
-  font-size: clamp(2rem, 3vw, 2.8rem);
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  text-align: center;
-  margin-bottom: 56px;
-  color: #111;
-}
-
-.video-reviews-grid{
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 28px;
-}
-
-/* Card box (premium container) */
+/* FINAL REVIEW SECTION - video sizing fix (desktop) */
 .video-review-card{
-  border: 1px solid #e7e2d6;
-  border-radius: 20px;
-  background: #fff;
-  padding: 22px;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.06);
+  background:#fff;
+  border:2px solid rgba(0,0,0,.08);
+  border-radius:18px;
+  padding:22px;
+  max-width:520px;            /* stops each card from becoming gigantic */
+  margin:0 auto;
 }
 
-/* Outer frame (makes the video feel “seated” inside a box) */
 .video-frame{
-  border-radius: 18px;
-  padding: 10px;
-  background: linear-gradient(180deg, rgba(220,38,38,0.06), rgba(0,0,0,0));
+  width:100%;
+  display:flex;
+  justify-content:center;     /* centers the square inside the card */
 }
 
-/* Red shiny border around the video container */
 .video-square{
-  aspect-ratio: 1 / 1;            /* ✅ square */
-  width: 100%;
-  border-radius: 16px;
-  border: 3px solid #dc2626;      /* red line */
-  box-shadow: 0 18px 40px rgba(220,38,38,0.12);
-  overflow: hidden;
-  background: #0b0b0b;            /* looks clean while loading */
+  width:min(320px, 100%);     /* desktop cap */
+  aspect-ratio:1 / 1;         /* keeps it square */
+  border:3px solid #d62828;   /* shiny red border */
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 10px 25px rgba(214,40,40,.18);
 }
 
-/* Video fills the square */
 .video-square video{
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;              /* ✅ keeps it tight (no tall video) */
+  width:100%;
+  height:100%;
+  object-fit:cover;           /* fills the square without distortion */
+  display:block;
+}
+
+/* optional: make desktop a little tighter */
+@media (min-width: 900px){
+  .video-square{ width:280px; }
 }
 
 /* Punchline quote (thicker + more premium) */
