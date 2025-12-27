@@ -546,6 +546,12 @@
   .about-photo{ width:min(340px, 92%); }
   .about-bg-word{ left:-6px; top:-10px; }
 }
+    .course-image{
+  width:100%;
+  max-width:180px;
+  margin:14px auto 10px;
+  display:block;
+}
   </style>
 </head>
 
@@ -553,7 +559,7 @@
   <!-- NAV BAR -->
   <div class="nav-bar">
     <a href="#home" class="nav-logo">
-      <img src="Logo.PNG" alt="Logo" style="height:40px;width:auto;">
+      <img src="Logo.png" alt="Logo" style="height:40px;width:auto;">
     </a>
 
     <div class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('active')">
@@ -590,11 +596,6 @@
         <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:24px;">
           <a href="https://nihongoredpill.systeme.io/12a87f23" class="cta-button" target="_blank" rel="noopener">Get Free Lesson</a>
           <a href="#courses" class="cta-button" style="background:transparent; border:1px solid #333;">View Courses</a>
-          <a href="https://whop.com/nihongoredlippcourse/nihiongo-red-pill/"
-             class="cta-button"
-             style="background:transparent; border:1px solid #dc2626;"
-             target="_blank" rel="noopener">
-            Enter the Dojo
           </a>
         </div>
       </div>
@@ -608,9 +609,12 @@
         <p class="courses-subline-strong">Master natural connection, emotional nuance, and confidence through real Japanese.</p>
       </div>
 
-   <div class="courses-grid">
+ <div class="courses-grid">
   <div class="course-card">
     <div class="course-badge">FOUNDATION</div>
+
+    <img src="foundationpic.png" alt="Foundation Course" class="course-image">
+
     <div class="course-name">Foundation for Casual Japanese</div>
     <div class="course-desc">
       The core mechanics that turn correct Japanese into human Japanese.
